@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>歷史遊戲</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 開始遊戲畫面 -->
+  <section id="startScreen" class="screen start-screen active">
+
+    <h1 class="game-title">歷史遊戲</h1>
+
+    <button id="startButton" class="start-button">
+      開始遊戲
+    </button>
+
+  </section>
+
+
+  <!-- 前導劇情畫面 -->
+  <section id="prologueScreen" class="screen prologue-screen sky-bg">
+
+    <!-- 角色立繪 -->
+    <img id="characterImage" class="character-image" src="" alt="角色立繪">
+
+    <div class="prologue-dialogue-area">
+
+      <!-- 說話者名稱 -->
+      <div id="speakerName" class="speaker-name">
+        玩家
+      </div>
+
+      <!-- 劇情文字框 -->
+      <div class="prologue-text-box">
+
+        <p id="prologueText">
+          距離那場大戰結束已經有幾個月的時間了。
+        </p>
+
+        <!-- 電報提示文字，預設隱藏 -->
+        <p id="telegramHint" class="telegram-hint">
+          點擊可往下一頁
+        </p>
+
+        <!-- 電報圖片，預設隱藏 -->
+        <img id="telegramImage" class="telegram-image" src="images/telegram.png" alt="電報">
+
+        <!-- 電報放大鏡 -->
+        <div id="telegramMagnifier" class="telegram-magnifier"></div>
+
+        <!-- 對話框內的上一句 / 下一句按鈕 -->
+        <div class="dialogue-controls">
+          <button id="prevPrologueButton" class="dialogue-arrow-button">
+            ←
+          </button>
+
+          <button id="nextPrologueButton" class="dialogue-arrow-button">
+            →
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 調查開始按鈕畫面，預設隱藏 -->
+    <div id="investigationStartPanel" class="investigation-start-panel">
+      <button id="investigationStartButton" class="investigation-start-button">
+        調查開始
+      </button>
+    </div>
+
+  </section>
+
+
+  <!-- 搜索階段：地圖畫面 -->
+  <section id="searchScreen" class="screen search-screen">
+
+    <div class="map-stage">
+
+      <!-- 地圖底圖 -->
+      <img class="floor-map-image" src="images/floor-map.jpg" alt="格局圖">
+
+      <!-- 可點擊房間按鈕 -->
+      <button class="map-room room-big-brother" data-room="bigBrother">大哥房</button>
+      <button class="map-room room-zashiki" data-room="zashiki">座敷</button>
+      <button class="map-room room-father" data-room="father">爸爸房</button>
+      <button class="map-room room-girls" data-room="girls">女生房</button>
+      <button class="map-room room-bath" data-room="bath">風呂</button>
+      <button class="map-room room-toilet" data-room="toilet">便所</button>
+      <button class="map-room room-reception" data-room="reception">應接室</button>
+      <button class="map-room room-second-brother" data-room="secondBrother">二哥房</button>
+      <button class="map-room room-tea" data-room="tea">茶間</button>
+      <button class="map-room room-kitchen" data-room="kitchen">台所</button>
+
+    </div>
+
+    <!-- 房間調查畫面上方資訊 -->
+    <div id="roomTitlePanel" class="room-title-panel">
+      <h2 id="roomTitleText">房間名稱</h2>
+    </div>
+
+    <!-- 回到地圖按鈕 -->
+    <button id="backToMapButton" class="back-to-map-button">
+      回到地圖
+    </button>
+
+    <!-- 房間中的人物立繪 -->
+<img id="roomCharacterImage" class="room-character-image" src="" alt="房間人物">
+
+<!-- 開始對話按鈕 -->
+<button id="startRoomDialogueButton" class="start-room-dialogue-button">
+  開始對話
+</button>
+
+<!-- 房間可點擊物件區域 -->
+<div id="roomHotspotLayer" class="room-hotspot-layer">
+
+  <!-- 大哥房：桌上的日記本 -->
+  <button
+    class="room-hotspot hotspot-diary"
+    data-hotspot="diary"
+    title="日記本">
+  </button>
+
+  <!-- 大哥房：右方櫃子上的紙張 -->
+  <button
+    class="room-hotspot hotspot-paper"
+    data-hotspot="paper"
+    title="紙張">
+  </button>
+
+</div>
+
+<!-- 房間對話框 -->
+<div id="roomDialogueBox" class="room-dialogue-box">
+
+  <div id="roomDialogueSpeaker" class="room-dialogue-speaker">
+    角色名稱
+  </div>
+
+  <p id="roomDialogueText" class="room-dialogue-text">
+    對話內容
+  </p>
+
+  <button id="nextRoomDialogueButton" class="next-room-dialogue-button">
+    →
+  </button>
+
+</div>
+
+    <!-- 點擊房間後顯示的提示框 -->
+    <div id="roomInfoPanel" class="room-info-panel">
+      <h3 id="roomInfoTitle">房間名稱</h3>
+      <p id="roomInfoText">這裡會顯示房間說明。</p>
+
+      <button id="closeRoomInfoButton" class="close-room-info-button">
+        關閉
+      </button>
+    </div>
+
+    <!-- 筆記本按鈕 -->
+    <button id="notebookButton" class="notebook-button" title="打開調查筆記">
+    <img src="images/notebook-icon.png" alt="筆記本" class="notebook-icon">
+    <span class="notebook-button-text">調查筆記</span>
+    </button>
+
+    <!-- 筆記本視窗 -->
+    <div id="notebookOverlay" class="notebook-overlay">
+
+      <div class="notebook-panel">
+
+    <!-- 筆記本封面：打開時會翻頁 -->
+    <div class="notebook-cover">
+      <div class="notebook-cover-title"></div>
+    </div>
+
+    <button id="closeNotebookButton" class="close-notebook-button">
+      ×
+    </button>
+
+        <h2 class="notebook-title">調查筆記本</h2>
+
+        <div class="clue-page">
+
+          <div class="clue-header">
+            <p id="clueTypeLabel" class="clue-type-label">必要線索</p>
+            <h3 id="cluePageTitle" class="clue-page-title">必要線索-1</h3>
+          </div>
+
+          <!-- 尚未取得時，這裡會保持空白 -->
+          <div id="clueContent" class="clue-content">
+            <img id="clueImage" class="clue-image" src="" alt="線索圖片">
+            <p id="clueDescription" class="clue-description"></p>
+          </div>
+
+        </div>
+
+        <div class="notebook-controls">
+          <button id="prevClueButton" class="notebook-page-button">
+            ← 上一頁
+          </button>
+
+          <span id="cluePageCounter" class="clue-page-counter">
+            1 / 10
+          </span>
+
+          <button id="nextClueButton" class="notebook-page-button">
+            下一頁 →
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
