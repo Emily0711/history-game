@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>金龍風暴</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 開始遊戲畫面 -->
+ <section id="startScreen" class="screen active start-cover-screen">
+  <img
+    src="images/start-cover.png"
+    alt="遊戲封面，點擊開始遊戲"
+    class="start-cover-image"
+    draggable="false"
+  />
+</section>
+
+  <!-- 語言 / 時代背景說明畫面 -->
+<section id="languageNoticeScreen" class="screen language-notice-screen">
+  <div class="language-notice-content">
+    <p>
+      此遊戲背景設定於1946年，角色對話原為日語、台語、華文交雜。<br>
+      為方便起見，後續對話皆由華文呈現。
+    </p>
+
+    <button id="languageNoticeDoneButton" class="language-notice-button">
+      閱讀完畢
+    </button>
+  </div>
+</section>
+
+  <!-- 前導劇情畫面 -->
+  <section id="prologueScreen" class="screen prologue-screen sky-bg">
+
+    <!-- 角色立繪 -->
+    <img id="characterImage" class="character-image" src="" alt="角色立繪">
+
+    <!-- 前導客廳多人立繪層 -->
+<div id="prologueFamilyLayer" class="prologue-family-layer">
+
+  <img
+    id="prologueBigBrotherImage"
+    class="prologue-family-character prologue-big-brother"
+    src="images/big-brother.png"
+    alt="大哥">
+
+  <img
+    id="prologueSecondBrotherImage"
+    class="prologue-family-character prologue-second-brother"
+    src="images/second-brother.png"
+    alt="二哥">
+
+  <img
+    id="prologueBigSisterImage"
+    class="prologue-family-character prologue-big-sister"
+    src="images/big-sister.png"
+    alt="大姊">
+
+  <img
+    id="prologueConcubineImage"
+    class="prologue-family-character prologue-concubine"
+    src="images/concubine-right.png"
+    alt="細姨">
+
+</div>
+
+    <div class="prologue-dialogue-area">
+
+      <!-- 說話者名稱 -->
+      <div id="speakerName" class="speaker-name">
+        玩家
+      </div>
+
+      <!-- 劇情文字框 -->
+      <div class="prologue-text-box">
+
+        <p id="prologueText">
+          距離那場大戰結束已經有幾個月的時間了。
+        </p>
+
+        <!-- 電報提示文字，預設隱藏 -->
+        <p id="telegramHint" class="telegram-hint">
+          點擊可往下一頁
+        </p>
+
+        <!-- 電報圖片，預設隱藏 -->
+        <img id="telegramImage" class="telegram-image" src="images/telegram.png" alt="電報">
+
+        <!-- 電報放大鏡 -->
+        <div id="telegramMagnifier" class="telegram-magnifier"></div>
+
+        <!-- 對話框內的上一句 / 下一句按鈕 -->
+        <div class="dialogue-controls">
+          <button id="prevPrologueButton" class="dialogue-arrow-button">
+            ←
+          </button>
+
+          <button id="nextPrologueButton" class="dialogue-arrow-button">
+            →
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 調查開始按鈕畫面，預設隱藏 -->
+    <div id="investigationStartPanel" class="investigation-start-panel">
+      <button id="investigationStartButton" class="investigation-start-button">
+        調查開始
+      </button>
+    </div>
+
+  </section>
+
+<!-- 教學內容畫面 -->
+<section id="tutorialScreen" class="screen tutorial-screen">
+
+  <div class="tutorial-card">
+
+    <h1 class="tutorial-title">
+      教學內容
+    </h1>
+
+    <p id="tutorialText" class="tutorial-text">
+      這裡會顯示教學內容。
+    </p>
+
+    <div class="tutorial-controls">
+
+      <button id="prevTutorialButton" class="tutorial-page-button">
+        上一頁
+      </button>
+
+      <span id="tutorialPageCounter" class="tutorial-page-counter">
+        1 / 2
+      </span>
+
+      <button id="nextTutorialButton" class="tutorial-page-button">
+        下一頁
+      </button>
+
+    </div>
+
+    <button id="tutorialDoneButton" class="tutorial-done-button">
+      閱讀完畢
+    </button>
+
+  </div>
+
+</section>
+
+<!-- 結局前提示畫面：收齊證據後進入指認前 -->
+<section id="endingNoticeScreen" class="screen ending-notice-screen">
+  <div class="ending-notice-content">
+    <p class="ending-notice-text">
+      您已找齊物件證據，可進行指認兇手。<br>
+      進入指認環節後，將無法回到搜索環節。
+    </p>
+
+    <button id="endingNoticeDoneButton" class="ending-notice-button">
+      閱讀完畢
+    </button>
+  </div>
+</section>
+
+<!-- 指認兇手畫面 -->
+<!-- 指認兇手畫面 -->
+<section id="accusationScreen" class="screen accusation-screen">
+
+  <!-- 選人物 / 選證據面板 -->
+  <div class="accusation-panel">
+
+    <h1 class="accusation-title">指認兇手</h1>
+
+    <!-- 第一階段：選擇人物 -->
+    <div id="suspectSelectArea" class="suspect-select-area">
+      <p class="accusation-instruction">
+        請選擇你認為與父親死亡有關的人。
+      </p>
+
+      <div class="suspect-button-grid">
+        <button class="suspect-button" data-suspect="bigBrother">大哥</button>
+        <button class="suspect-button" data-suspect="secondBrother">二哥</button>
+        <button class="suspect-button" data-suspect="bigSister">大姊</button>
+        <button class="suspect-button" data-suspect="concubine">細姨</button>
+      </div>
+    </div>
+
+    <!-- 第二階段：選擇證據 -->
+    <div id="evidenceSelectArea" class="evidence-select-area">
+      <p id="selectedSuspectText" class="selected-suspect-text"></p>
+
+      <p class="accusation-instruction">
+        請選擇 2 項能支持你指認的證據。
+      </p>
+
+      <div id="accusationEvidenceGrid" class="accusation-evidence-grid">
+        <!-- JS 會自動產生證據卡片 -->
+      </div>
+
+      <div class="accusation-bottom-row">
+        <button id="backToSuspectButton" class="accusation-sub-button">
+          返回人物選擇
+        </button>
+
+        <div id="selectedEvidenceCounter" class="selected-evidence-counter">
+          已選擇：0 / 2
+        </div>
+
+        <button id="confirmAccusationButton" class="accusation-main-button">
+          確認指認
+        </button>
+      </div>
+
+      <p id="accusationErrorText" class="accusation-error-text"></p>
+    </div>
+
+  </div>
+
+  <!-- 第三階段：指認 / 結局劇情演出 -->
+  <div id="endingDialogueArea" class="ending-dialogue-area">
+
+    <div id="endingLocationLabel" class="ending-location-label">
+      地點：客廳
+    </div>
+
+    <!-- 客廳人物立繪層 -->
+    <div id="endingCharacterLayer" class="ending-character-layer">
+
+      <img
+        id="endingBigBrotherImage"
+        class="ending-character ending-big-brother"
+        src="images/big-brother.png"
+        alt="大哥">
+
+      <img
+        id="endingSecondBrotherImage"
+        class="ending-character ending-second-brother"
+        src="images/second-brother.png"
+        alt="二哥">
+
+      <img
+        id="endingBigSisterImage"
+        class="ending-character ending-big-sister"
+        src="images/big-sister.png"
+        alt="大姊">
+
+      <img
+        id="endingConcubineImage"
+        class="ending-character ending-concubine"
+        src="images/concubine-right.png"
+        alt="細姨">
+
+    </div>
+
+    <!-- 下方對話框 -->
+    <div class="ending-vn-dialogue-box">
+
+      <div id="endingDialogueSpeaker" class="ending-vn-speaker">
+        玩家
+      </div>
+
+      <p id="endingDialogueText" class="ending-vn-text">
+      </p>
+
+      <button id="nextEndingDialogueButton" class="ending-vn-next-button">
+        →
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- 第四階段：結局名稱 -->
+  <div id="endingResultArea" class="ending-result-area">
+    <p class="ending-result-label">解鎖結局</p>
+    <h2 id="endingResultTitle" class="ending-result-title"></h2>
+  </div>
+
+</section>
+
+  <!-- 搜索階段：地圖畫面 -->
+  <section id="searchScreen" class="screen search-screen">
+
+    <div class="map-stage">
+
+      <!-- 地圖底圖 -->
+      <img class="floor-map-image" src="images/floor-map.jpg" alt="格局圖">
+
+      <!-- 可點擊房間按鈕 -->
+      <button class="map-room room-big-brother" data-room="bigBrother">大哥房</button>
+      
+      <button class="map-room room-father" data-room="father">爸爸房</button>
+      <button class="map-room room-girls" data-room="girls">女生房</button>
+      
+      <button class="map-room room-toilet" data-room="toilet">便所</button>
+      <button class="map-room room-reception" data-room="reception">應接室</button>
+      <button class="map-room room-second-brother" data-room="secondBrother">二哥房</button>
+      <button class="map-room room-tea" data-room="tea">茶間</button>
+      
+      <button class="map-room room-zashiki" data-room="zashiki" data-tooltip="客廳">
+  座敷
+</button>
+
+<button class="map-room room-bath" data-room="bath" data-tooltip="浴室">
+  風呂
+</button>
+
+<button class="map-room room-kitchen" data-room="kitchen" data-tooltip="餐廳">
+  台所
+</button>
+
+    </div>
+
+    <!-- 房間調查畫面上方資訊 -->
+    <div id="roomTitlePanel" class="room-title-panel">
+  <h2 id="roomTitleText">房間名稱</h2>
+
+  <p id="roomHotspotCountText" class="room-hotspot-count-text">
+    本房間共有 0 個「物件」可點擊調查
+  </p>
+</div>
+
+    <!-- 回到地圖按鈕 -->
+    <button id="backToMapButton" class="back-to-map-button">
+      回到地圖
+    </button>
+
+   <!-- 房間中的人物立繪 -->
+    <img id="roomCharacterImage" class="room-character-image" src="" alt="房間人物">
+
+    <!-- 房間人物可點擊範圍 -->
+    <button id="roomCharacterHitbox" class="room-character-hitbox" title="點擊對話"></button>
+
+    <!-- 開始對話按鈕：目前先保留，但不顯示 -->
+    <button id="startRoomDialogueButton" class="start-room-dialogue-button">
+      開始對話
+    </button> 
+
+<!-- 房間可點擊物件區域 -->
+<div id="roomHotspotLayer" class="room-hotspot-layer">
+
+  <!-- 大哥房：桌上的日記本 -->
+  <button
+    class="room-hotspot hotspot-diary"
+    data-hotspot="diary"
+    title="點擊調查">
+  </button>
+
+  <!-- 大哥房：右方櫃子上的紙張 -->
+  <button
+    class="room-hotspot hotspot-paper"
+    data-hotspot="heartCertificate"
+    title="點擊調查">
+  </button>
+
+  <!-- 父親房：右邊桌上的石製紙鎮 -->
+<button
+  class="room-hotspot hotspot-father-paperweight"
+  data-hotspot="fatherPaperweight"
+  title="點擊調查">
+</button>
+
+<!-- 父親房：床頭櫃角落的血跡 / 破損處 -->
+<button
+  class="room-hotspot hotspot-father-bedside-corner"
+  data-hotspot="fatherBedsideCorner"
+  title="點擊調查">
+</button>
+
+<!-- 父親房：整個床頭櫃 -->
+<button
+  class="room-hotspot hotspot-father-bedside-cabinet"
+  data-hotspot="fatherBedsideCabinet"
+  title="點擊調查">
+</button>
+
+<!-- 父親房：押入裡的親密書信 -->
+<button
+  class="room-hotspot hotspot-father-letter"
+  data-hotspot="fatherLetter"
+  title="點擊調查">
+</button>
+
+<!-- 父親房：整個押入 -->
+<button
+  class="room-hotspot hotspot-father-oshiire"
+  data-hotspot="fatherOshiire"
+  title="點擊調查">
+</button>
+
+<!-- 座敷：左下箱子 / 藥箱裡的安眠藥 -->
+<button
+  class="room-hotspot hotspot-sleeping-pills"
+  data-hotspot="sleepingPills"
+  title="點擊調查">
+</button>
+
+<!-- 座敷：右側相框 / 細姨與小弟的照片 -->
+<button
+  class="room-hotspot hotspot-concubine-photo"
+  data-hotspot="concubinePhoto"
+  title="點擊調查">
+</button>
+
+<!-- 座敷：左側紙張 / 土地契約 -->
+<button
+  class="room-hotspot hotspot-land-contract"
+  data-hotspot="landContract"
+  title="點擊調查">
+</button>
+
+<!-- 客廳 / 座敷：父親的遺照 -->
+<button
+  class="room-hotspot hotspot-father-memorial-photo"
+  data-hotspot="fatherMemorialPhoto"
+  title="點擊調查">
+</button>
+
+<!-- 女生房：桌上的手帕 -->
+<button
+  class="room-hotspot hotspot-girls-handkerchief"
+  data-hotspot="girlsHandkerchief"
+  title="點擊調查">
+</button>
+
+<!-- 女生房：牆上的蓮花畫 -->
+<button
+  class="room-hotspot hotspot-girls-lotus-painting"
+  data-hotspot="girlsLotusPainting"
+  title="點擊調查">
+</button>
+
+<!-- 女生房：左側梳妝櫃 -->
+<button
+  class="room-hotspot hotspot-girls-dresser"
+  data-hotspot="girlsDresser"
+  title="點擊調查">
+</button>
+
+<!-- 大哥房：蒲團 / 座墊 -->
+<button
+  class="room-hotspot hotspot-big-brother-futon"
+  data-hotspot="bigBrotherFuton"
+  title="點擊調查">
+</button>
+
+<!-- 大哥房：窗戶 -->
+<button
+  class="room-hotspot hotspot-big-brother-window"
+  data-hotspot="bigBrotherWindow"
+  title="點擊調查">
+</button>
+
+<!-- 應接室：燕子花 -->
+<button
+  class="room-hotspot hotspot-reception-iris-flower"
+  data-hotspot="receptionIrisFlower"
+  title="點擊調查">
+</button>
+
+<!-- 應接室：洋式桌椅 -->
+<button
+  class="room-hotspot hotspot-reception-western-furniture"
+  data-hotspot="receptionWesternFurniture"
+  title="點擊調查">
+</button>
+
+<!-- 廚房：右側木製冰箱 -->
+<button
+  class="room-hotspot hotspot-kitchen-icebox"
+  data-hotspot="kitchenIcebox"
+  aria-label="木製冰箱">
+</button>
+
+<!-- 廚房：左側高型菜櫥 -->
+<button
+  class="room-hotspot hotspot-kitchen-cupboard"
+  data-hotspot="kitchenCupboard"
+  aria-label="高型菜櫥">
+</button>
+
+<!-- 風呂：打水桶 -->
+<button
+  class="room-hotspot hotspot-bath-bucket"
+  data-hotspot="bathBucket"
+  aria-label="打水桶">
+</button>
+
+<!-- 風呂：浴缸 -->
+<button
+  class="room-hotspot hotspot-bath-tub"
+  data-hotspot="bathTub"
+  aria-label="浴缸">
+</button>
+
+</div>
+
+<!-- 房間對話框 -->
+<div id="roomDialogueBox" class="room-dialogue-box">
+
+  <!-- 關閉對話按鈕 -->
+  <button id="closeRoomDialogueButton" class="close-room-dialogue-button">
+    ×
+  </button>
+
+  <div id="roomDialogueSpeaker" class="room-dialogue-speaker">
+    角色名稱
+  </div>
+
+  <p id="roomDialogueText" class="room-dialogue-text">
+    對話內容
+  </p>
+
+  <!-- 對話選項區 -->
+  <div id="roomChoiceBox" class="room-choice-box"></div>
+
+  <button id="nextRoomDialogueButton" class="next-room-dialogue-button">
+    →
+  </button>
+
+</div>
+
+<!-- 點擊房間後顯示的提示框 -->
+<div id="roomInfoPanel" class="room-info-panel">
+  <h3 id="roomInfoTitle">房間名稱</h3>
+  <p id="roomInfoText">這裡會顯示房間說明。</p>
+
+  <button id="closeRoomInfoButton" class="close-room-info-button">
+    關閉
+  </button>
+</div>
+
+    <!-- 證據檢視彈窗 -->
+<div id="evidencePanel" class="evidence-panel">
+
+  <div id="evidenceCard" class="evidence-card">
+
+    <div class="evidence-header">
+      <div id="evidenceType" class="evidence-type">
+        關鍵證據
+      </div>
+
+      <h3 id="evidenceTitle" class="evidence-title">
+        證據名稱
+      </h3>
+
+      <p id="evidenceHint" class="evidence-hint">
+        點擊圖片查看內容
+      </p>
+    </div>
+
+    
+<div class="evidence-content">
+
+  <!-- 左邊：圖片 -->
+  <div class="evidence-image-area">
+    <img id="evidenceImage" class="evidence-image" src="" alt="證據圖片">
+  </div>
+
+  <!-- 右邊：文字 + 關閉按鈕 -->
+  <div class="evidence-right-column">
+
+    <div id="evidenceReadingPanel" class="evidence-reading-panel">
+      <p id="evidenceDescription" class="evidence-description">
+        說明文字
+      </p>
+
+      <div id="evidenceDiaryBlock" class="evidence-diary-block">
+        <h4 id="evidenceDiaryTitle">日記內容</h4>
+        <p id="evidenceDiaryText"></p>
+
+        <div id="evidenceDiaryControls" class="evidence-diary-controls">
+          <button id="prevEvidenceDiaryButton" class="evidence-diary-page-button">
+            上一頁
+          </button>
+
+          <span id="evidenceDiaryCounter" class="evidence-diary-counter">
+            1 / 2
+          </span>
+
+          <button id="nextEvidenceDiaryButton" class="evidence-diary-page-button">
+            下一頁
+          </button>
+        </div>
+      </div>
+
+      <p id="evidenceCloseHint" class="evidence-close-hint">
+        請回到第 1 頁後再關閉
+      </p>
+    </div>
+
+    <div class="evidence-action-row">
+      <button id="closeEvidenceButton" class="close-evidence-button">
+        關閉
+      </button>
+    </div>
+
+    </div>
+</div>
+
+  </div>
+</div>
+
+<!-- 筆記已更新提示 -->
+<div id="notebookUpdateToast" class="notebook-update-toast">
+  筆記已更新
+</div>
+
+<!-- 筆記本按鈕 -->
+<button id="notebookButton" class="notebook-button" title="打開調查筆記">
+  <img src="images/notebook-icon.png" alt="筆記本" class="notebook-icon">
+  <span class="notebook-button-text">調查筆記</span>
+</button>
+
+<div class="side-mini-button-row">
+
+  <button id="tutorialOpenButton" class="side-mini-button tutorial-mini-button" title="教學內容">
+    <img class="side-mini-icon" src="images/tutorial-icon.png" alt="教學內容">
+  </button>
+
+  <button id="relationshipMapButton" class="side-mini-button relationship-mini-button" title="人物關係圖">
+    <img class="side-mini-icon" src="images/relationship-icon.png" alt="人物關係圖">
+  </button>
+
+</div>
+
+<!-- 人物關係圖快速查看彈窗 -->
+<div id="relationshipMapOverlay" class="relationship-map-overlay">
+
+  <div class="relationship-map-card">
+
+    <h2 class="relationship-map-title">
+      人物關係圖
+    </h2>
+
+    <div class="relationship-map-image-area">
+      <img
+        id="relationshipMapImage"
+        class="relationship-map-image"
+        src="images/relationship-map.png"
+        alt="人物關係圖">
+    </div>
+
+    <button id="closeRelationshipMapButton" class="relationship-map-close-button">
+      關閉
+    </button>
+
+  </div>
+
+</div>
+
+<!-- 筆記本視窗 -->
+<div id="notebookOverlay" class="notebook-overlay">
+
+  <div class="notebook-panel">
+
+    <!-- 筆記本封面：打開時會翻頁 -->
+    <div class="notebook-cover">
+      <div class="notebook-cover-title"></div>
+    </div>
+
+    <button id="closeNotebookButton" class="close-notebook-button">
+      ×
+    </button>
+
+    <h2 class="notebook-title">調查筆記本</h2>
+
+   <div class="notebook-tabs">
+
+  <button class="notebook-tab" data-tab="required">
+    關鍵證據
+    <span class="notebook-tab-dot"></span>
+  </button>
+
+  <button class="notebook-tab" data-tab="secondary">
+    次要證據
+    <span class="notebook-tab-dot"></span>
+  </button>
+
+  <button class="notebook-tab" data-tab="notes">
+    筆記
+    <span class="notebook-tab-dot"></span>
+  </button>
+</div> 
+
+    <div class="clue-page">
+
+      <div class="clue-header">
+        <p id="clueTypeLabel" class="clue-type-label">必要線索</p>
+        <h3 id="cluePageTitle" class="clue-page-title">必要線索-1</h3>
+      </div>
+
+      <div id="clueContent" class="clue-content">
+        <img id="clueImage" class="clue-image" src="" alt="線索圖片">
+        <p id="clueDescription" class="clue-description"></p>
+      </div>
+
+    </div>
+
+    <div class="notebook-controls">
+      <button id="prevClueButton" class="notebook-page-button">
+        ← 上一頁
+      </button>
+
+      <span id="cluePageCounter" class="clue-page-counter">
+        1 / 10
+      </span>
+
+      <button id="nextClueButton" class="notebook-page-button">
+        下一頁 →
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+  </section>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
