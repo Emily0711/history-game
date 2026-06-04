@@ -13296,3 +13296,25 @@ button:focus-visible,
   cursor: default;
   pointer-events: none;
 }
+
+/* ========================= */
+/* 茶間：可調查物件熱區 */
+/* ========================= */
+
+/* 桌上的壽喜燒 */
+.hotspot-tea-sukiyaki {
+  left: 50%;
+  top: 65%;
+
+  width: 26px;
+  height: 26px;
+}
+
+/* 天花板的牛奶燈 */
+.hotspot-tea-milk-lamp {
+  left: 50%;
+  top: 25%;
+
+  width: 26px;
+  height: 26px;
+}
