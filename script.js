@@ -2056,9 +2056,17 @@ const roomData = {
   },
 
   tea: {
-    title: "茶間",
-    available: false
-  },
+  title: "茶間",
+  available: true,
+  background: "images/rooms/tea-room.png",
+
+  characterImage: "",
+
+  hotspots: [
+    "teaSukiyaki",
+    "teaMilkLamp"
+  ]
+},
 
   kitchen: {
   title: "台所",
@@ -3742,6 +3750,36 @@ receptionWesternFurniture: {
   thought: "",
 
   clueId: null
+},
+
+teaSukiyaki: {
+  type: "調查區域",
+  title: "壽喜燒",
+
+  image: "images/rooms/tea-sukiyaki.png",
+
+  description:
+    "壽喜燒是日治時期常吃的一道日式料理，會把肉片和蔬菜等食材放進一個鍋具裡面，配上清酒，簡直是人間美味！",
+
+  diaryContent: "",
+  thought: "",
+  clueId: null,
+  noteIds: []
+},
+
+teaMilkLamp: {
+  type: "調查區域",
+  title: "牛奶燈",
+
+  image: "images/rooms/tea-milk-lamp.png",
+
+  description:
+    "當時的燈飾大多都是乳白色的，所以常被稱作牛奶燈喔！",
+
+  diaryContent: "",
+  thought: "",
+  clueId: null,
+  noteIds: []
 }
 };
 
