@@ -148,22 +148,27 @@ notebookUpdateSound.volume = 0.65;
 const prologueBgm = new Audio("audio/prologue-bgm.mp3");
 const investigationBgm = new Audio("audio/investigation-bgm.mp3");
 
-// 新增：指認後結局劇情音樂
+// 指認後結局劇情音樂
 const endingDialogueBgm = new Audio("audio/ending-dialogue-bgm.mp3");
 
-// 新增：片尾跑馬燈音樂
+// 片尾跑馬燈音樂
 const creditsBgm = new Audio("audio/credits-bgm.mp3");
+
+// 新增：參考說明 / 正式參考資料音樂
+const referenceBgm = new Audio("audio/reference-bgm.mp3");
 
 prologueBgm.loop = true;
 investigationBgm.loop = true;
 endingDialogueBgm.loop = true;
 creditsBgm.loop = true;
+referenceBgm.loop = true;
 
 // 音量可調，0.0 ~ 1.0
 prologueBgm.volume = 0.35;
 investigationBgm.volume = 0.35;
 endingDialogueBgm.volume = 0.35;
 creditsBgm.volume = 0.35;
+referenceBgm.volume = 0.32;
 
 let currentBgm = null;
 
@@ -946,6 +951,28 @@ function updateEnterAccusationButtonVisibility() {
   }
 }
 
+function updateNotebookButtonVisibility() {
+  if (!notebookButton) {
+    return;
+  }
+
+  const isSearchActive =
+    searchScreen && searchScreen.classList.contains("active");
+
+  const isAccusationActive =
+    accusationScreen && accusationScreen.classList.contains("active");
+
+  const shouldShowNotebook =
+    isSearchActive ||
+    (isAccusationActive && canOpenNotebookDuringAccusation);
+
+  if (shouldShowNotebook) {
+    notebookButton.classList.add("show");
+  } else {
+    notebookButton.classList.remove("show");
+  }
+}
+
 function showScreen(screenToShow) {
   startScreen.classList.remove("active");
   languageNoticeScreen.classList.remove("active");
@@ -962,7 +989,8 @@ function showScreen(screenToShow) {
 
   screenToShow.classList.add("active");
 
-  updateEnterAccusationButtonVisibility();
+updateEnterAccusationButtonVisibility();
+updateNotebookButtonVisibility();
 }
 
 // =========================
@@ -3866,6 +3894,9 @@ retryAccusationButton.addEventListener("click", function () {
 
   creditsButtonArea.classList.remove("show");
 
+  canOpenNotebookDuringAccusation = true;
+updateNotebookButtonVisibility();
+
   startAccusationPhase();
 });
 
@@ -5349,7 +5380,12 @@ const accusationEvidenceOptions = [
 let selectedSuspect = null;
 let selectedAccusationEvidenceIds = [];
 
+// 指認階段是否允許查看調查筆記
+// 指認人物、選擇證據時 true；選完證據進入結局後 false
+let canOpenNotebookDuringAccusation = false;
+
 function startAccusationPhase() {
+  canOpenNotebookDuringAccusation = true;
   selectedSuspect = null;
   selectedAccusationEvidenceIds = [];
 
@@ -5381,9 +5417,14 @@ function startAccusationPhase() {
   setAccusationScene("livingroom");
 
   showScreen(accusationScreen);
+  updateNotebookButtonVisibility();
 }
 
 function openEvidenceSelectionForSuspect(suspectKey) {
+  canOpenNotebookDuringAccusation = true;
+  updateNotebookButtonVisibility();
+
+  
   selectedSuspect = suspectKey;
   selectedAccusationEvidenceIds = [];
 
@@ -5508,8 +5549,12 @@ function confirmAccusation() {
   // 下一步會在這裡接入結局對話
  const endingData = endingDialogueData[selectedSuspect];
 
-// 指認完成後，先繼續播放調查階段音樂
-// 等到結局劇情進入天空場景時，再切換成 ending-dialogue-bgm
+// 玩家確認證據、進入結局劇情後，就不再顯示調查筆記
+canOpenNotebookDuringAccusation = false;
+updateNotebookButtonVisibility();
+
+notebookOverlay.classList.remove("open");
+
 startEndingDialogue(
   endingData.lines,
   endingData.endingTitle
@@ -5785,6 +5830,10 @@ function pauseCreditsForUserReading() {
 }
 
 function startCredits(isCorrect) {
+  canOpenNotebookDuringAccusation = false;
+updateNotebookButtonVisibility();
+notebookOverlay.classList.remove("open");
+    
   finalAccusationCorrect = isCorrect;
 
   console.log("startCredits 已啟動，isCorrect =", isCorrect);
@@ -6071,8 +6120,8 @@ function showOfficialReferencePanel() {
 moreInfoButton.addEventListener("click", function () {
   playClickSound();
 
-  // 進入參考資料頁後不播放音樂
-  stopBgm();
+  // 進入參考說明 / 參考資料頁時，切換成參考資料音樂
+  playBgm(referenceBgm);
 
   showScreen(referenceScreen);
   showReferenceHome();
@@ -6081,6 +6130,9 @@ moreInfoButton.addEventListener("click", function () {
 // 參考說明首頁左上角：返回片尾
 referenceBackButton.addEventListener("click", function () {
   playClickSound();
+
+  // 從參考資料回片尾時，切回片尾音樂
+  playBgm(creditsBgm);
 
   showScreen(creditsScreen);
 
