@@ -14,6 +14,8 @@ const tutorialText = document.getElementById("tutorialText");
 const endingNoticeScreen = document.getElementById("endingNoticeScreen");
 const endingNoticeDoneButton = document.getElementById("endingNoticeDoneButton");
 
+const continueInvestigationButton = document.getElementById("continueInvestigationButton");
+const enterAccusationButton = document.getElementById("enterAccusationButton");
 
 const prevTutorialButton = document.getElementById("prevTutorialButton");
 const nextTutorialButton = document.getElementById("nextTutorialButton");
@@ -32,6 +34,46 @@ const prologueTextBox = document.querySelector(".prologue-text-box");
 const prologueDialogueArea = document.querySelector(".prologue-dialogue-area");
 const characterImage = document.getElementById("characterImage");
 const prologueFamilyLayer = document.getElementById("prologueFamilyLayer");
+
+const imagePreviewOverlay = document.getElementById("imagePreviewOverlay");
+const imagePreviewImage = document.getElementById("imagePreviewImage");
+const closeImagePreviewButton = document.getElementById("closeImagePreviewButton");
+
+const creditsScreen = document.getElementById("creditsScreen");
+const creditsRollWrap = document.querySelector(".credits-roll-wrap");
+const creditsRoll = document.getElementById("creditsRoll");
+const creditsButtonArea = document.getElementById("creditsButtonArea");
+
+const retryAccusationButton = document.getElementById("retryAccusationButton");
+const backToCoverButton = document.getElementById("backToCoverButton");
+const moreInfoButton = document.getElementById("moreInfoButton");
+
+const referenceScreen = document.getElementById("referenceScreen");
+const referenceBackButton = document.getElementById("referenceBackButton");
+
+const referenceHomePanel = document.getElementById("referenceHomePanel");
+const referenceQuestionPanel = document.getElementById("referenceQuestionPanel");
+const referenceAnswerPanel = document.getElementById("referenceAnswerPanel");
+const officialReferencePanel = document.getElementById("officialReferencePanel");
+
+const referenceCategoryButtons = document.querySelectorAll(".reference-category-button");
+const referenceCategoryTitle = document.getElementById("referenceCategoryTitle");
+const referenceQuestionList = document.getElementById("referenceQuestionList");
+
+const referenceCategoryBackButton = document.getElementById("referenceCategoryBackButton");
+const referenceAnswerBackButton = document.getElementById("referenceAnswerBackButton");
+
+const referenceAnswerQuestion = document.getElementById("referenceAnswerQuestion");
+const referenceAnswerText = document.getElementById("referenceAnswerText");
+
+const officialReferenceButton = document.getElementById("officialReferenceButton");
+const officialReferenceBackButton = document.getElementById("officialReferenceBackButton");
+
+let finalAccusationCorrect = false;
+
+const resumeNoticeScreen = document.getElementById("resumeNoticeScreen");
+const resumeGameButton = document.getElementById("resumeGameButton");
+
 
 const prologueFamilyImages = {
   bigBrother: document.getElementById("prologueBigBrotherImage"),
@@ -82,6 +124,9 @@ const endingDialogueSpeaker = document.getElementById("endingDialogueSpeaker");
 const endingDialogueText = document.getElementById("endingDialogueText");
 const nextEndingDialogueButton = document.getElementById("nextEndingDialogueButton");
 
+const playNoticeScreen = document.getElementById("playNoticeScreen");
+const playNoticeDoneButton = document.getElementById("playNoticeDoneButton");
+
 const endingResultArea = document.getElementById("endingResultArea");
 const endingResultTitle = document.getElementById("endingResultTitle");
 // =========================
@@ -103,12 +148,22 @@ notebookUpdateSound.volume = 0.65;
 const prologueBgm = new Audio("audio/prologue-bgm.mp3");
 const investigationBgm = new Audio("audio/investigation-bgm.mp3");
 
+// 新增：指認後結局劇情音樂
+const endingDialogueBgm = new Audio("audio/ending-dialogue-bgm.mp3");
+
+// 新增：片尾跑馬燈音樂
+const creditsBgm = new Audio("audio/credits-bgm.mp3");
+
 prologueBgm.loop = true;
 investigationBgm.loop = true;
+endingDialogueBgm.loop = true;
+creditsBgm.loop = true;
 
 // 音量可調，0.0 ~ 1.0
 prologueBgm.volume = 0.35;
 investigationBgm.volume = 0.35;
+endingDialogueBgm.volume = 0.35;
+creditsBgm.volume = 0.35;
 
 let currentBgm = null;
 
@@ -203,7 +258,7 @@ const prologueLines = [
   },
   {
     speaker: "我",
-    text: "我要趕快辦手續，才能回台灣！"
+    text: "我要趕快辦手續，才能回臺灣！"
   },
   {
   type: "backgroundOnly",
@@ -212,12 +267,12 @@ const prologueLines = [
 },
   {
     speaker: "我",
-    text: "（我向台灣同鄉會申請了中文姓名，也拿到了中華民國籍證明...）",
+    text: "（我向臺灣同鄉會申請了中文姓名，也拿到了中華民國籍證明...）",
     background: "house"
   },
   {
     speaker: "我",
-    text: "（經歷了這麼多，終於在半年後回到台灣了！）",
+    text: "（經歷了這麼多，終於在半年後回到臺灣了！）",
     background: "house"
   },
   {
@@ -380,7 +435,7 @@ const prologueLines = [
   },
   {
     speaker: "細姨",
-    text: "很久沒看到杏子了。",
+    text: "很久沒看到幸子了。",
     background: "livingroom",
     characterImage: "images/concubine-left.png"
   },
@@ -398,13 +453,13 @@ const prologueLines = [
   },
   {
     speaker: "大姐",
-    text: "在外面這幾年都是你自己生活，辛苦我們家杏子了。",
+    text: "在外面這幾年都是你自己生活，辛苦我們家幸子了。",
     background: "livingroom",
     characterImage: "images/big-sister.png"
   },
   {
     speaker: "大姐",
-    text: "在外面有沒有受到甚麼委屈？",
+    text: "在外面有沒有受什麼委屈？",
     background: "livingroom",
     characterImage: "images/big-sister.png"
   },
@@ -522,7 +577,7 @@ const prologueLines = [
   },
   {
     speaker: "大姐",
-    text: "政夫，細姨。",
+    text: "……政夫，阿姨。",
     background: "livingroom",
     characterImage: "images/big-sister.png"
   },
@@ -534,13 +589,13 @@ const prologueLines = [
   },
   {
     speaker: "大姐",
-    text: "杏子具體是想知道什麼？",
+    text: "幸子具體是想知道什麼？",
     background: "livingroom",
     characterImage: "images/big-sister.png"
   },
   {
     speaker: "我",
-    text: "父親過世當天，家裡有發生甚麼事嗎？",
+    text: "父親過世當天，家裡有發生什麼事嗎？",
     background: "livingroom",
     characterImage: "images/big-sister.png"
   },
@@ -564,7 +619,7 @@ const prologueLines = [
   },
   {
     speaker: "大哥",
-    text: "沒關係……如果杏子有疑問，就讓她問吧。",
+    text: "沒關係……如果幸子有疑問，就讓她問吧。",
     background: "livingroom",
     characterImage: "images/big-brother.png"
   },
@@ -876,16 +931,38 @@ else {
 // 切換畫面用的函式
 // =========================
 
+function updateEnterAccusationButtonVisibility() {
+  if (!enterAccusationButton) {
+    return;
+  }
+
+  if (
+    isEndingNoticeTriggered &&
+    searchScreen.classList.contains("active")
+  ) {
+    enterAccusationButton.classList.add("show");
+  } else {
+    enterAccusationButton.classList.remove("show");
+  }
+}
+
 function showScreen(screenToShow) {
   startScreen.classList.remove("active");
   languageNoticeScreen.classList.remove("active");
+  playNoticeScreen.classList.remove("active");
+  resumeNoticeScreen.classList.remove("active");
   prologueScreen.classList.remove("active");
   tutorialScreen.classList.remove("active");
   endingNoticeScreen.classList.remove("active");
   accusationScreen.classList.remove("active");
   searchScreen.classList.remove("active");
 
+  creditsScreen.classList.remove("active");
+  referenceScreen.classList.remove("active");
+
   screenToShow.classList.add("active");
+
+  updateEnterAccusationButtonVisibility();
 }
 
 // =========================
@@ -932,12 +1009,19 @@ startScreen.addEventListener("click", function () {
   startGameFromCover();
 });
 
+
 // 鍵盤按任意鍵開始
 document.addEventListener("keydown", function () {
   startGameFromCover();
 });
 
 languageNoticeDoneButton.addEventListener("click", function () {
+  playClickSound();
+
+  showScreen(playNoticeScreen);
+});
+
+playNoticeDoneButton.addEventListener("click", function () {
   playClickSound();
 
   currentPrologueIndex = 0;
@@ -1049,6 +1133,7 @@ const tutorialPages = [
 
   `調查後，可取得「關鍵證據」、「次要證據」或「筆記」。
   皆會收錄至「調查筆記」中，未讀時會出現紅點提示。
+  收集完畢後，可進入指認兇手階段，也可繼續調查。
   ★ 人物關係圖：點擊查看，可了解你在家中的位置。`
 ];
 
@@ -1125,15 +1210,29 @@ nextTutorialButton.addEventListener("click", function () {
 tutorialDoneButton.addEventListener("click", function () {
   playClickSound();
 
+  // 保險：教學結束時，不應該進入指認狀態
+  accusationScreen.classList.remove("story-mode");
+
+  suspectSelectArea.style.display = "flex";
+  evidenceSelectArea.style.display = "none";
+  endingDialogueArea.style.display = "none";
+  endingResultArea.style.display = "none";
+
+  // 如果玩家還沒有真正收齊所有內容，就不要讓指認狀態殘留
+  if (!hasCollectedAllEndingRequirements()) {
+    isEndingNoticeTriggered = false;
+
+    if (enterAccusationButton) {
+      enterAccusationButton.classList.remove("show");
+    }
+  }
+
   showScreen(searchScreen);
 
   // 如果是前導劇情後第一次看教學，讀完後進地圖
   if (tutorialOpenSource === "beforeMap") {
     showMapView();
   }
-
-  // 如果是右側教學按鈕打開，就只回到原本搜尋畫面
-  // 不呼叫 showMapView()，避免玩家在房間裡看教學後被強制送回地圖
 });
 
 // =========================
@@ -1212,9 +1311,14 @@ const closeRoomDialogueButton = document.getElementById("closeRoomDialogueButton
 const notebookUpdateToast = document.getElementById("notebookUpdateToast");
 
 let currentRoom = null;
+let currentRoomKey = null;
+
 let currentRoomDialogueIndex = 0;
 let isRoomDialogueOpen = false;
 let isRoomInfoOpen = false;
+
+// 記錄每個房間已經調查過哪些物件
+const investigatedHotspotsByRoom = {};
 
 let currentDialogueLines = [];
 let currentDialogueSectionIndex = null;
@@ -1239,6 +1343,7 @@ function isDialogueViewed(dialogueId) {
 function markDialogueViewed(dialogueId) {
   if (!viewedDialogueIds.includes(dialogueId)) {
     viewedDialogueIds.push(dialogueId);
+    saveSessionProgress();
   }
 }
 
@@ -1385,7 +1490,7 @@ const roomData = {
         },
         {
           speaker: "大哥",
-          text: "當時大家都不在，細姨小弟是在我之後才回來的，說是帶小弟去拍照了。"
+          text: "當時大家都不在，阿姨和小弟是在我之後才回來的，說是帶小弟去拍照了。"
         },
         {
           speaker: "大哥",
@@ -1421,11 +1526,11 @@ const roomData = {
         },
         {
           speaker: "大哥",
-          text: "嗯。細姨之前也在和父親吵這件事。"
+          text: "嗯。阿姨之前也在和父親吵這件事。"
         },
         {
           speaker: "大哥",
-          text: "細姨是和母親一起嫁入我們家的。你知道父親和細姨之間是有很深的感情。"
+          text: "阿姨是和母親一起嫁入我們家的。你知道父親和阿姨之間是有很深的感情。"
         },
         {
           speaker: "我",
@@ -1433,15 +1538,15 @@ const roomData = {
         },
         {
           speaker: "大哥",
-          text: "但在父親過世前，細姨發現父親和外面的女生在寫信......好像還有約出去，買給那個人保養品。"
+          text: "但在父親過世前，阿姨發現父親和外面的女生在寫信......好像還有約出去，買給那個人保養品。"
         },
         {
           speaker: "大哥",
-          text: "細姨很傷心，和父親大吵了一架。"
+          text: "阿姨很傷心，和父親大吵了一架。"
         },
         {
           speaker: "大哥",
-          text: "所以那天細姨才和小弟自己去拍照片，不找父親。"
+          text: "所以那天阿姨才和小弟自己去拍照片，不找父親。"
         }
       ]
     },
@@ -1514,7 +1619,7 @@ const roomData = {
         },
         {
           speaker: "二哥",
-          text: "我甚麼都不知道。那天我出去和朋友喝酒了，比較晚回家。"
+          text: "我什麼都不知道。那天我出去和朋友喝酒了，比較晚回家。"
         },
         {
           speaker: "二哥",
@@ -1571,7 +1676,7 @@ const roomData = {
         },
         {
           speaker: "二哥",
-          text: "你說大哥也真是的。他從戰場上回來後，雙手肌肉就不太能出力了嘛，力氣現在基本上和細姨差不多，都拿不起重物。"
+          text: "你說大哥也真是的。他從戰場上回來後，雙手肌肉就不太能出力了嘛，力氣現在基本上和阿姨差不多，都拿不起重物。"
         },
         {
           speaker: "二哥",
@@ -1587,7 +1692,7 @@ const roomData = {
         },
         {
           speaker: "我",
-          text: "甚麼意思？看不起誰？"
+          text: "什麼意思？看不起誰？"
         },
         {
           speaker: "二哥",
@@ -1641,7 +1746,7 @@ const roomData = {
         },
         {
           speaker: "大姊",
-          text: "早上時細姨也在，下午他就帶著小弟出門去照相館了。"
+          text: "早上時阿姨也在，下午他就帶著小弟出門去照相館了。"
         },
         {
           speaker: "大姊",
@@ -1649,7 +1754,7 @@ const roomData = {
         },
         {
           speaker: "大姊",
-          text: "二弟的話，稍微晚二哥一段時間出門，我就沒等他回來。說是去找朋友玩，但行為又神神秘秘的，也不知道要幹嘛。"
+          text: "二弟的話，稍微晚大哥一段時間出門，我就沒等他回來。說是去找朋友玩，但行為又神神秘秘的，也不知道要幹嘛。"
         },
         {
           speaker: "大姊",
@@ -1661,7 +1766,7 @@ const roomData = {
         },
         {
           speaker: "大姊",
-          text: "是呀。去年說要創業，跑去跟潮流，向甚麼地下錢莊借錢。"
+          text: "是呀。去年說要創業，跑去跟潮流，向地下錢莊借錢。"
         },
         {
           speaker: "大姊",
@@ -1713,11 +1818,11 @@ const roomData = {
         },
         {
           speaker: "我",
-          text: "知道的，所以九條先生也回去了嗎？但這跟契約有甚麼關係？"
+          text: "知道的，所以九條先生也回去了嗎？但這跟契約有什麼關係？"
         },
         {
           speaker: "大姊",
-          text: "九條先生在台灣還有一些土地，帶不回去呀！如果放著不管就會被新來的政府收走了，多可惜。"
+          text: "九條先生在臺灣還有一些土地，帶不回去呀！如果放著不管就會被新來的政府收走了，多可惜。"
         },
         {
           speaker: "大姊",
@@ -1737,7 +1842,7 @@ const roomData = {
         },
         {
           speaker: "大姊",
-          text: "我跟大哥，還有細姨，當時都在幫忙處理這些事情。"
+          text: "我跟大哥，還有阿姨，當時都在幫忙處理這些事情。"
         },
         {
           speaker: "大姊",
@@ -1761,7 +1866,7 @@ const roomData = {
       lines: [
         {
           speaker: "我",
-          text: "大姊，這手帕是你的對吧？為甚麼上面會有血跡呢？"
+          text: "大姊，這手帕是你的對吧？為什麼上面會有血跡呢？"
         },
         {
           speaker: "大姊",
@@ -1789,7 +1894,7 @@ const roomData = {
         },
         {
           speaker: "我",
-          text: "大姊生病了，甚麼病？甚麼時候的事，身體還好嗎？！"
+          text: "大姊生病了，什麼病？什麼時候的事，身體還好嗎？！"
         },
         {
           speaker: "大姊",
@@ -1890,7 +1995,7 @@ const roomData = {
       lines: [
         {
           speaker: "我",
-          text: "細姨，這是你的安眠藥嗎？"
+          text: "阿姨，這是你的安眠藥嗎？"
         },
         {
           speaker: "細姨",
@@ -1966,11 +2071,11 @@ const roomData = {
           text: "當天晚上，您還看到了什麼？"
         },
         {
-          speaker: "鄰居",
+          speaker: "郝國強",
           text: "我當時在澆花......大概是傍晚的時候，我看到有人拿鑰匙開了你家的門。"
         },
         {
-          speaker: "鄰居",
+          speaker: "郝國強",
           text: "但天色已經暗下來了，我沒有看清楚是誰。"
         },
         {
@@ -1978,11 +2083,11 @@ const roomData = {
           text: "鑰匙？"
         },
         {
-          speaker: "鄰居",
+          speaker: "郝國強",
           text: "沒錯，所以我才會懷疑是你家的人，尤其是你大哥。"
         },
         {
-          speaker: "鄰居",
+          speaker: "郝國強",
           text: "我還沒說完，在那個人進去後，我聽到金龍兄和人的吵架聲。"
         }
       ]
@@ -2006,11 +2111,11 @@ const roomData = {
           text: "他們在吵什麼？"
         },
         {
-          speaker: "鄰居",
+          speaker: "郝國強",
           text: "他們當時是用日語吵架的，我沒有聽懂。"
         },
         {
-          speaker: "鄰居",
+          speaker: "郝國強",
           text: "吵架聲停止後，我看到一個人影衝了出去。再之後我就沒關注了。"
         },
         {
@@ -2038,7 +2143,7 @@ const roomData = {
           text: "為什麼會懷疑大哥？"
         },
         {
-          speaker: "鄰居",
+          speaker: "郝國強",
           text: "金龍兄前一陣子和你大哥常常吵架......好像是跟找工作有關。"
         },
         {
@@ -2082,9 +2187,51 @@ const roomData = {
 }
 };
 
+function getInvestigatedSet(roomKey) {
+  if (!investigatedHotspotsByRoom[roomKey]) {
+    investigatedHotspotsByRoom[roomKey] = new Set();
+  }
+
+  return investigatedHotspotsByRoom[roomKey];
+}
+
+function updateRoomHotspotProgress(roomKey) {
+  if (!roomKey || !roomData[roomKey]) {
+    return;
+  }
+
+  const room = roomData[roomKey];
+  const totalCount = room.hotspots ? room.hotspots.length : 0;
+  const investigatedSet = getInvestigatedSet(roomKey);
+
+  // 只計算這個房間真的有的物件，避免誤算
+  const investigatedCount = room.hotspots
+    ? room.hotspots.filter(function (hotspotId) {
+        return investigatedSet.has(hotspotId);
+      }).length
+    : 0;
+
+  roomHotspotCountText.innerHTML =
+    `已調查物件：<span class="hotspot-count-number">${investigatedCount}</span> / ${totalCount}`;
+}
+
+function markHotspotAsInvestigated(roomKey, hotspotId) {
+  if (!roomKey || !hotspotId) {
+    return;
+  }
+
+  const investigatedSet = getInvestigatedSet(roomKey);
+  investigatedSet.add(hotspotId);
+
+  updateRoomHotspotProgress(roomKey);
+  saveSessionProgress();
+}
+
 // 進入房間
-function enterRoom(room) {
+function enterRoom(room, roomKey) {
   currentRoom = room;
+  currentRoomKey = roomKey;
+
   currentRoomDialogueIndex = 0;
 
   isRoomDialogueOpen = false;
@@ -2112,11 +2259,8 @@ function enterRoom(room) {
 
   // 顯示房名
   roomTitleText.textContent = room.title;
-  // 顯示本房間可調查物件數量
-const hotspotCount = room.hotspots ? room.hotspots.length : 0;
-
-  roomHotspotCountText.innerHTML =
-  `本房間共有 <span class="hotspot-count-number">${hotspotCount}</span> 個「物件」可點擊調查`;
+  // 顯示本房間已調查進度
+updateRoomHotspotProgress(currentRoomKey);
 
   // 切換房間背景
   searchScreen.style.backgroundImage =
@@ -2179,10 +2323,20 @@ startRoomDialogueButton.style.display = "none";
       const hotspotName = hotspot.dataset.hotspot;
 
       if (room.hotspots.includes(hotspotName)) {
-        hotspot.style.display = "block";
-      } else {
-        hotspot.style.display = "none";
-      }
+  hotspot.style.display = "block";
+
+  const investigatedSet = getInvestigatedSet(currentRoomKey);
+
+  if (investigatedSet.has(hotspotName)) {
+    hotspot.classList.add("investigated");
+  } else {
+    hotspot.classList.remove("investigated");
+  }
+
+} else {
+  hotspot.style.display = "none";
+  hotspot.classList.remove("investigated");
+}
     });
   } else {
     roomHotspotLayer.style.display = "none";
@@ -2195,12 +2349,16 @@ startRoomDialogueButton.style.display = "none";
   setRoomInteractionEnabled(true);
 
   applyRandomHotspotTwinkle();
+
+  saveSessionProgress();
 }
 
 // 回到地圖
 function showMapView() {
   currentRoom = null;
-  currentRoomDialogueIndex = 0;
+currentRoomKey = null;
+
+currentRoomDialogueIndex = 0;
 
   isRoomDialogueOpen = false;
   isRoomInfoOpen = false;
@@ -2238,6 +2396,8 @@ function showMapView() {
   // 清掉房間背景
   searchScreen.style.backgroundImage = "";
   searchScreen.style.backgroundColor = "#87bf69";
+
+  saveSessionProgress();
 }
 
 // 顯示目前房間對話
@@ -2507,8 +2667,8 @@ roomButtons.forEach(function (button) {
     const selectedRoom = roomData[roomKey];
 
     if (selectedRoom.available) {
-      enterRoom(selectedRoom);
-    } else {
+  enterRoom(selectedRoom, roomKey);
+} else {
       openRoomInfoPanel(
   selectedRoom.title,
   "這個房間目前尚未開放。"
@@ -2635,7 +2795,7 @@ const clues = [
     title: "契約",
     collected: false,
     image: "images/evidence/land-contract.png",
-    description: "一份商業契約，上面有九條先生和父親的名字。"
+    description: "一份商業契約，上面有九條先生和父親的名字（陳金龍）。"
   },
   {
     id: "secondary3",
@@ -2707,7 +2867,7 @@ const clues = [
   title: "筆記-5",
   collected: false,
   image: "",
-  description: "細姨回家時只有大哥在家，他說父親可能是自己跌到撞到櫃子的。那郝先生說的，又是怎麼一回事呢？"
+  description: "阿姨回家時只有大哥在家，他說父親可能是自己跌倒撞到櫃子的。那郝先生說的，又是怎麼一回事呢？"
 },
 {
   id: "note06",
@@ -2715,7 +2875,7 @@ const clues = [
   title: "筆記-6",
   collected: false,
   image: "",
-  description: "安眠藥是細姨買給父親吃的。如果沒有控制好安眠藥劑量，父親有可能精神恍惚，甚至摔倒，所以平常安眠藥都由細姨保管的。"
+  description: "安眠藥是阿姨買給父親吃的。如果沒有控制好安眠藥劑量，父親有可能精神恍惚，甚至摔倒，所以平常安眠藥都由阿姨保管的。"
 },
 {
   id: "note07",
@@ -2723,7 +2883,7 @@ const clues = [
   title: "筆記-7",
   collected: false,
   image: "",
-  description: "有細姨筆跡的安眠藥。為什麼家裡會有安眠藥，是給誰吃的？或許可以去問細姨。"
+  description: "有阿姨筆跡的安眠藥。為什麼家裡會有安眠藥，是給誰吃的？或許可以去問阿姨。"
 },
 {
   id: "note08",
@@ -2779,7 +2939,7 @@ const clues = [
     title: "筆記-14",
     collected: false,
     image: "",
-    description: "為什麼家裡會有不知名女性寫給父親的信？這件事細姨知道嗎？直接問細姨有點尷尬，或許可以去問其他人。"
+    description: "為什麼家裡會有不知名女性寫給父親的信？這件事阿姨知道嗎？直接問阿姨有點尷尬，或許可以去問其他人。"
   },
   {
     id: "note15",
@@ -2803,7 +2963,7 @@ const clues = [
     title: "筆記-17",
     collected: false,
     image: "",
-    description: "大哥說細姨和小弟去照相館拍照，比他還晚一點回來。"
+    description: "大哥說阿姨和小弟去照相館拍照，比他還晚一點回來。"
   },
   {
     id: "note18",
@@ -2819,7 +2979,7 @@ const clues = [
     title: "筆記-19",
     collected: false,
     image: "",
-    description: "父親似乎在外面有其他的情感關係，細姨和父親因此吵架了。其他人看起來都知道這件事。"
+    description: "父親似乎在外面有其他的情感關係，阿姨和父親因此吵架了。其他人看起來都知道這件事。"
   },
   {
     id: "note20",
@@ -2851,7 +3011,7 @@ const clues = [
     title: "筆記-23",
     collected: false,
     image: "",
-    description: "父親過世當天，大哥先因為工作關係出門，後來二哥也跟著出去找朋友。細姨和小弟晚一些時間去照相館拍照了。大姊自己也在晚餐前回家。"
+    description: "父親過世當天，大哥先因為工作關係出門，後來二哥也跟著出去找朋友。阿姨和小弟晚一些時間去照相館拍照了。大姊自己也在晚餐前回家。"
   },
   {
     id: "note24",
@@ -2883,7 +3043,7 @@ const clues = [
     title: "筆記-27",
     collected: false,
     image: "",
-    description: "這是姐姐自己縫的手帕，他對於自己的刺繡特別自豪，所以我一眼就認出來了。但是上面有已經乾涸的血跡，為甚麼呢？要直接去問姐姐嗎？"
+    description: "這是姐姐自己縫的手帕，他對於自己的刺繡特別自豪，所以我一眼就認出來了。但是上面有已經乾涸的血跡，為什麼呢？要直接去問姐姐嗎？"
   },
   {
   id: "note28",
@@ -2930,11 +3090,236 @@ let currentNotebookTab = "required";
 let updatedClueIndexes = [];
 
 // =========================
+// 筆記本一般翻頁範圍
+// 只讓「關鍵證據 4 頁 + 次要證據 6 頁」進入一般翻頁
+// 筆記不再一頁一頁翻，改由「筆記目錄」顯示
+// =========================
+
+const NOTEBOOK_CLUE_FIRST_INDEX = notebookCategories.required.startIndex; // 0
+const NOTEBOOK_CLUE_LAST_INDEX = notebookCategories.secondary.endIndex;   // 9
+const NOTEBOOK_CLUE_TOTAL =
+  NOTEBOOK_CLUE_LAST_INDEX - NOTEBOOK_CLUE_FIRST_INDEX + 1;               // 10
+
+// =========================
+// 筆記目錄：依照房間整理 note01 ~ note29
+// =========================
+
+let notebookMode = "clue";
+let currentNoteDirectoryRoomKey = "reception";
+
+const notebookRoomNoteGroups = [
+  {
+    key: "reception",
+    label: "應接室：郝國強",
+    noteIds: ["note01", "note02", "note03"]
+  },
+  {
+    key: "zashiki",
+    label: "座敷：細姨",
+    noteIds: ["note04", "note05", "note06", "note07", "note08", "note09"]
+  },
+  {
+    key: "father",
+    label: "爸爸房：二哥",
+    noteIds: ["note10", "note11", "note12", "note13", "note14", "note28", "note29"]
+  },
+  {
+    key: "bigBrother",
+    label: "大哥房：大哥",
+    noteIds: ["note15", "note16", "note17", "note18", "note19", "note20", "note21", "note22"]
+  },
+  {
+    key: "girls",
+    label: "女生房：大姊",
+    noteIds: ["note23", "note24", "note25", "note26", "note27"]
+  }
+];
+
+function getNotebookItemById(itemId) {
+  return clues.find(function (item) {
+    return item.id === itemId;
+  });
+}
+
+function getRoomKeyByNoteId(noteId) {
+  const group = notebookRoomNoteGroups.find(function (roomGroup) {
+    return roomGroup.noteIds.includes(noteId);
+  });
+
+  return group ? group.key : "reception";
+}
+
+function getFirstUpdatedNoteRoomKey() {
+  const reversedUpdatedIndexes = updatedClueIndexes.slice().reverse();
+
+  for (const clueIndex of reversedUpdatedIndexes) {
+    const clue = clues[clueIndex];
+
+    if (clue && clue.id && clue.id.startsWith("note")) {
+      return getRoomKeyByNoteId(clue.id);
+    }
+  }
+
+  return null;
+}
+
+function setNotebookTabActive(tabName) {
+  notebookTabs.forEach(function (tab) {
+    if (tab.dataset.tab === tabName) {
+      tab.classList.add("active");
+    } else {
+      tab.classList.remove("active");
+    }
+  });
+}
+
+function markNotesInRoomAsSeen(roomKey) {
+  const group = notebookRoomNoteGroups.find(function (roomGroup) {
+    return roomGroup.key === roomKey;
+  });
+
+  if (!group) {
+    return;
+  }
+
+  group.noteIds.forEach(function (noteId) {
+    const noteIndex = clues.findIndex(function (item) {
+      return item.id === noteId;
+    });
+
+    if (noteIndex === -1) {
+      return;
+    }
+
+    const note = clues[noteIndex];
+
+    if (note.collected) {
+      note.seen = true;
+
+      updatedClueIndexes = updatedClueIndexes.filter(function (index) {
+        return index !== noteIndex;
+      });
+    }
+  });
+
+  updateNotebookUpdateIndicators();
+  saveSessionProgress();
+}
+
+function escapeHtml(text) {
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function renderNoteDirectoryPage() {
+  notebookMode = "notesDirectory";
+  currentNotebookTab = "notes";
+
+  const currentGroup =
+    notebookRoomNoteGroups.find(function (group) {
+      return group.key === currentNoteDirectoryRoomKey;
+    }) || notebookRoomNoteGroups[0];
+
+  currentNoteDirectoryRoomKey = currentGroup.key;
+
+  // 重置頁面 class
+  cluePage.classList.remove("relationship-page");
+  cluePage.classList.remove("note-page");
+  cluePage.classList.remove("evidence-page");
+  cluePage.classList.add("note-directory-page");
+
+  // 筆記目錄已經有房間小頁籤，所以不需要大標題
+clueHeader.style.display = "none";
+clueTypeLabel.style.display = "none";
+cluePageTitle.style.display = "none";
+
+clueTypeLabel.textContent = "";
+cluePageTitle.textContent = "";
+
+  clueContent.style.display = "block";
+  clueImage.style.display = "none";
+  clueImage.src = "";
+
+  clueDescription.style.display = "block";
+
+  cluePageCounter.textContent = "筆記一覽";
+  prevClueButton.disabled = true;
+  nextClueButton.disabled = true;
+
+  setNotebookTabActive("notes");
+
+  const roomButtonsHtml = notebookRoomNoteGroups
+    .map(function (group) {
+      const activeClass = group.key === currentGroup.key ? "active" : "";
+
+      return `
+        <button class="note-directory-room-button ${activeClass}" data-room-key="${group.key}">
+          ${escapeHtml(group.label)}
+        </button>
+      `;
+    })
+    .join("");
+
+  const notesHtml = currentGroup.noteIds
+    .map(function (noteId) {
+      const note = getNotebookItemById(noteId);
+      const noteNumber = noteId.replace("note", "");
+      const isCollected = note && note.collected === true;
+
+      let noteText = "？？？";
+
+      if (isCollected) {
+        noteText = note.description && note.description.trim() !== ""
+          ? note.description
+          : "這則筆記已取得，但目前沒有填寫內容。";
+      }
+
+      return `
+        <div class="note-directory-item ${isCollected ? "collected" : "locked"}">
+          <div class="note-directory-item-title">筆記 ${noteNumber}</div>
+          <div class="note-directory-item-text">
+            ${escapeHtml(noteText)}
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  clueDescription.innerHTML = `
+    <div class="note-directory-wrapper">
+      <div class="note-directory-room-tabs">
+        ${roomButtonsHtml}
+      </div>
+
+      <div class="note-directory-list">
+        ${notesHtml}
+      </div>
+    </div>
+  `;
+
+  clueDescription
+    .querySelectorAll(".note-directory-room-button")
+    .forEach(function (button) {
+      button.addEventListener("click", function () {
+        playClickSound();
+
+        currentNoteDirectoryRoomKey = button.dataset.roomKey;
+        renderNoteDirectoryPage();
+      });
+    });
+
+  // 玩家看過這個房間的筆記目錄後，該房間已收集筆記視為已讀
+  markNotesInRoomAsSeen(currentGroup.key);
+}
+
+// =========================
 // 結局前提示：收齊調查內容後觸發
 // =========================
 
-// 目前程式實際是 4 個關鍵證據 + 6 個次要證據
-// 之後如果真的改成 5 + 5，只要改這個清單即可
 const endingRequiredClueIds = [
   "required1",
   "required2",
@@ -2978,6 +3363,7 @@ function hasCollectedAllEndingRequirements() {
 
 function openEndingNoticeScreen() {
   isEndingNoticeTriggered = true;
+  saveSessionProgress();
 
   // 關掉可能還開著的介面
   evidencePanel.style.display = "none";
@@ -2992,6 +3378,9 @@ function openEndingNoticeScreen() {
   isEvidenceThoughtOpen = false;
 
   setRoomInteractionEnabled(false);
+
+  // 進入黑底提示頁時，先不要顯示右側常駐按鈕
+  enterAccusationButton.classList.remove("show");
 
   showScreen(endingNoticeScreen);
 }
@@ -3033,17 +3422,15 @@ function getNotebookTabByIndex(index) {
 }
 
 function updateNotebookTabActiveState() {
+  if (notebookMode === "notesDirectory") {
+    currentNotebookTab = "notes";
+    setNotebookTabActive("notes");
+    return;
+  }
+
   currentNotebookTab = getNotebookTabByIndex(currentClueIndex);
 
-  notebookTabs.forEach(function (tab) {
-    const tabName = tab.dataset.tab;
-
-    if (tabName === currentNotebookTab) {
-      tab.classList.add("active");
-    } else {
-      tab.classList.remove("active");
-    }
-  });
+  setNotebookTabActive(currentNotebookTab);
 }
 
 function markNotebookItemAsUpdated(index) {
@@ -3064,19 +3451,35 @@ function clearCurrentNotebookItemUpdate() {
 
 // 顯示目前這一頁線索
 function renderNotebookPage() {
+  // 如果因為舊狀態或未讀更新跳到 note01 以後，
+  // 不要顯示單張筆記頁，直接改進筆記目錄
+  if (currentClueIndex > NOTEBOOK_CLUE_LAST_INDEX) {
+    const currentItem = clues[currentClueIndex];
+
+    if (currentItem && currentItem.id && currentItem.id.startsWith("note")) {
+      currentNoteDirectoryRoomKey = getRoomKeyByNoteId(currentItem.id);
+    }
+
+    renderNoteDirectoryPage();
+    return;
+  }
+
   const clue = clues[currentClueIndex];
 
   if (!clue) {
     return;
   }
 
-  // 先更新頁籤狀態，避免永遠卡在人物關係圖
+  notebookMode = "clue";
+
+  // 先更新頁籤狀態
   updateNotebookTabActiveState();
 
   // 重置頁面 class
   cluePage.classList.remove("relationship-page");
   cluePage.classList.remove("note-page");
   cluePage.classList.remove("evidence-page");
+  cluePage.classList.remove("note-directory-page");
 
   // 重置顯示狀態
   clueHeader.style.display = "block";
@@ -3090,14 +3493,14 @@ function renderNotebookPage() {
     clearCurrentNotebookItemUpdate();
   }
 
-  // 更新頁籤紅點與右上角筆記本紅點
   updateNotebookUpdateIndicators();
+  saveSessionProgress();
 
-  cluePageCounter.textContent = `${currentClueIndex + 1} / ${clues.length}`;
+  // 頁碼只算關鍵證據 + 次要證據，共 10 頁
+  cluePageCounter.textContent =
+    `${currentClueIndex - NOTEBOOK_CLUE_FIRST_INDEX + 1} / ${NOTEBOOK_CLUE_TOTAL}`;
 
-  // =========================
   // 尚未收集頁
-  // =========================
   if (!clue.collected) {
     clueTypeLabel.textContent = clue.type;
     cluePageTitle.textContent = "???";
@@ -3115,9 +3518,7 @@ function renderNotebookPage() {
     return;
   }
 
-  // =========================
-  // 已收集的一般頁面
-  // =========================
+  // 已收集頁面
   clueTypeLabel.textContent = clue.type;
   cluePageTitle.textContent = clue.title;
 
@@ -3125,25 +3526,15 @@ function renderNotebookPage() {
   clueDescription.style.display = "block";
   clueDescription.textContent = clue.description || "";
 
-  // 筆記頁：只顯示文字
-  if (clue.type === "筆記") {
-    cluePage.classList.add("note-page");
+  // 只剩證據頁會進來，筆記頁不會再用一般翻頁顯示
+  cluePage.classList.add("evidence-page");
 
+  if (clue.image && clue.image.trim() !== "") {
+    clueImage.style.display = "block";
+    clueImage.src = clue.image;
+  } else {
     clueImage.style.display = "none";
     clueImage.src = "";
-  }
-
-  // 證據頁：顯示圖片
-  else {
-    cluePage.classList.add("evidence-page");
-
-    if (clue.image && clue.image.trim() !== "") {
-      clueImage.style.display = "block";
-      clueImage.src = clue.image;
-    } else {
-      clueImage.style.display = "none";
-      clueImage.src = "";
-    }
   }
 
   updateNotebookButtons();
@@ -3187,13 +3578,19 @@ function updateNotebookUpdateIndicators() {
 }
 
 function updateNotebookButtons() {
-  if (currentClueIndex === 0) {
+  if (notebookMode === "notesDirectory") {
+    prevClueButton.disabled = true;
+    nextClueButton.disabled = true;
+    return;
+  }
+
+  if (currentClueIndex <= NOTEBOOK_CLUE_FIRST_INDEX) {
     prevClueButton.disabled = true;
   } else {
     prevClueButton.disabled = false;
   }
 
-  if (currentClueIndex === clues.length - 1) {
+  if (currentClueIndex >= NOTEBOOK_CLUE_LAST_INDEX) {
     nextClueButton.disabled = true;
   } else {
     nextClueButton.disabled = false;
@@ -3201,15 +3598,19 @@ function updateNotebookButtons() {
 }
 
 function turnNotebookPage(direction) {
+  if (notebookMode === "notesDirectory") {
+    return;
+  }
+
   if (isNotebookPageTurning) {
     return;
   }
 
-  if (direction === "next" && currentClueIndex >= clues.length - 1) {
+  if (direction === "next" && currentClueIndex >= NOTEBOOK_CLUE_LAST_INDEX) {
     return;
   }
 
-  if (direction === "prev" && currentClueIndex <= 0) {
+  if (direction === "prev" && currentClueIndex <= NOTEBOOK_CLUE_FIRST_INDEX) {
     return;
   }
 
@@ -3295,13 +3696,30 @@ notebookButton.addEventListener("click", function () {
     notebookUpdateToast.classList.remove("show");
   }
 
-  // 如果有多個未讀更新，先跳到最早取得的那一頁
   if (updatedClueIndexes.length > 0) {
-  currentClueIndex = updatedClueIndexes[updatedClueIndexes.length - 1];
-}
+    currentClueIndex = updatedClueIndexes[updatedClueIndexes.length - 1];
+
+    const updatedItem = clues[currentClueIndex];
+
+    // 如果最新更新的是筆記，就打開筆記目錄，並跳到對應房間
+    if (updatedItem && updatedItem.id && updatedItem.id.startsWith("note")) {
+      notebookMode = "notesDirectory";
+      currentNoteDirectoryRoomKey = getRoomKeyByNoteId(updatedItem.id);
+    }
+
+    // 如果最新更新的是關鍵 / 次要證據，就維持原本單頁顯示
+    else {
+      notebookMode = "clue";
+    }
+  }
 
   notebookOverlay.classList.add("open");
-  renderNotebookPage();
+
+  if (notebookMode === "notesDirectory") {
+    renderNoteDirectoryPage();
+  } else {
+    renderNotebookPage();
+  }
 });
 
 // 關閉筆記本
@@ -3328,6 +3746,24 @@ notebookTabs.forEach(function (tab) {
     playPageFlipSound();
 
     const tabName = tab.dataset.tab;
+
+    // 筆記頁籤：改成進入筆記目錄
+    if (tabName === "notes") {
+      notebookMode = "notesDirectory";
+
+      const updatedRoomKey = getFirstUpdatedNoteRoomKey();
+
+      if (updatedRoomKey) {
+        currentNoteDirectoryRoomKey = updatedRoomKey;
+      }
+
+      renderNoteDirectoryPage();
+      return;
+    }
+
+    // 關鍵證據 / 次要證據：維持原本翻頁模式
+    notebookMode = "clue";
+
     const category = notebookCategories[tabName];
 
     if (!category) {
@@ -3349,6 +3785,197 @@ notebookTabs.forEach(function (tab) {
     renderNotebookPage();
   });
 });
+
+// =========================
+// 本次遊玩暫存系統 sessionStorage
+// 重新整理會保留，關掉分頁後重新開始
+// =========================
+
+const SESSION_SAVE_KEY = "historyGameSessionProgressV1";
+
+let sessionResumeStage = "map";
+let sessionResumeRoomKey = null;
+
+function serializeInvestigatedHotspots() {
+  const result = {};
+
+  for (const roomKey in investigatedHotspotsByRoom) {
+    result[roomKey] = Array.from(investigatedHotspotsByRoom[roomKey]);
+  }
+
+  return result;
+}
+
+function saveSessionProgress() {
+  const saveData = {
+    version: 1,
+
+    // 玩家目前大概在哪裡
+    stage: currentRoomKey ? "room" : "map",
+    currentRoomKey: currentRoomKey,
+
+    // 已調查物件
+    investigatedHotspotsByRoom: serializeInvestigatedHotspots(),
+
+    // 筆記本已收集內容
+    collectedClueIds: clues
+      .filter(function (item) {
+        return item.collected === true;
+      })
+      .map(function (item) {
+        return item.id;
+      }),
+
+    // 筆記本已讀狀態
+    seenClueIds: clues
+      .filter(function (item) {
+        return item.seen === true;
+      })
+      .map(function (item) {
+        return item.id;
+      }),
+
+    // 紅點更新狀態
+    updatedClueIndexes: updatedClueIndexes.slice(),
+
+    // 已讀對話
+    viewedDialogueIds: viewedDialogueIds.slice(),
+
+    // 是否已經觸發結局前提示
+    isEndingNoticeTriggered: isEndingNoticeTriggered
+  };
+
+  sessionStorage.setItem(SESSION_SAVE_KEY, JSON.stringify(saveData));
+}
+
+// =========================
+// 片尾按鈕功能
+// =========================
+
+// 錯誤結局：回到指認兇手環節
+retryAccusationButton.addEventListener("click", function () {
+  playClickSound();
+
+  // 如果片尾跑馬燈還有自動捲動，先停止
+  if (typeof stopCreditsAutoScroll === "function") {
+    stopCreditsAutoScroll();
+  }
+
+  // 回到指認時，不要繼續播放片尾音樂
+  stopBgm();
+
+  creditsButtonArea.classList.remove("show");
+
+  startAccusationPhase();
+});
+
+// 回主頁面：清除本次遊玩暫存，回到封面
+// 回主頁面：清除本次遊玩暫存，並重新載入，確保所有遊戲變數歸零
+backToCoverButton.addEventListener("click", function () {
+  playClickSound();
+
+  stopBgm();
+  clearSessionProgress();
+
+  location.reload();
+});
+
+
+function loadSessionProgress() {
+  const savedText = sessionStorage.getItem(SESSION_SAVE_KEY);
+
+  if (!savedText) {
+    return false;
+  }
+
+  let saveData;
+
+  try {
+    saveData = JSON.parse(savedText);
+  } catch (error) {
+    console.log("暫存資料讀取失敗，已清除：", error);
+    sessionStorage.removeItem(SESSION_SAVE_KEY);
+    return false;
+  }
+
+  if (!saveData || saveData.version !== 1) {
+    return false;
+  }
+
+  // 還原已調查物件
+  if (saveData.investigatedHotspotsByRoom) {
+    for (const roomKey in saveData.investigatedHotspotsByRoom) {
+      investigatedHotspotsByRoom[roomKey] =
+        new Set(saveData.investigatedHotspotsByRoom[roomKey]);
+    }
+  }
+
+  // 還原筆記本收集狀態
+  const collectedClueIds = saveData.collectedClueIds || [];
+  const seenClueIds = saveData.seenClueIds || [];
+
+  clues.forEach(function (item) {
+    item.collected = collectedClueIds.includes(item.id);
+    item.seen = seenClueIds.includes(item.id);
+  });
+
+  // 還原紅點
+  updatedClueIndexes = Array.isArray(saveData.updatedClueIndexes)
+    ? saveData.updatedClueIndexes
+    : [];
+
+  // 還原已讀對話
+  viewedDialogueIds = Array.isArray(saveData.viewedDialogueIds)
+    ? saveData.viewedDialogueIds
+    : [];
+
+  // 還原結局前提示狀態
+  isEndingNoticeTriggered = saveData.isEndingNoticeTriggered === true;
+
+  sessionResumeStage = saveData.stage || "map";
+  sessionResumeRoomKey = saveData.currentRoomKey || null;
+
+  updateNotebookUpdateIndicators();
+
+  return true;
+}
+
+function clearSessionProgress() {
+  sessionStorage.removeItem(SESSION_SAVE_KEY);
+}
+
+function continueFromSessionProgress() {
+  hasStartedGame = true;
+
+  // 搜索階段使用搜索音樂
+  playBgm(investigationBgm);
+
+  // 已經收齊全部內容，但還沒有跳過完成提示時，顯示完成提示
+  if (hasCollectedAllEndingRequirements() && !isEndingNoticeTriggered) {
+    openEndingNoticeScreen();
+    return;
+  }
+
+  showScreen(searchScreen);
+
+  // 如果玩家重整前在某個房間，就回到那個房間
+  if (
+    sessionResumeStage === "room" &&
+    sessionResumeRoomKey &&
+    roomData[sessionResumeRoomKey] &&
+    roomData[sessionResumeRoomKey].available
+  ) {
+    enterRoom(roomData[sessionResumeRoomKey], sessionResumeRoomKey);
+  }
+
+  // 否則回到地圖
+  else {
+    showMapView();
+  }
+
+  // 已解鎖指認後，回到調查畫面時顯示右側常駐按鈕
+  updateEnterAccusationButtonVisibility();
+}
 
 // 蒐集線索用的函式
 // 之後在房間調查到線索時，就呼叫這個函式
@@ -3378,6 +4005,8 @@ function collectClue(clueId) {
     renderNotebookPage();
   }
 
+  saveSessionProgress();
+
   return true;
 }
 
@@ -3406,6 +4035,8 @@ function collectNote(noteId) {
   if (notebookOverlay.classList.contains("open")) {
     renderNotebookPage();
   }
+
+  saveSessionProgress();
 
   return true;
 }
@@ -3477,7 +4108,7 @@ noteIds: ["note22"]
 
   image: "images/evidence/bigBrotherFuton.png",
 
-  description: "榻榻米上用的桌子都矮矮的，比較少用高腳桌，因為擔心桌腳會刺穿榻榻米。再配上蒲團（當時的坐墊！），就不擔心久坐腰痛了～",
+  description: "榻榻米上用的桌子都矮矮的，這是因為擔心高腳桌的桌腳會刺穿榻榻米。配上蒲團（當時的坐墊！），就不擔心久坐腰痛了～",
 
   diaryContent: "",
   thought: "",
@@ -3505,7 +4136,7 @@ bigBrotherWindow: {
 
   image: "images/evidence/father-paperweight.png",
 
-  description: "父親鍾愛的石製紙鎮，角落有破損的痕跡。",
+  description: "父親鍾愛的石製紙鎮，角落有破損的痕跡，還有些許斑駁的血跡。",
   diaryContent: "",
 
   thought: "",
@@ -3573,7 +4204,7 @@ sleepingPills: {
 
   image: "images/evidence/sleeping-pills.png",
 
-  description: "這是安眠藥，從上面的字跡來看，似乎是細姨的筆跡。",
+  description: "這是安眠藥，從上面的字跡來看，似乎是阿姨的筆跡。",
 
   diaryContent: "",
 
@@ -3674,7 +4305,7 @@ receptionIrisFlower: {
 
   image: "images/evidence/receptionIrisFlower.png",
 
-  description: "這是當時花道常用的燕子花。在台日本婦女常會開課學習插花，台灣婦女耳濡目染，多多少少也會一點造花。",
+  description: "這是當時花道常用的燕子花。在台日本婦女常會開課學習插花，臺灣婦女耳濡目染，多多少少也會一點造花。",
 
   diaryContent: "",
   thought: "",
@@ -3756,7 +4387,7 @@ teaSukiyaki: {
   type: "調查區域",
   title: "壽喜燒",
 
-  image: "images/rooms/tea-sukiyaki.png",
+  image: "images/evidence/tea-sukiyaki.png",
 
   description:
     "壽喜燒是日治時期常吃的一道日式料理，會把肉片和蔬菜等食材放進一個鍋具裡面，配上清酒，簡直是人間美味！",
@@ -3771,7 +4402,7 @@ teaMilkLamp: {
   type: "調查區域",
   title: "牛奶燈",
 
-  image: "images/rooms/tea-milk-lamp.png",
+  image: "images/evidence/tea-milk-lamp.png",
 
   description:
     "當時的燈飾大多都是乳白色的，所以常被稱作牛奶燈喔！",
@@ -4014,6 +4645,11 @@ nextEvidenceDiaryButton.addEventListener("click", function (event) {
 });
 
 evidenceImage.addEventListener("click", function (event) {
+  if (evidenceCard.classList.contains("detail-open")) {
+  openImagePreview(evidenceImage.src, evidenceTitle.textContent);
+  return;
+}
+  
   event.stopPropagation();
 
   // 已經展開後，就不再有任何反應
@@ -4028,6 +4664,12 @@ evidenceImage.addEventListener("click", function (event) {
 
   playPageFlipSound();
   showEvidenceDetail();
+});
+
+resumeGameButton.addEventListener("click", function () {
+  playClickSound();
+
+  continueFromSessionProgress();
 });
 
 function closeEvidencePanel() {
@@ -4163,9 +4805,18 @@ roomHotspots.forEach(function (hotspot) {
       return;
     }
 
+    const hotspotName = hotspot.dataset.hotspot;
+    const roomKey = hotspot.dataset.room || currentRoomKey;
+
+    // 如果這個熱區沒有對應資料，就不要計入進度
+    if (!evidenceData[hotspotName]) {
+      return;
+    }
+
     playClickSound();
 
-    const hotspotName = hotspot.dataset.hotspot;
+    markHotspotAsInvestigated(roomKey, hotspotName);
+    hotspot.classList.add("investigated");
 
     openEvidencePanel(hotspotName);
   });
@@ -4374,10 +5025,9 @@ const endingDialogueData = {
       { scene: "livingroom", speaker: "大姊", text: "也好。我們來討論吧。" },
 
       { scene: "sky", speaker: "玩家", text: "我後來私下找了大哥和其他人對話，父親的死真的跟大哥無關。" },
-      { scene: "sky", speaker: "玩家", text: "我們那天後來討論了遺產分配。" },
-      { scene: "sky", speaker: "玩家", text: "我跟大姊都想要分配到財產......尤其是那份契約，父親跟九條先生交易的財產價值實在很龐大。" },
-      { scene: "sky", speaker: "玩家", text: "雖然現在的法律保障我跟大姊的繼承權，但其他人堅持要依照慣習。" },
-      { scene: "sky", speaker: "玩家", text: "說是讓大哥、二哥和小弟先繼承財產後，大哥再私下分給我們。" },
+      { scene: "sky", speaker: "玩家", text: "那天後來，我們討論了遺產分配。" },
+      { scene: "sky", speaker: "玩家", text: "按照新的法規，我和大姊簽了拋棄繼承同意書。" },
+      { scene: "sky", speaker: "玩家", text: "大哥、二哥和小弟均分父親的遺產，大哥再私下給我和大姊一些財產。" },
       { scene: "sky", speaker: "玩家", text: "真沒想到會是這樣的結果啊......說起來，父親的死真的是意外嗎？我還是覺得哪裡有奇怪的地方。" }
     ]
   },
@@ -4400,9 +5050,8 @@ const endingDialogueData = {
 
       { scene: "sky", speaker: "玩家", text: "原來大姊染上肺癆了，我卻懷疑他。大姊最近身體狀況每況愈下，我看到許多人和大姊有一樣的情況。" },
       { scene: "sky", speaker: "玩家", text: "那天後來，我們討論了遺產分配。" },
-      { scene: "sky", speaker: "玩家", text: "我跟大姊都想要分配到財產......尤其是那份契約，父親跟九條先生交易的財產價值實在很龐大。" },
-      { scene: "sky", speaker: "玩家", text: "雖然現在的法律保障我跟大姊的繼承權，但其他人堅持要依照慣習。" },
-      { scene: "sky", speaker: "玩家", text: "說是讓大哥、二哥和小弟先繼承財產後，大哥再私下分給我們。" },
+      { scene: "sky", speaker: "玩家", text: "按照新的法規，我和大姊簽了拋棄繼承同意書。" },
+      { scene: "sky", speaker: "玩家", text: "大哥、二哥和小弟均分父親的遺產，大哥再私下給我和大姊一些財產。" },
       { scene: "sky", speaker: "玩家", text: "真沒想到會是這樣的結果啊......說起來，父親的死真的是意外嗎？我還是覺得哪裡有奇怪的地方。" }
     ]
   },
@@ -4427,9 +5076,8 @@ const endingDialogueData = {
 
       { scene: "sky", speaker: "玩家", text: "細姨說的並沒有錯......是我錯怪他了。" },
       { scene: "sky", speaker: "玩家", text: "那天後來，我們討論了遺產分配。" },
-      { scene: "sky", speaker: "玩家", text: "我跟大姊都想要分配到財產......尤其是那份契約，父親跟九條先生交易的財產價值實在很龐大。" },
-      { scene: "sky", speaker: "玩家", text: "雖然現在的法律保障我跟大姊的繼承權，但其他人堅持要依照慣習。" },
-      { scene: "sky", speaker: "玩家", text: "說是讓大哥、二哥和小弟先繼承財產後，大哥再私下分給我們。" },
+      { scene: "sky", speaker: "玩家", text: "按照新的法規，我和大姊簽了拋棄繼承同意書。" },
+      { scene: "sky", speaker: "玩家", text: "大哥、二哥和小弟均分父親的遺產，大哥再私下給我和大姊一些財產。" },
       { scene: "sky", speaker: "玩家", text: "真沒想到會是這樣的結果啊......說起來，父親的死真的是意外嗎？我還是覺得哪裡有奇怪的地方。" }
     ]
   },
@@ -4452,11 +5100,12 @@ const endingDialogueData = {
       { scene: "livingroom", speaker: "大姊", text: "政夫？政夫！" },
 
       { scene: "sky", speaker: "玩家", text: "那天後來，二哥突然衝出家門，大哥非常生氣，去報了警。" },
-      { scene: "sky", speaker: "玩家", text: "二哥因為殺人被判了刑。過一陣子後我們才想起來分配遺產的事。" },
-      { scene: "sky", speaker: "玩家", text: "我跟大姊都想要分配到財產......尤其是那份契約，父親跟九條先生交易的財產價值實在很龐大。" },
-      { scene: "sky", speaker: "玩家", text: "雖然現在的法律保障我跟大姊的繼承權，但其他人堅持要依照慣習。" },
-      { scene: "sky", speaker: "玩家", text: "說是讓大哥和小弟先繼承財產後，大哥再私下分給我們。" },
-      { scene: "sky", speaker: "玩家", text: "如果知道無論如何，都沒辦法分到遺產的話，我忙這一齣又是為了甚麼呢？" }
+      { scene: "sky", speaker: "玩家", text: "二哥因為殺人被判了刑。雖然找到了兇手是誰，但我心裡五味雜陳，不敢相信真的是二哥做的。" },
+      { scene: "sky", speaker: "玩家", text: "大哥和大姊都沉默了很久，過一陣子才想起來分配遺產的事。" },
+      { scene: "sky", speaker: "玩家", text: "按照新的法規，我和大姊簽了拋棄繼承同意書。" },
+      { scene: "sky", speaker: "玩家", text: "大哥和小弟平分父親的遺產，大哥再私下給我和大姊一些財產。" },
+      { scene: "sky", speaker: "玩家", text: "雖然新的法規上是說女性也能繼承財產，但很少人真的這樣做。而且，大姊已經嫁人，一般而言是不會分到家裡的錢。" },
+      { scene: "sky", speaker: "玩家", text: "大哥其實已經給我們很多了，所以我並不埋怨他。只是有點可惜......會有那麼一天，我們也可以理所當然繼承遺產嗎？" }
     ]
   }
 };
@@ -4465,6 +5114,22 @@ let currentEndingLines = [];
 let currentEndingLineIndex = 0;
 let currentEndingTitle = "";
 let pendingEvidenceSelectionAfterIntro = false;
+
+function updateEndingDialogueBgmByScene(sceneName) {
+  // 指認開場對話，例如「我認為父親的死和大哥有關」
+  // 這段還不算正式結局，所以不要切成 ending-dialogue-bgm
+  if (pendingEvidenceSelectionAfterIntro) {
+    playBgm(investigationBgm);
+    return;
+  }
+
+  // 正式結局中，進入天空獨白後才切換成結局劇情音樂
+  if (sceneName === "sky") {
+    playBgm(endingDialogueBgm);
+  } else {
+    playBgm(investigationBgm);
+  }
+}
 
 function setAccusationScene(sceneName) {
   accusationScreen.classList.remove("sky-ending-scene");
@@ -4566,7 +5231,13 @@ function renderEndingDialogueLine() {
 
   const sceneName = line.scene || "livingroom";
 
+  // 先切換背景
   setAccusationScene(sceneName);
+
+  // 再根據目前場景決定音樂
+  // 客廳段：繼續 investigation-bgm
+  // 天空段：開始 ending-dialogue-bgm
+  updateEndingDialogueBgmByScene(sceneName);
 
   endingDialogueSpeaker.textContent = line.speaker;
   endingDialogueText.textContent = line.text;
@@ -4610,6 +5281,15 @@ function finishEndingDialogue() {
 
   accusationScreen.classList.add("story-mode");
   endingResultArea.style.display = "flex";
+
+  const isCorrectEnding = currentEndingTitle === "真正的兇手";
+
+  console.log("正式結局結束，準備進入片尾跑馬燈：", currentEndingTitle);
+
+  // 讓玩家看 3 秒結局標題，再進入片尾跑馬燈
+  setTimeout(function () {
+    startCredits(isCorrectEnding);
+  }, 3000);
 }
 
 // 指認階段顯示全部關鍵 + 次要證據
@@ -4673,12 +5353,30 @@ function startAccusationPhase() {
   selectedSuspect = null;
   selectedAccusationEvidenceIds = [];
 
+  currentEndingLines = [];
+  currentEndingLineIndex = 0;
+  currentEndingTitle = "";
+  pendingEvidenceSelectionAfterIntro = false;
+
   accusationErrorText.textContent = "";
+
+  // 重要：每次重新進指認，都要離開劇情模式
+  accusationScreen.classList.remove("story-mode");
+  accusationScreen.classList.remove("sky-ending-scene");
+
+  // 進入指認階段後，不顯示右側常駐指認按鈕
+  if (enterAccusationButton) {
+    enterAccusationButton.classList.remove("show");
+  }
 
   suspectSelectArea.style.display = "flex";
   evidenceSelectArea.style.display = "none";
   endingDialogueArea.style.display = "none";
   endingResultArea.style.display = "none";
+
+  selectedSuspectText.textContent = "";
+  selectedEvidenceCounter.textContent = "已選擇：0 / 2";
+  accusationEvidenceGrid.innerHTML = "";
 
   setAccusationScene("livingroom");
 
@@ -4808,8 +5506,10 @@ function confirmAccusation() {
   }
 
   // 下一步會在這裡接入結局對話
-  const endingData = endingDialogueData[selectedSuspect];
+ const endingData = endingDialogueData[selectedSuspect];
 
+// 指認完成後，先繼續播放調查階段音樂
+// 等到結局劇情進入天空場景時，再切換成 ending-dialogue-bgm
 startEndingDialogue(
   endingData.lines,
   endingData.endingTitle
@@ -4864,7 +5564,63 @@ nextEndingDialogueButton.addEventListener("click", function () {
 endingNoticeDoneButton.addEventListener("click", function () {
   playClickSound();
 
-  startAccusationPhase();
+  // 沒有真的收齊時，不應該進指認
+  if (!hasCollectedAllEndingRequirements()) {
+    console.log("尚未收齊所有證據與筆記，不能進入指認。");
+
+    isEndingNoticeTriggered = false;
+
+    if (enterAccusationButton) {
+      enterAccusationButton.classList.remove("show");
+    }
+
+    showScreen(searchScreen);
+    showMapView();
+    return;
+  }
+
+  if (enterAccusationButton) {
+  enterAccusationButton.classList.remove("show");
+}
+
+startAccusationPhase();
+});
+
+if (enterAccusationButton) {
+  enterAccusationButton.addEventListener("click", function () {
+    playClickSound();
+
+    if (!hasCollectedAllEndingRequirements() && !isEndingNoticeTriggered) {
+      console.log("尚未完成調查，不能進入指認。");
+      enterAccusationButton.classList.remove("show");
+      return;
+    }
+
+    enterAccusationButton.classList.remove("show");
+
+    startAccusationPhase();
+  });
+}
+
+continueInvestigationButton.addEventListener("click", function () {
+  playClickSound();
+
+  showScreen(searchScreen);
+
+  // 如果調查完成提示是在房間內觸發，就回到原本房間
+  if (currentRoom && currentRoomKey) {
+    setRoomInteractionEnabled(true);
+    updateRoomHotspotProgress(currentRoomKey);
+  }
+
+  // 如果不是在房間內，就回到地圖
+  else {
+    showMapView();
+  }
+
+  enterAccusationButton.classList.add("show");
+
+  saveSessionProgress();
 });
 
 // =========================
@@ -4878,3 +5634,510 @@ document.querySelectorAll("img").forEach(function (img) {
     event.preventDefault();
   });
 });
+
+function openImagePreview(imageSrc, imageAlt) {
+  if (!imageSrc) return;
+
+  // 先清掉上一張圖的狀態
+  imagePreviewImage.classList.remove("low-resolution-preview");
+  imagePreviewImage.style.removeProperty("width");
+  imagePreviewImage.style.removeProperty("height");
+
+  imagePreviewImage.alt = imageAlt || "放大證據圖片";
+
+  function applyPreviewSize() {
+    const naturalWidth = imagePreviewImage.naturalWidth;
+    const naturalHeight = imagePreviewImage.naturalHeight;
+
+    const isLowResolution = naturalWidth < 500 || naturalHeight < 500;
+
+    if (isLowResolution) {
+      imagePreviewImage.classList.add("low-resolution-preview");
+
+      // 低解析圖也要有明顯放大感
+      // 但最多不要超過畫面 72vw / 78vh
+      const scale = 4;
+
+      const targetWidth = Math.min(
+        naturalWidth * scale,
+        window.innerWidth * 0.72
+      );
+
+      const targetHeight = Math.min(
+        naturalHeight * scale,
+        window.innerHeight * 0.78
+      );
+
+      // 以不變形為原則，取較小比例
+      const widthRatio = targetWidth / naturalWidth;
+      const heightRatio = targetHeight / naturalHeight;
+      const finalScale = Math.min(widthRatio, heightRatio);
+
+      imagePreviewImage.style.setProperty(
+        "width",
+        naturalWidth * finalScale + "px",
+        "important"
+      );
+
+      imagePreviewImage.style.setProperty(
+        "height",
+        naturalHeight * finalScale + "px",
+        "important"
+      );
+    } else {
+      imagePreviewImage.style.setProperty("width", "min(88vw, 1080px)", "important");
+      imagePreviewImage.style.setProperty("height", "auto", "important");
+      imagePreviewImage.style.setProperty("max-height", "82vh", "important");
+    }
+  }
+
+  // 重要：先設定 onload，再設定 src
+  imagePreviewImage.onload = applyPreviewSize;
+
+  imagePreviewImage.src = imageSrc;
+
+  // 如果圖片已經被快取，onload 可能不會重新跑，所以補一次
+  if (imagePreviewImage.complete) {
+    applyPreviewSize();
+  }
+
+  imagePreviewOverlay.classList.add("open");
+  imagePreviewOverlay.setAttribute("aria-hidden", "false");
+}
+
+function closeImagePreview() {
+  imagePreviewOverlay.classList.remove("open");
+  imagePreviewOverlay.setAttribute("aria-hidden", "true");
+
+  imagePreviewImage.src = "";
+}
+
+closeImagePreviewButton.addEventListener("click", function () {
+  closeImagePreview();
+});
+
+imagePreviewOverlay.addEventListener("click", function (event) {
+  if (event.target === imagePreviewOverlay) {
+    closeImagePreview();
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape" && imagePreviewOverlay.classList.contains("open")) {
+    closeImagePreview();
+  }
+});
+
+// =========================
+// 片尾跑馬燈：可手動捲動版
+// =========================
+
+let creditsScrollTimer = null;
+let creditsUserPauseTimer = null;
+
+// 數字越大，跑馬燈越快
+// 建議範圍：0.8 ~ 2.2
+let creditsScrollSpeed = 1.45;
+
+function stopCreditsAutoScroll() {
+  if (creditsScrollTimer !== null) {
+    clearInterval(creditsScrollTimer);
+    creditsScrollTimer = null;
+  }
+}
+
+function showCreditsButtonsIfReachBottom() {
+  const reachedBottom =
+    creditsRollWrap.scrollTop + creditsRollWrap.clientHeight >=
+    creditsRollWrap.scrollHeight - 8;
+
+  if (reachedBottom) {
+    stopCreditsAutoScroll();
+    creditsButtonArea.classList.add("show");
+  }
+}
+
+function startCreditsAutoScroll() {
+  stopCreditsAutoScroll();
+
+  creditsScrollTimer = setInterval(function () {
+    creditsRollWrap.scrollTop += creditsScrollSpeed;
+
+    showCreditsButtonsIfReachBottom();
+  }, 16);
+}
+
+function pauseCreditsForUserReading() {
+  stopCreditsAutoScroll();
+
+  if (creditsUserPauseTimer !== null) {
+    clearTimeout(creditsUserPauseTimer);
+    creditsUserPauseTimer = null;
+  }
+
+  // 玩家手動捲動後，暫停 6 秒方便閱讀
+  // 如果想讓玩家一捲就永遠不自動播放，可以把下面 setTimeout 整段刪掉
+  creditsUserPauseTimer = setTimeout(function () {
+    if (!creditsButtonArea.classList.contains("show")) {
+      startCreditsAutoScroll();
+    }
+  }, 6000);
+}
+
+function startCredits(isCorrect) {
+  finalAccusationCorrect = isCorrect;
+
+  console.log("startCredits 已啟動，isCorrect =", isCorrect);
+
+  // 進入片尾跑馬燈時，切換成片尾音樂
+  playBgm(creditsBgm);
+
+  showScreen(creditsScreen);
+
+  creditsButtonArea.classList.remove("show");
+
+  // 錯誤結局才顯示「回到指認兇手環節」
+  if (isCorrect) {
+    retryAccusationButton.style.display = "none";
+  } else {
+    retryAccusationButton.style.display = "inline-block";
+  }
+
+  // 停掉舊的 CSS 動畫，改用 JS 捲動
+  creditsRoll.style.animation = "none";
+
+  // 每次進入片尾都從最上方重新開始
+  creditsRollWrap.scrollTop = 0;
+
+  // 先強制顯示片尾內容
+  creditsScreen.classList.add("active");
+
+  // 開始自動往下捲
+  startCreditsAutoScroll();
+}
+
+// 玩家手動滾動時，暫停自動跑馬燈
+creditsRollWrap.addEventListener("wheel", function () {
+  pauseCreditsForUserReading();
+});
+
+creditsRollWrap.addEventListener("touchstart", function () {
+  pauseCreditsForUserReading();
+});
+
+creditsRollWrap.addEventListener("scroll", function () {
+  showCreditsButtonsIfReachBottom();
+});
+
+// =========================
+// 參考說明頁面
+// =========================
+
+const referenceData = {
+  life: {
+    title: "生活",
+    items: [
+      {
+        question: "大姊為什麼會穿洋裝呢？",
+        answer: "日治時期臺灣人受到新式教育和西洋文化的影響開始流行穿西式服裝，而這種「男生穿西裝、女生穿洋裝」的習慣也一直延續到戰後沒有消失喔！"
+      },
+      {
+        question: "細姨為什麼會穿旗袍呢？",
+        answer: "旗袍在日治時期其實一度相當流行過，但因為戰時的皇民化政策而中斷，戰後又再次成為女性間的流行服飾！"
+      },
+      {
+        question: "大哥與二哥為什麼會混穿開襟衫和西裝褲呢？",
+        answer: "從日治時期過渡到戰後的政權轉移之下，會有人將代表不同文化的服飾混穿，且戰後臺灣人面對國家、國族認同的煩惱也反映在穿著上……當時的服裝習慣可以說是相當多元呢！"
+      },
+      {
+        question: "郝國強為什麼會穿中山裝呢？",
+        answer: "二戰結束後陸續有外省人來到臺灣，郝國強就是當時來到臺灣的外省公務員，而當時中山裝是外省公務員常見的服裝款式！"
+      },
+      {
+        question: "陌生女性寄給父親的信裡，提到百貨公司和保養品是什麼？",
+        answer: "日治時期臺灣開始出現像書信中提到的百貨公司、喫茶店這類型的休閒場所，而父親送給陌生女性的クラブ美身クリーム則是當時非常受臺灣女性歡迎的暢銷品項！"
+      },
+      {
+        question: "父親的紙鎮有什麼特別的地方嗎？",
+        answer: "這個紙鎮是由金屬材質製成的，樣式其實是參考陳澄波先生（日治時期及戰後時期油畫家）的收藏品喔！"
+      },
+      {
+        question: "大姊的手帕有什麼特別的地方嗎？",
+        answer: "日治時期臺灣女性習慣的刺繡樣式從「支那」式轉變為「日本內地」樣式，而常看到的日本刺繡樣式包含松、竹、櫻花等等，大姊手帕上的則是用藏針縫手法繡成的花莖圖樣！"
+      },
+      {
+        question: "應接室花瓶裏的花是什麼花？",
+        answer: "是燕子花！那個時代的夏天，普遍會採集燕子花來作為插花的材料。有趣的是，雖然花道插花是從日本傳過來的，但花是臺灣本土的花種喔！"
+      },
+      {
+        question: "為什麼那時候還在用打水桶啊？",
+        answer: "當時沒有熱水器，主要還是燒柴煮水喔，需要先用打水桶裝燒好的熱水，再拿去浴室洗澡。"
+      },
+      {
+        question: "當時候就有浴缸了嗎？",
+        answer: "不是每個人的家都有浴缸啦～日治時期為了減少皮膚病的發生，傳入泡澡文化，普遍大家都會去公共浴場。比較有錢的人家就會在家用瓷磚拼貼浴缸！"
+      }
+    ]
+  },
+
+  medical: {
+    title: "醫療與衛生",
+    items: [
+      {
+        question: "家裡的安眠藥有什麼特別的嗎？",
+        answer: "這款カルモチン安眠藥曾經出現在日治時期的臺南新報上廣告，而且太宰治也曾經試著用這款安眠藥自殺。"
+      },
+      {
+        question: "大姊為什麼會得肺癆啊？",
+        answer: "日治時期臺灣的檢疫場所在戰爭時期已經被炸毀，制度也沒有被保留，因此疾病開始在1946年的夏天大量盛行，主要疾病就包含肺癆。大姊可能是被她的丈夫傳染的，當時主要的傳播對象就是同居的親人！"
+      }
+    ]
+  },
+
+  family: {
+    title: "女性與家庭關係",
+    items: [
+      {
+        question: "遊戲開場時，玩家為什麼會在日本呢？",
+        answer: "日治時期，有錢人家會選擇讓小孩去日本讀書進修，少數女性也可以前往東京帝國大學念書！主角幸子就是去日本讀醫學喔！"
+      },
+      {
+        question: "什麼是細姨？她與其他角色的關係是......？",
+        answer: "細姨在臺語中是小妾的意思！日治時期雖然有自由戀愛風氣，但仍保有部分傳統的媒妁之言和蓄妾風氣。細姨是陳金龍的妾室，對於玩家那輩的人而言，是類似阿姨的角色！"
+      },
+      {
+        question: "為什麼主角和大姊沒有得到遺產分配呢？",
+        answer: "日治時期，女性無法獲得家產的繼承權。到了戰後，雖然法規讓男女都有繼承權資格，但延續過去傳統，戰後的女性大多數仍無法獲得直接繼承財產；據我們詢問身邊師長，這樣的情況，至上個世代都還可能存在！"
+      }
+    ]
+  },
+
+  economy: {
+    title: "經濟",
+    items: [
+      {
+        question: "二哥為什麼會欠債啊？",
+        answer: "戰後臺灣的經濟狀況不穩定，才剛經歷過二戰，民生物資又被送往國共內戰地區，所以物價瘋狂膨脹。這一時期也是錢在地下錢莊大量流通的階段！二哥剛好碰上這兩個不穩定因素，所以創業失敗欠債了。"
+      },
+      {
+        question: "為什麼父親會和九條先生做交易呢？",
+        answer: "戰後初期，日本人的財產會被政府接收，而且只能攜帶現金1000元回國。有些日本人因此會跟臺灣人進行交易——將無法帶走的資產賣給臺灣人，再要求臺灣人之後寄錢給他。林煶灶（大同集團的創辦人）就是這樣獲利崛起的真實案例！"
+      },
+      {
+        question: "陳金龍（玩家的父親）很有錢嗎？",
+        answer: "他們家超有錢的！當時只有有錢人家會送女兒出國念書，家裡的應接室和浴缸也都可以看出他們有錢人的身分！和九條先生交易後，陳家的經濟狀況可能更上層樓！"
+      }
+    ]
+  },
+
+  movement: {
+    title: "人群與移動",
+    items: [
+      {
+        question: "玩家從日本回到臺灣，為什麼要花費半年的時間呢？",
+        answer: "戰後許多臺灣人滯留於日本地區與中國地區。部分臺灣人選擇登記國籍並且改回中文姓名，這過程可以自行登記或是找同鄉會協助，再持護照返回臺灣。"
+      },
+      {
+        question: "為什麼這家人都有兩個姓名？",
+        answer: "日治後期，少數臺灣人在政策要求下改成日本姓氏，他們使用的新姓氏大多和原本姓氏有關係！像是玩家的日本姓氏是穎川，中文姓氏是陳，因為「穎川」是常見的陳姓堂號。戰後，臺灣人在政府的要求下陸續改回中文姓氏，戶籍、財產登記上也陸續改用中文名字！"
+      },
+      {
+        question: "戰後語言為什麼會呈現三語狀態呢？",
+        answer: "日治後期，大部分的日常生活和文書用語都是使用日語，老一輩的人則會在家中使用臺語。戰後，部分臺灣人在得知國民政府接收後，主動學習華文，政府也在後續推動華語的普及！"
+      },
+      {
+        question: "戰後為什麼他們家還住在日式房屋啊？",
+        answer: "陳金龍家族在日治時期是國語家庭，會改名、說日語及住進日式住宅。戰後也沒有搬出去，所以就一直住在日式住宅中。"
+      }
+    ]
+  },
+
+  space: {
+    title: "空間",
+    items: [
+      {
+        question: "格局圖的地板為什麼會有兩種顏色呢？",
+        answer: "淺黃色的部分是日式住宅常用的榻榻米喔，而深褐色的部分是木板而成的地板～"
+      },
+      {
+        question: "為什麼房子的入口會這樣安排？",
+        answer: "房子入口是北入喔！這不是隨便設計的，是因為入口在北邊的話，陽光就可以照入主人家常用的起居性空間。日式住宅在設計上的確會考慮到這點喔！"
+      },
+      {
+        question: "為什麼房子沒有大門啊？",
+        answer: "你居然有注意到！當時是會有木製的大門框和鐵門的，但由於設計上的美觀，因此將這個部分去掉，留下籬笆而已～"
+      },
+      {
+        question: "當時的房子周圍都會是草地嗎？",
+        answer: "不是喔！日式住宅的院子常常會有很多的花草樹木，甚至還會有小池子！主人家是會非常用心打造自己的花園的！"
+      },
+      {
+        question: "為什麼房間的榻榻米數量不一樣啊？",
+        answer: "設計上，有些房間空間比較大，所以用來拼貼的榻榻米數量就會比較多～比較大的空間，像是座敷、爸爸房和女生房都是使用十疊榻榻米，而其他比較小的空間用六疊！"
+      },
+      {
+        question: "為什麼應接室的風格比較洋式一點啊？",
+        answer: "當時的應接室都會做得比較洋式，是和洋折衷的概念喔。主要是展現給外來的客人看自家有多麼富有，這樣就比較有面子！"
+      }
+    ]
+  }
+};
+
+let currentReferenceCategoryKey = null;
+
+// 統一控制參考資料頁的四個面板
+function showReferencePanel(panelToShow) {
+  referenceHomePanel.classList.remove("active");
+  referenceQuestionPanel.classList.remove("active");
+  referenceAnswerPanel.classList.remove("active");
+  officialReferencePanel.classList.remove("active");
+
+  panelToShow.classList.add("active");
+
+  // 只有首頁顯示「返回片尾」
+  if (panelToShow === referenceHomePanel) {
+    referenceBackButton.style.display = "inline-flex";
+  } else {
+    referenceBackButton.style.display = "none";
+  }
+}
+
+// 顯示參考資料首頁：六個分類 + 正式參考資料
+function showReferenceHome() {
+  currentReferenceCategoryKey = null;
+  showReferencePanel(referenceHomePanel);
+}
+
+// 顯示某個分類的問句列表
+function showReferenceCategory(categoryKey) {
+  const category = referenceData[categoryKey];
+
+  if (!category) {
+    console.log("找不到分類資料：", categoryKey);
+    return;
+  }
+
+  console.log("成功進入分類：", category.title);
+
+  currentReferenceCategoryKey = categoryKey;
+
+  referenceCategoryTitle.textContent = category.title;
+  referenceQuestionList.innerHTML = "";
+
+  category.items.forEach(function (item, index) {
+    const questionButton = document.createElement("button");
+
+    questionButton.type = "button";
+    questionButton.className = "reference-question-button";
+    questionButton.textContent = item.question;
+
+    questionButton.addEventListener("click", function () {
+      playClickSound();
+      showReferenceAnswer(categoryKey, index);
+    });
+
+    referenceQuestionList.appendChild(questionButton);
+  });
+
+  showReferencePanel(referenceQuestionPanel);
+
+  // 進入分類頁時，讓問題列表從最上方開始
+  referenceQuestionList.scrollTop = 0;
+}
+
+// 顯示單一問句的答案
+function showReferenceAnswer(categoryKey, itemIndex) {
+  const category = referenceData[categoryKey];
+
+  if (!category || !category.items[itemIndex]) {
+    console.log("找不到答案資料：", categoryKey, itemIndex);
+    return;
+  }
+
+  const item = category.items[itemIndex];
+
+  referenceAnswerQuestion.textContent = item.question;
+  referenceAnswerText.textContent = item.answer;
+
+  showReferencePanel(referenceAnswerPanel);
+}
+
+// 顯示正式參考資料
+function showOfficialReferencePanel() {
+  showReferencePanel(officialReferencePanel);
+}
+
+// 從片尾「你想知道更多嗎？」進入參考說明首頁
+moreInfoButton.addEventListener("click", function () {
+  playClickSound();
+
+  // 進入參考資料頁後不播放音樂
+  stopBgm();
+
+  showScreen(referenceScreen);
+  showReferenceHome();
+});
+
+// 參考說明首頁左上角：返回片尾
+referenceBackButton.addEventListener("click", function () {
+  playClickSound();
+
+  showScreen(creditsScreen);
+
+  // 回片尾時直接顯示片尾按鈕，不用重跑跑馬燈
+  creditsButtonArea.classList.add("show");
+});
+
+// 六個分類按鈕
+referenceCategoryButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    playClickSound();
+
+    const categoryKey = button.getAttribute("data-category");
+
+    console.log("點擊分類：", categoryKey);
+
+    showReferenceCategory(categoryKey);
+  });
+});
+
+// 分類問句列表：返回分類首頁
+referenceCategoryBackButton.addEventListener("click", function () {
+  playClickSound();
+
+  showReferenceHome();
+});
+
+// 單題答案：返回原本分類的問句列表
+referenceAnswerBackButton.addEventListener("click", function () {
+  playClickSound();
+
+  if (currentReferenceCategoryKey) {
+    showReferenceCategory(currentReferenceCategoryKey);
+  } else {
+    showReferenceHome();
+  }
+});
+
+// 正式參考資料按鈕
+officialReferenceButton.addEventListener("click", function () {
+  playClickSound();
+
+  showOfficialReferencePanel();
+});
+
+// 正式參考資料：返回分類首頁
+officialReferenceBackButton.addEventListener("click", function () {
+  playClickSound();
+
+  showReferenceHome();
+});
+
+// =========================
+// 頁面載入時：如果有本次暫存，就顯示繼續遊戲提示
+// =========================
+
+if (loadSessionProgress()) {
+  hasStartedGame = true;
+  showScreen(resumeNoticeScreen);
+}
