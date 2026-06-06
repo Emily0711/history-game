@@ -13318,3 +13318,2662 @@ button:focus-visible,
   width: 26px;
   height: 26px;
 }
+
+/* ========================= */
+/* 已調查過的物件光點 */
+/* ========================= */
+
+.room-hotspot.investigated::after {
+  animation: none !important;
+
+  opacity: 0.42 !important;
+
+  background-color: rgba(255, 255, 255, 0.75) !important;
+
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.75),
+    0 0 18px rgba(255, 255, 255, 0.38) !important;
+}
+
+.room-hotspot.investigated:hover::after {
+  opacity: 1 !important;
+
+  background-color: rgba(255, 230, 80, 0.95) !important;
+
+  box-shadow:
+    0 0 14px rgba(255, 230, 80, 1),
+    0 0 30px rgba(255, 200, 40, 0.8),
+    0 0 52px rgba(255, 180, 20, 0.5) !important;
+}
+
+/* ================================================= */
+/* 證據圖片：點擊放大預覽 */
+/* ================================================= */
+
+.image-preview-overlay {
+  display: none;
+
+  position: fixed;
+  inset: 0;
+
+  z-index: 20000;
+
+  background: rgba(0, 0, 0, 0.82);
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 42px;
+  box-sizing: border-box;
+}
+
+.image-preview-overlay.open {
+  display: flex;
+}
+
+.image-preview-image {
+  max-width: 92vw;
+  max-height: 86vh;
+
+  width: auto;
+  height: auto;
+
+  object-fit: contain;
+
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.65);
+}
+
+.close-image-preview-button {
+  position: fixed;
+  top: 28px;
+  right: 34px;
+
+  width: 58px;
+  height: 58px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.92);
+  color: #111111;
+
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-image-preview-button:hover {
+  background: #facc15;
+  transform: scale(1.05);
+}
+
+.image-preview-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+
+  color: rgba(255, 255, 255, 0.86);
+
+  font-size: 18px;
+  letter-spacing: 2px;
+
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* 證據展開後，圖片可以點擊放大 */
+#evidenceCard.detail-open #evidenceImage {
+  cursor: zoom-in !important;
+}
+
+/* 證據圖片區提示 */
+#evidenceCard.detail-open .evidence-image-area {
+  position: relative !important;
+}
+
+#evidenceCard.detail-open .evidence-image-area::after {
+  content: "點擊圖片可放大";
+
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  transform: translateX(-50%);
+
+  padding: 5px 12px;
+
+  background: rgba(0, 0, 0, 0.62);
+  color: #ffffff;
+
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  pointer-events: none;
+}
+
+.play-notice-text {
+  margin: 0 0 56px 0;
+
+  color: #ffffff;
+
+  font-size: 28px;
+  line-height: 2;
+  letter-spacing: 2px;
+  font-weight: 500;
+
+  text-align: center;
+}
+
+/* ========================= */
+/* 暫存進度提示畫面 */
+/* ========================= */
+
+.resume-notice-screen {
+  background: #000000;
+  color: #ffffff;
+
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+.resume-notice-screen.active {
+  display: flex;
+}
+
+.resume-notice-content {
+  width: min(82vw, 900px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.resume-notice-text {
+  margin: 0 0 56px 0;
+
+  font-size: 28px;
+  line-height: 2;
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+/* ================================================= */
+/* 房間人物：調查階段整體放大 1.25 倍 */
+/* 一定放在 style.css 最下面 */
+/* ================================================= */
+
+.room-character-image,
+.room-character-image.big-brother-room-character,
+.room-character-image.reception-neighbor-character {
+  transform: translateX(-50%) scale(1.25) !important;
+  transform-origin: bottom center !important;
+}
+
+/* 滑鼠移到人物時：維持發光，並在 1.25 倍基礎上微微放大 */
+.room-character-image.room-character-glow,
+.room-character-image.big-brother-room-character.room-character-glow,
+.room-character-image.reception-neighbor-character.room-character-glow {
+  transform: translateX(-50%) scale(1.29) !important;
+  transform-origin: bottom center !important;
+}
+
+/* 點擊時不要縮回原本大小 */
+.room-character-image:active {
+  transform: translateX(-50%) scale(1.22) !important;
+  transform-origin: bottom center !important;
+}
+
+/* ================================================= */
+/* 前導、結局人物：整體放大 */
+/* 一定放在 style.css 最下面 */
+/* ================================================= */
+
+/* 前導單人立繪 */
+.character-image {
+  transform: translateX(-50%) scale(1.25) !important;
+  transform-origin: bottom center !important;
+}
+
+/* 前導客廳多人立繪 */
+.prologue-family-character {
+  transform: translateX(-50%) scale(1.25) !important;
+  transform-origin: bottom center !important;
+}
+
+/* 前導客廳多人：正在說話的人再稍微亮起、放大一點 */
+.prologue-family-character.active {
+  transform: translateX(-50%) scale(1.29) !important;
+  transform-origin: bottom center !important;
+}
+
+/* 結局人物立繪 */
+.ending-character {
+  transform: translateX(-50%) scale(1.25) !important;
+  transform-origin: bottom center !important;
+}
+
+/* 結局人物：正在說話的人再稍微亮起、放大一點 */
+.ending-character.active {
+  transform: translateX(-50%) scale(1.29) !important;
+  transform-origin: bottom center !important;
+}
+
+/* ================================================= */
+/* 片尾跑馬燈畫面 */
+/* ================================================= */
+
+.credits-screen {
+  position: relative;
+
+  background: #000000;
+  color: #ffffff;
+
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.credits-screen.active {
+  display: flex;
+}
+
+.credits-roll-wrap {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+}
+
+.credits-roll {
+  position: absolute;
+
+  top: 100%;
+
+  width: min(900px, 82vw);
+
+  text-align: center;
+
+  animation: creditsRollMove 85s linear forwards;
+}
+
+.credits-roll h1 {
+  margin: 80px 0 28px;
+
+  font-size: 34px;
+  letter-spacing: 6px;
+  font-weight: 900;
+}
+
+.credits-roll p {
+  margin: 14px 0;
+
+  font-size: 20px;
+  line-height: 1.9;
+  letter-spacing: 1px;
+}
+
+@keyframes creditsRollMove {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-145%);
+  }
+}
+
+/* 片尾結束後的按鈕 */
+.credits-button-area {
+  display: none;
+
+  position: absolute;
+  left: 50%;
+  bottom: 80px;
+  transform: translateX(-50%);
+
+  gap: 22px;
+
+  z-index: 5;
+}
+
+.credits-button-area.show {
+  display: flex;
+}
+
+.credits-button {
+  padding: 14px 28px;
+
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+}
+
+.credits-button:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-2px);
+}
+
+/* ================================================= */
+/* 參考說明頁面 */
+/* ================================================= */
+
+.reference-screen {
+  background: #000000;
+  color: #ffffff;
+
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.reference-screen.active {
+  display: flex;
+}
+
+.reference-card {
+  width: min(980px, 86vw);
+  height: min(720px, 86vh);
+
+  padding: 44px 56px;
+
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  row-gap: 28px;
+}
+
+.reference-card h1 {
+  margin: 0;
+
+  text-align: center;
+
+  font-size: 42px;
+  letter-spacing: 4px;
+}
+
+.reference-content {
+  overflow-y: auto;
+
+  padding-right: 16px;
+
+  font-size: 20px;
+  line-height: 1.9;
+  letter-spacing: 1px;
+}
+
+.reference-content h2 {
+  margin: 28px 0 12px;
+
+  font-size: 28px;
+  color: #facc15;
+}
+
+.reference-back-button {
+  justify-self: center;
+
+  padding: 12px 36px;
+
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+
+  font-size: 20px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.reference-back-button:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+.credits-button-area {
+  z-index: 50 !important;
+  pointer-events: auto !important;
+}
+
+.credits-button {
+  pointer-events: auto !important;
+}
+
+.credits-roll-wrap,
+.credits-roll {
+  pointer-events: none !important;
+}
+
+/* ================================================= */
+/* 片尾跑馬燈：可手動捲動版 */
+/* ================================================= */
+
+.credits-roll-wrap {
+  position: absolute !important;
+  inset: 0 !important;
+
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  display: block !important;
+
+  padding: 0 !important;
+
+  pointer-events: auto !important;
+
+  scrollbar-width: thin;
+}
+
+/* Chrome / Edge 的卷軸樣式 */
+.credits-roll-wrap::-webkit-scrollbar {
+  width: 8px;
+}
+
+.credits-roll-wrap::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.credits-roll-wrap::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.38);
+  border-radius: 999px;
+}
+
+/* 跑馬燈內容本體：取消 CSS 動畫，改由 JS 控制捲動 */
+.credits-roll {
+  position: relative !important;
+
+  top: auto !important;
+
+  width: min(900px, 82vw) !important;
+
+  margin: 0 auto !important;
+
+  padding-top: 70vh !important;
+  padding-bottom: 52vh !important;
+
+  text-align: center !important;
+
+  animation: none !important;
+
+  pointer-events: none !important;
+}
+
+/* 按鈕區維持可以點擊 */
+.credits-button-area {
+  z-index: 50 !important;
+  pointer-events: auto !important;
+}
+
+.credits-button {
+  pointer-events: auto !important;
+}
+
+/* ================================================= */
+/* 調查完成提示畫面 */
+/* ================================================= */
+
+.ending-notice-screen {
+  background: #000000;
+  color: #ffffff;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.ending-notice-screen.active {
+  display: flex;
+}
+
+.ending-complete-panel {
+  width: min(820px, 82vw);
+  min-height: 420px;
+
+  padding: 54px 70px;
+
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  border-radius: 26px;
+
+  background: rgba(0, 0, 0, 0.88);
+
+  text-align: center;
+
+  box-shadow: 0 0 28px rgba(255, 255, 255, 0.12);
+}
+
+.ending-complete-title {
+  margin: 0 0 36px;
+
+  font-size: 46px;
+  font-weight: 900;
+  letter-spacing: 6px;
+}
+
+.ending-complete-main-text {
+  margin: 0 0 20px;
+
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.8;
+  letter-spacing: 2px;
+}
+
+.ending-complete-sub-text {
+  width: min(680px, 100%);
+  margin: 0 auto 48px;
+
+  font-size: 22px;
+  line-height: 1.9;
+  letter-spacing: 1.5px;
+}
+
+.ending-complete-button-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 26px;
+}
+
+.ending-complete-main-button,
+.ending-complete-sub-button {
+  min-width: 230px;
+  height: 64px;
+
+  padding: 0 26px;
+
+  border-radius: 18px;
+
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 2px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.ending-complete-main-button {
+  border: 2px solid #ffffff;
+  background: #8a4b1f;
+  color: #ffffff;
+}
+
+.ending-complete-sub-button {
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  background: transparent;
+  color: #ffffff;
+}
+
+.ending-complete-main-button:hover,
+.ending-complete-sub-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(255, 255, 255, 0.16);
+}
+
+.ending-complete-main-button:active,
+.ending-complete-sub-button:active {
+  transform: scale(0.96);
+}
+
+/* ================================================= */
+/* 收齊證據後：右側常駐進入指認按鈕 */
+/* ================================================= */
+
+.enter-accusation-button {
+  display: none;
+
+  position: absolute;
+  top: 190px;
+  right: 58px;
+
+  width: 96px;
+  height: 46px;
+
+  z-index: 80;
+
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  border-radius: 14px;
+
+  background: rgba(122, 70, 29, 0.94);
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  line-height: 1.2;
+
+  cursor: pointer;
+
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.28);
+  transition: 0.2s;
+}
+
+.search-screen.active .enter-accusation-button.show {
+  display: flex;
+}
+
+.enter-accusation-button:hover {
+  transform: translateY(-2px);
+  background: rgba(145, 82, 35, 0.98);
+  box-shadow: 0 9px 18px rgba(0, 0, 0, 0.34);
+}
+
+.enter-accusation-button:active {
+  transform: scale(0.96);
+}
+
+/* =========================
+   參考說明頁面
+========================= */
+
+.reference-screen {
+  background: #050505;
+  color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  font-family: "Noto Sans TC", sans-serif;
+}
+
+.reference-screen.active {
+  display: flex;
+}
+
+.reference-container {
+  position: relative;
+  width: min(1200px, 88vw);
+  height: min(760px, 82vh);
+  padding: 56px 72px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 28px;
+  background: rgba(0, 0, 0, 0.92);
+  box-shadow: 0 0 36px rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.reference-back-button,
+.reference-small-back-button {
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-radius: 14px;
+  padding: 10px 22px;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reference-back-button {
+  position: absolute;
+  left: 32px;
+  top: 28px;
+}
+
+.reference-small-back-button {
+  margin-bottom: 24px;
+}
+
+.reference-back-button:hover,
+.reference-small-back-button:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.reference-panel {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.reference-panel.active {
+  display: block;
+}
+
+.reference-title {
+  margin: 12px 0 24px;
+  text-align: center;
+  font-size: 52px;
+  letter-spacing: 0.12em;
+}
+
+.reference-intro {
+  text-align: center;
+  font-size: 24px;
+  line-height: 1.9;
+  margin-bottom: 42px;
+}
+
+.reference-category-grid {
+  width: min(760px, 80%);
+  margin: 0 auto 36px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.reference-category-button,
+.official-reference-button,
+.reference-question-button {
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-radius: 18px;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.reference-category-button {
+  min-height: 86px;
+}
+
+.reference-category-button:hover,
+.official-reference-button:hover,
+.reference-question-button:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.official-reference-button {
+  display: block;
+  width: 320px;
+  height: 64px;
+  margin: 0 auto;
+}
+
+.reference-section-title {
+  text-align: center;
+  font-size: 44px;
+  letter-spacing: 0.12em;
+  margin: 0 0 12px;
+}
+
+.reference-section-hint {
+  text-align: center;
+  font-size: 20px;
+  opacity: 0.82;
+  margin-bottom: 24px;
+}
+
+.reference-question-list {
+  width: min(900px, 92%);
+  height: 470px;
+  margin: 0 auto;
+  padding: 8px 18px 16px;
+  overflow-y: auto;
+}
+
+.reference-question-button {
+  display: block;
+  width: 100%;
+  min-height: 64px;
+  margin-bottom: 16px;
+  padding: 14px 22px;
+  text-align: left;
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.reference-answer-question {
+  width: min(900px, 92%);
+  margin: 30px auto 28px;
+  text-align: center;
+  font-size: 36px;
+  line-height: 1.45;
+}
+
+.reference-answer-text {
+  width: min(900px, 92%);
+  max-height: 460px;
+  margin: 0 auto;
+  padding: 32px 42px;
+  overflow-y: auto;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 24px;
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+
+.official-reference-scroll {
+  width: min(900px, 92%);
+  height: 520px;
+  margin: 28px auto 0;
+  padding: 32px 42px;
+  overflow-y: auto;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 20px;
+  line-height: 1.8;
+}
+
+/* 卷軸樣式 */
+.reference-question-list::-webkit-scrollbar,
+.reference-answer-text::-webkit-scrollbar,
+.official-reference-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.reference-question-list::-webkit-scrollbar-thumb,
+.reference-answer-text::-webkit-scrollbar-thumb,
+.official-reference-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+}
+
+.reference-question-list::-webkit-scrollbar-track,
+.reference-answer-text::-webkit-scrollbar-track,
+.official-reference-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* =========================
+   參考資料頁面版面微調
+   ========================= */
+
+/* 整個黑色外框內容稍微往上、縮小內距，避免下面按鈕被擠掉 */
+.reference-panel,
+.reference-content,
+.reference-container {
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+}
+
+/* 參考頁主標題：想知道更多嗎？ / 生活 */
+.reference-title,
+#referenceTitle {
+  font-size: clamp(36px, 4vw, 58px);
+  margin-bottom: 24px;
+  line-height: 1.15;
+}
+
+/* 參考頁說明文字稍微縮小 */
+.reference-intro,
+#referenceIntroText {
+  font-size: clamp(20px, 1.8vw, 30px);
+  line-height: 1.7;
+  margin-bottom: 42px;
+}
+
+/* 六個分類按鈕區塊：縮小間距，讓正式參考資料按鈕露出來 */
+.reference-category-grid,
+#referenceCategoryGrid {
+  gap: 24px 32px;
+  margin-bottom: 28px;
+}
+
+/* 分類按鈕稍微矮一點 */
+.reference-category-button {
+  min-height: 92px;
+  font-size: clamp(24px, 2vw, 34px);
+  padding: 18px 24px;
+}
+
+/* 正式參考資料按鈕不要被擠到太下面 */
+.reference-official-button,
+#officialReferenceButton {
+  margin-top: 8px;
+  min-height: 72px;
+  font-size: clamp(22px, 1.8vw, 30px);
+}
+
+/* =========================
+   分類內頁：例如「生活」
+   ========================= */
+
+/* 左上兩個按鈕改成上下排列，不要重疊 */
+.reference-top-buttons {
+  position: absolute;
+  top: 32px;
+  left: 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 20;
+}
+
+/* 如果你的兩顆按鈕是分開 ID，也一起指定 */
+#referenceBackButton,
+#referenceCategoryBackButton {
+  position: static;
+  width: 150px;
+  height: 58px;
+  font-size: 22px;
+}
+
+/* 分類頁大標上移、縮小 */
+.reference-category-title,
+#referenceCategoryTitle {
+  font-size: clamp(38px, 4vw, 60px);
+  margin-top: 10px;
+  margin-bottom: 18px;
+  line-height: 1.15;
+}
+
+/* 分類頁副標縮小，節省空間 */
+.reference-category-subtitle,
+#referenceCategorySubtitle {
+  font-size: clamp(18px, 1.5vw, 24px);
+  margin-bottom: 28px;
+}
+
+/* 問題清單往上拉高一點，增加可滾動區域 */
+.reference-question-list,
+#referenceQuestionList {
+  max-height: 48vh;
+  padding-right: 18px;
+}
+
+/* 問句按鈕稍微矮一點，讓畫面能看到更多題目 */
+.reference-question-button {
+  min-height: 72px;
+  padding: 18px 26px;
+  font-size: clamp(20px, 1.7vw, 28px);
+  margin-bottom: 18px;
+}
+
+/* =========================
+   參考資料頁：左上返回按鈕避免重疊
+   ========================= */
+
+/* 外層容器作為定位基準 */
+.reference-container {
+  position: relative;
+}
+
+/* 返回片尾：固定在第一排 */
+#referenceBackButton {
+  position: absolute;
+  top: 32px;
+  left: 42px;
+  z-index: 30;
+}
+
+
+/* ================================================= */
+/* 參考說明頁面：首頁壓縮版，確保 7 顆按鈕都看得到 */
+/* ================================================= */
+
+.reference-screen {
+  background: #000000 !important;
+  color: #ffffff !important;
+
+  justify-content: center !important;
+  align-items: center !important;
+
+  overflow: hidden !important;
+}
+
+.reference-container {
+  position: relative !important;
+
+  width: min(1180px, 88vw) !important;
+  height: min(650px, 82vh) !important;
+
+  padding: 34px 58px 30px !important;
+  box-sizing: border-box !important;
+
+  border: 1.5px solid rgba(255, 255, 255, 0.75) !important;
+  border-radius: 24px !important;
+
+  background: rgba(255, 255, 255, 0.035) !important;
+  box-shadow: 0 0 28px rgba(255, 255, 255, 0.08) !important;
+
+  overflow: hidden !important;
+}
+
+/* 首頁內容排版 */
+.reference-home-panel {
+  height: 100% !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  gap: 22px !important;
+}
+
+/* 大標縮小 */
+.reference-title {
+  margin: 0 !important;
+
+  font-size: clamp(42px, 4.5vw, 62px) !important;
+  line-height: 1.1 !important;
+  letter-spacing: 4px !important;
+  text-align: center !important;
+}
+
+/* 說明文字縮小 */
+.reference-intro {
+  margin: 0 !important;
+
+  font-size: clamp(18px, 1.7vw, 24px) !important;
+  line-height: 1.65 !important;
+  letter-spacing: 1px !important;
+  text-align: center !important;
+}
+
+/* 六個分類按鈕 */
+.reference-category-grid {
+  width: min(820px, 78vw) !important;
+
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 18px 24px !important;
+
+  margin: 14px auto 4px !important;
+}
+
+.reference-category-button {
+  height: 74px !important;
+
+  padding: 0 22px !important;
+
+  border: 1.5px solid rgba(255, 255, 255, 0.9) !important;
+  border-radius: 18px !important;
+
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+
+  font-size: clamp(20px, 2vw, 28px) !important;
+  font-weight: 900 !important;
+  letter-spacing: 1px !important;
+
+  cursor: pointer !important;
+
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  line-height: 1 !important;
+}
+
+.reference-category-button:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 正式參考資料按鈕：一定顯示在六顆按鈕下方 */
+.official-reference-button {
+  display: block !important;
+
+  width: min(360px, 52vw) !important;
+  height: 58px !important;
+
+  margin: 0 auto !important;
+  padding: 0 26px !important;
+
+  border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 999px !important;
+
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+
+  font-size: clamp(18px, 1.7vw, 24px) !important;
+  font-weight: 900 !important;
+  letter-spacing: 1px !important;
+
+  cursor: pointer !important;
+
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+}
+
+.official-reference-button:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 左上返回片尾：只作為首頁按鈕 */
+.reference-back-button {
+  position: absolute !important;
+  top: 30px !important;
+  left: 36px !important;
+  z-index: 30 !important;
+
+  min-width: 126px !important;
+  height: 52px !important;
+
+  padding: 0 22px !important;
+
+  border: 1.5px solid rgba(255, 255, 255, 0.9) !important;
+  border-radius: 14px !important;
+
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+
+  font-size: 20px !important;
+  font-weight: 900 !important;
+
+  cursor: pointer !important;
+
+  white-space: nowrap !important;
+}
+
+.reference-back-button:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* 分類頁、答案頁、正式參考資料頁的返回按鈕 */
+.reference-small-back-button {
+  position: absolute !important;
+  top: 30px !important;
+  left: 36px !important;
+  z-index: 30 !important;
+
+  min-width: 126px !important;
+  height: 52px !important;
+
+  padding: 0 22px !important;
+
+  border: 1.5px solid rgba(255, 255, 255, 0.9) !important;
+  border-radius: 14px !important;
+
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+
+  font-size: 20px !important;
+  font-weight: 900 !important;
+
+  cursor: pointer !important;
+
+  white-space: nowrap !important;
+}
+
+.reference-small-back-button:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* 分類頁標題縮小、上移 */
+.reference-section-title {
+  margin: 34px 0 12px !important;
+
+  font-size: clamp(36px, 4vw, 54px) !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+  letter-spacing: 4px !important;
+}
+
+.reference-section-hint {
+  margin: 0 0 28px !important;
+
+  font-size: clamp(17px, 1.6vw, 22px) !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  text-align: center !important;
+}
+
+/* 問題列表可滾動區域加高 */
+.reference-question-list {
+  width: min(820px, 78vw) !important;
+  max-height: 390px !important;
+
+  margin: 0 auto !important;
+  padding-right: 14px !important;
+
+  overflow-y: auto !important;
+}
+
+/* 問題按鈕不要太高 */
+.reference-question-button {
+  min-height: 58px !important;
+
+  padding: 14px 22px !important;
+
+  font-size: clamp(18px, 1.65vw, 24px) !important;
+  line-height: 1.35 !important;
+  white-space: normal !important;
+}
+
+/* 答案頁文字區 */
+.reference-answer-text,
+.official-reference-scroll {
+  max-height: 410px !important;
+  overflow-y: auto !important;
+}
+
+#referenceBackButton,
+#referenceCategoryBackButton,
+#referenceAnswerBackButton,
+#officialReferenceBackButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 56px;
+  min-width: 160px;
+  padding: 0 28px;
+
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ================================================= */
+/* 參考說明頁：面板切換修正版 */
+/* ================================================= */
+
+.reference-panel {
+  display: none !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* 首頁需要用 flex，讓七顆按鈕維持置中 */
+.reference-home-panel.active {
+  display: flex !important;
+}
+
+/* 分類頁、答案頁、正式參考資料頁用 block */
+.reference-question-panel.active,
+.reference-answer-panel.active,
+.official-reference-panel.active {
+  display: block !important;
+}
+
+/* 沒有 active 的面板一定隱藏 */
+.reference-home-panel:not(.active),
+.reference-question-panel:not(.active),
+.reference-answer-panel:not(.active),
+.official-reference-panel:not(.active) {
+  display: none !important;
+}
+
+/* 分類頁只顯示返回分類 */
+.reference-question-panel.active #referenceCategoryBackButton,
+.reference-answer-panel.active #referenceAnswerBackButton,
+.official-reference-panel.active #officialReferenceBackButton {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ================================================= */
+/* 參考資料分類頁：100% 縮放防裁切修正 */
+/* ================================================= */
+
+/* 分類頁本身：改成上下排版，不讓內容超出外框 */
+#referenceQuestionPanel.reference-panel.active {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  box-sizing: border-box !important;
+  padding: 5.2vh 6vw 3.8vh !important;
+
+  overflow: hidden !important;
+}
+
+/* 左上角返回分類按鈕固定位置，不參與內容排版 */
+#referenceCategoryBackButton {
+  position: absolute !important;
+  top: 5.2vh !important;
+  left: 5.2vw !important;
+
+  width: 150px !important;
+  height: 58px !important;
+
+  font-size: 24px !important;
+  line-height: 1 !important;
+  z-index: 20 !important;
+}
+
+/* 分類大標縮小一點、上移一點 */
+#referenceCategoryTitle {
+  margin: 0 !important;
+  margin-top: 1.2vh !important;
+  margin-bottom: 0.8vh !important;
+
+  font-size: clamp(42px, 4.2vw, 64px) !important;
+  line-height: 1.05 !important;
+}
+
+/* 大標下面的小字 */
+.reference-category-subtitle,
+.reference-question-panel-subtitle {
+  margin: 0 0 1.6vh !important;
+
+  font-size: clamp(18px, 1.6vw, 26px) !important;
+  line-height: 1.3 !important;
+}
+
+/* 問題列表：重點是限制高度，讓它自己捲動 */
+#referenceQuestionList {
+  width: min(880px, 72vw) !important;
+
+  max-height: 48vh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  box-sizing: border-box !important;
+
+  margin: 0 auto !important;
+  padding: 0 20px 34px 0 !important;
+
+  scrollbar-gutter: stable !important;
+}
+
+/* 問題按鈕縮小一點，避免 100% 時被裁切 */
+.reference-question-button {
+  width: 100% !important;
+
+  min-height: 58px !important;
+  padding: 12px 24px !important;
+  margin-bottom: 12px !important;
+
+  font-size: clamp(19px, 1.8vw, 28px) !important;
+  line-height: 1.25 !important;
+
+  box-sizing: border-box !important;
+}
+
+/* 最後一顆按鈕多留一點底部空間，避免貼到外框 */
+.reference-question-button:last-child {
+  margin-bottom: 36px !important;
+}
+
+.official-reference-scroll {
+  white-space: pre-line;
+  text-align: left;
+}
+
+/* ================================================= */
+/* 指認兇手畫面：100% 縮放完整顯示修正版 */
+/* 貼在 style.css 最下面 */
+/* ================================================= */
+
+.accusation-screen {
+  padding: 18px !important;
+  box-sizing: border-box !important;
+
+  justify-content: center !important;
+  align-items: center !important;
+
+  overflow: hidden !important;
+}
+
+/* 整個米色面板縮小，避免超出畫面 */
+.accusation-panel {
+  width: min(82vw, 1360px) !important;
+  height: min(820px, 86vh) !important;
+  min-height: 0 !important;
+
+  padding: 24px 42px 26px !important;
+
+  display: grid !important;
+  grid-template-rows: auto minmax(0, 1fr) !important;
+  row-gap: 10px !important;
+
+  align-items: stretch !important;
+
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* 大標題縮小一點 */
+.accusation-title {
+  margin: 0 !important;
+
+  font-size: clamp(34px, 3.4vw, 48px) !important;
+  line-height: 1.1 !important;
+  letter-spacing: 7px !important;
+
+  text-align: center !important;
+}
+
+/* 第一階段：選人物 */
+.suspect-select-area {
+  min-height: 0 !important;
+
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* 第二階段：選證據 */
+/* JS 會把它設成 display:flex，所以這裡用屬性選擇器強制改成 grid */
+#evidenceSelectArea[style*="flex"] {
+  display: grid !important;
+}
+
+/* 選證據區改成固定五段：人物文字 / 說明 / 證據卡 / 底部按鈕 / 錯誤訊息 */
+.evidence-select-area {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto !important;
+  row-gap: 10px !important;
+
+  align-items: center !important;
+  justify-items: center !important;
+
+  overflow: hidden !important;
+}
+
+/* 「你選擇指認：大哥」 */
+.selected-suspect-text {
+  margin: 0 !important;
+
+  font-size: clamp(19px, 1.8vw, 26px) !important;
+  line-height: 1.25 !important;
+}
+
+/* 說明文字 */
+.accusation-instruction {
+  margin: 0 !important;
+
+  font-size: clamp(18px, 1.7vw, 24px) !important;
+  line-height: 1.35 !important;
+  letter-spacing: 1px !important;
+
+  text-align: center !important;
+}
+
+/* 證據卡片區：維持 5 欄 2 列，但整體壓縮 */
+.accusation-evidence-grid {
+  width: min(100%, 1040px) !important;
+  max-width: 1040px !important;
+
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+
+  margin: 0 !important;
+
+  align-self: center !important;
+  overflow: visible !important;
+}
+
+/* 每張證據卡縮小 */
+.accusation-evidence-card {
+  min-height: 0 !important;
+  height: clamp(118px, 15vh, 148px) !important;
+
+  padding: 8px 6px !important;
+
+  border-width: 3px !important;
+  border-radius: 13px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  overflow: hidden !important;
+}
+
+/* 證據圖片縮小 */
+.accusation-evidence-image {
+  width: clamp(48px, 4.2vw, 66px) !important;
+  height: clamp(40px, 3.7vw, 56px) !important;
+
+  margin-bottom: 6px !important;
+
+  object-fit: contain !important;
+}
+
+/* 關鍵01 / 次要01 */
+.accusation-evidence-code {
+  margin-bottom: 3px !important;
+
+  font-size: clamp(12px, 1vw, 14px) !important;
+  line-height: 1.15 !important;
+}
+
+/* 證據名稱 */
+.accusation-evidence-name {
+  font-size: clamp(13px, 1.1vw, 15px) !important;
+  line-height: 1.25 !important;
+
+  text-align: center !important;
+  word-break: keep-all !important;
+}
+
+/* 底部返回 / 計數 / 確認 */
+.accusation-bottom-row {
+  width: min(100%, 1040px) !important;
+
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center !important;
+
+  column-gap: 20px !important;
+
+  margin: 4px 0 0 !important;
+}
+
+/* 左右按鈕縮小 */
+.accusation-sub-button,
+.accusation-main-button {
+  min-width: 150px !important;
+  height: 52px !important;
+
+  padding: 0 24px !important;
+
+  border-radius: 16px !important;
+
+  font-size: clamp(18px, 1.5vw, 24px) !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+}
+
+/* 左邊按鈕靠左，右邊按鈕靠右 */
+.accusation-sub-button {
+  justify-self: start !important;
+}
+
+.accusation-main-button {
+  justify-self: end !important;
+}
+
+/* 已選擇：0 / 2 */
+.selected-evidence-counter {
+  justify-self: center !important;
+
+  font-size: clamp(18px, 1.6vw, 26px) !important;
+  line-height: 1.2 !important;
+  font-weight: 800 !important;
+
+  white-space: nowrap !important;
+}
+
+/* 錯誤訊息保留一點高度，避免跳動 */
+.accusation-error-text {
+  min-height: 24px !important;
+  margin: 0 !important;
+
+  font-size: clamp(16px, 1.3vw, 20px) !important;
+  line-height: 1.2 !important;
+
+  text-align: center !important;
+}
+
+/* ================================================= */
+/* 螢幕高度比較小時，再壓縮一點 */
+/* ================================================= */
+
+@media (max-height: 820px) {
+  .accusation-panel {
+    width: min(84vw, 1300px) !important;
+    height: 88vh !important;
+
+    padding: 18px 38px 20px !important;
+    row-gap: 8px !important;
+  }
+
+  .accusation-title {
+    font-size: clamp(30px, 3vw, 42px) !important;
+  }
+
+  .accusation-evidence-grid {
+    gap: 10px !important;
+  }
+
+  .accusation-evidence-card {
+    height: clamp(104px, 14vh, 132px) !important;
+    padding: 6px 5px !important;
+  }
+
+  .accusation-evidence-image {
+    width: 50px !important;
+    height: 42px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .accusation-evidence-name {
+    font-size: 13px !important;
+  }
+
+  .accusation-sub-button,
+  .accusation-main-button {
+    height: 46px !important;
+    font-size: 19px !important;
+  }
+}
+
+/* ================================================= */
+/* 指認兇手畫面：修正人物選擇與證據選擇重疊 */
+/* 一定貼在 style.css 最下面 */
+/* ================================================= */
+
+/* 讓 JS 控制人物選擇區，不要被 CSS 強制顯示 */
+#suspectSelectArea[style*="none"] {
+  display: none !important;
+}
+
+#suspectSelectArea[style*="flex"] {
+  display: flex !important;
+}
+
+/* 讓 JS 控制證據選擇區 */
+#evidenceSelectArea[style*="none"] {
+  display: none !important;
+}
+
+#evidenceSelectArea[style*="flex"] {
+  display: grid !important;
+}
+
+/* ================================================= */
+/* 指認兇手畫面：排版微調版 */
+/* 目標：上方文字集中、整體下移、證據卡片變大 */
+/* ================================================= */
+
+/* 整個指認面板 */
+.accusation-panel {
+  width: min(84vw, 1360px) !important;
+  height: min(800px, 86vh) !important;
+
+  padding: 36px 48px 34px !important;
+
+  display: grid !important;
+  grid-template-rows: auto minmax(0, 1fr) !important;
+  row-gap: 14px !important;
+
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+/* 大標題：不要貼太上面 */
+.accusation-title {
+  margin: 0 !important;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+
+  font-size: clamp(38px, 3.4vw, 52px) !important;
+  line-height: 1.1 !important;
+  letter-spacing: 7px !important;
+
+  text-align: center !important;
+}
+
+/* =============================== */
+/* 第一階段：人物選擇畫面 */
+/* =============================== */
+
+.suspect-select-area {
+  min-height: 0 !important;
+
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+
+  padding-top: 110px !important;
+  box-sizing: border-box !important;
+}
+
+/* 人物選擇說明文字：拉近標題，不要掉到中間 */
+.suspect-select-area .accusation-instruction {
+  margin: 0 0 18px !important;
+
+  font-size: clamp(20px, 1.8vw, 28px) !important;
+  line-height: 1.35 !important;
+}
+
+/* 人物按鈕區 */
+.suspect-button-grid,
+.suspect-grid {
+  margin-top: 0 !important;
+  gap: 28px 34px !important;
+}
+
+/* 如果你的人物按鈕不是用上面兩個 class，也一併壓縮 */
+.suspect-button {
+  height: 76px !important;
+  font-size: clamp(28px, 2.4vw, 40px) !important;
+}
+
+/* =============================== */
+/* 第二階段：證據選擇畫面 */
+/* =============================== */
+
+.evidence-select-area {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+
+  display: grid !important;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto !important;
+  row-gap: 12px !important;
+
+  align-items: center !important;
+  justify-items: center !important;
+
+  padding-top: 6px !important;
+  box-sizing: border-box !important;
+
+  overflow: hidden !important;
+}
+
+/* 「你選擇指認：二哥」 */
+.selected-suspect-text {
+  margin: 0 !important;
+  margin-top: 0 !important;
+
+  font-size: clamp(22px, 1.9vw, 30px) !important;
+  line-height: 1.25 !important;
+  font-weight: 800 !important;
+}
+
+/* 「請選擇 2 項...」 */
+.evidence-select-area .accusation-instruction {
+  margin: 0 !important;
+
+  font-size: clamp(21px, 1.8vw, 28px) !important;
+  line-height: 1.35 !important;
+  letter-spacing: 1px !important;
+
+  text-align: center !important;
+}
+
+/* 證據卡片區：維持 5 * 2，但卡片變大 */
+.accusation-evidence-grid {
+  width: min(100%, 1120px) !important;
+  max-width: 1120px !important;
+
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+
+  margin: 8px 0 0 !important;
+
+  align-self: center !important;
+}
+
+/* 每張證據卡：拉長一點 */
+.accusation-evidence-card {
+  height: clamp(132px, 16.5vh, 164px) !important;
+
+  padding: 10px 8px !important;
+
+  border-width: 3px !important;
+  border-radius: 14px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  overflow: hidden !important;
+}
+
+/* 證據圖片 */
+.accusation-evidence-image {
+  width: clamp(54px, 4.8vw, 76px) !important;
+  height: clamp(46px, 4.2vw, 64px) !important;
+
+  margin-bottom: 8px !important;
+
+  object-fit: contain !important;
+}
+
+/* 關鍵01 / 次要01 */
+.accusation-evidence-code {
+  margin-bottom: 4px !important;
+
+  font-size: clamp(14px, 1.15vw, 17px) !important;
+  line-height: 1.15 !important;
+}
+
+/* 證據名稱 */
+.accusation-evidence-name {
+  font-size: clamp(15px, 1.25vw, 18px) !important;
+  line-height: 1.25 !important;
+
+  font-weight: 900 !important;
+  text-align: center !important;
+  word-break: keep-all !important;
+}
+
+/* 底部區塊 */
+.accusation-bottom-row {
+  width: min(100%, 1120px) !important;
+
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center !important;
+
+  column-gap: 24px !important;
+
+  margin-top: 8px !important;
+}
+
+/* 底部按鈕也稍微放大 */
+.accusation-sub-button,
+.accusation-main-button {
+  min-width: 160px !important;
+  height: 54px !important;
+
+  padding: 0 26px !important;
+  border-radius: 16px !important;
+
+  font-size: clamp(19px, 1.55vw, 25px) !important;
+  font-weight: 900 !important;
+}
+
+/* 已選擇：0 / 2 */
+.selected-evidence-counter {
+  font-size: clamp(22px, 1.8vw, 30px) !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important;
+}
+
+/* ================================================= */
+/* 指認兇手：人物選擇頁空白修正 */
+/* 只修選人物頁，不影響證據選擇頁 */
+/* ================================================= */
+
+#suspectSelectArea {
+  padding-top: 55px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+}
+
+/* 說明文字和人物按鈕的距離 */
+#suspectSelectArea .accusation-instruction {
+  margin: 0 0 22px !important;
+
+  font-size: clamp(22px, 1.9vw, 30px) !important;
+  line-height: 1.35 !important;
+}
+
+/* 人物按鈕區維持舒服距離 */
+#suspectSelectArea .suspect-button-grid {
+  margin-top: 0 !important;
+  gap: 28px 34px !important;
+}
+
+/* ================================================= */
+/* 隱藏指認 / 結局劇情中的地點標籤 */
+/* ================================================= */
+
+.ending-location-label {
+  display: none !important;
+}
+
+/* ================================================= */
+/* 圖片放大檢視：高解析放大、低解析適度放大 */
+/* ================================================= */
+
+#imagePreviewOverlay.open {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  padding: 32px !important;
+  box-sizing: border-box !important;
+}
+
+/* 一般高解析圖片：可以大張顯示 */
+#imagePreviewImage {
+  max-width: 88vw !important;
+  max-height: 82vh !important;
+
+  width: auto !important;
+  height: auto !important;
+
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* 低解析圖片：不要撐滿畫面，避免糊掉 */
+#imagePreviewImage.low-resolution-preview {
+  max-width: 70vw !important;
+  max-height: 78vh !important;
+
+  object-fit: contain !important;
+  image-rendering: auto !important;
+}
+
+/* ================================================= */
+/* 圖片放大檢視：確保低解析圖片也有明顯放大 */
+/* ================================================= */
+
+#imagePreviewOverlay.open {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  padding: 32px !important;
+  box-sizing: border-box !important;
+}
+
+/* 預覽圖片基礎樣式 */
+#imagePreviewImage {
+  display: block !important;
+
+  max-width: 88vw !important;
+  max-height: 82vh !important;
+
+  object-fit: contain !important;
+
+  border-radius: 14px !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* 低解析圖片：不要被 auto 壓回原尺寸 */
+#imagePreviewImage.low-resolution-preview {
+  max-width: 72vw !important;
+  max-height: 78vh !important;
+
+  object-fit: contain !important;
+  image-rendering: auto !important;
+}
+
+/* ================================================= */
+/* 調查筆記：筆記目錄頁 */
+/* ================================================= */
+
+.clue-page.note-directory-page #clueContent {
+  display: block !important;
+  width: 100% !important;
+}
+
+.clue-page.note-directory-page #clueImage {
+  display: none !important;
+}
+
+.clue-page.note-directory-page #clueDescription {
+  width: 100% !important;
+  height: 100% !important;
+
+  margin-top: 8px !important;
+  text-align: left !important;
+
+  overflow: hidden !important;
+}
+
+.note-directory-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  gap: 14px !important;
+  box-sizing: border-box !important;
+}
+
+.note-directory-room-tabs {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+
+  width: 100% !important;
+}
+
+.note-directory-room-button {
+  min-height: 48px !important;
+  padding: 8px 10px !important;
+
+  border: 2px solid #8a4b1f !important;
+  border-radius: 14px !important;
+
+  background: rgba(255, 250, 240, 0.9) !important;
+  color: #4a2b16 !important;
+
+  font-size: clamp(15px, 1.15vw, 20px) !important;
+  font-weight: 900 !important;
+
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+}
+
+.note-directory-room-button.active {
+  background: #8a4b1f !important;
+  color: #fff7ea !important;
+}
+
+.note-directory-list {
+  flex: 1 !important;
+  min-height: 0 !important;
+
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  padding-right: 10px !important;
+  box-sizing: border-box !important;
+}
+
+.note-directory-item {
+  display: grid !important;
+  grid-template-columns: 90px minmax(0, 1fr) !important;
+  gap: 12px !important;
+
+  padding: 10px 12px !important;
+  margin-bottom: 10px !important;
+
+  border-radius: 12px !important;
+  border: 2px solid rgba(138, 75, 31, 0.35) !important;
+
+  background: rgba(255, 252, 244, 0.92) !important;
+
+  box-sizing: border-box !important;
+}
+
+.note-directory-item.locked {
+  opacity: 0.55 !important;
+}
+
+.note-directory-item-title {
+  color: #8a4b1f !important;
+
+  font-size: clamp(15px, 1.1vw, 19px) !important;
+  font-weight: 900 !important;
+
+  white-space: nowrap !important;
+}
+
+.note-directory-item-text {
+  color: #3a2416 !important;
+
+  font-size: clamp(15px, 1.1vw, 19px) !important;
+  line-height: 1.55 !important;
+
+  word-break: break-word !important;
+}
+
+.note-directory-item.locked .note-directory-item-text {
+  font-weight: 900 !important;
+  letter-spacing: 3px !important;
+}
+
+/* ================================================= */
+/* 調查筆記：筆記目錄修正版 */
+/* 解決只顯示一個 ???、已收集筆記不顯示內容 */
+/* ================================================= */
+
+.clue-page.note-directory-page {
+  overflow: hidden !important;
+}
+
+.clue-page.note-directory-page #clueContent {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+
+  display: block !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  overflow: hidden !important;
+}
+
+.clue-page.note-directory-page #clueImage {
+  display: none !important;
+}
+
+.clue-page.note-directory-page #clueDescription {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  text-align: left !important;
+
+  overflow: hidden !important;
+}
+
+.note-directory-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  gap: 12px !important;
+
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+.note-directory-room-tabs {
+  flex: 0 0 auto !important;
+
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+
+  width: 100% !important;
+}
+
+.note-directory-room-button {
+  min-height: 44px !important;
+  padding: 8px 8px !important;
+
+  border: 2px solid #8a4b1f !important;
+  border-radius: 14px !important;
+
+  background: rgba(255, 250, 240, 0.9) !important;
+  color: #4a2b16 !important;
+
+  font-size: clamp(14px, 1vw, 18px) !important;
+  font-weight: 900 !important;
+
+  white-space: nowrap !important;
+
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+}
+
+.note-directory-room-button.active {
+  background: #8a4b1f !important;
+  color: #fff7ea !important;
+}
+
+.note-directory-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  padding-right: 10px !important;
+  box-sizing: border-box !important;
+}
+
+.note-directory-item {
+  display: grid !important;
+  grid-template-columns: 88px minmax(0, 1fr) !important;
+  gap: 12px !important;
+
+  padding: 10px 12px !important;
+  margin-bottom: 10px !important;
+
+  border-radius: 12px !important;
+  border: 2px solid rgba(138, 75, 31, 0.35) !important;
+
+  background: rgba(255, 252, 244, 0.92) !important;
+
+  box-sizing: border-box !important;
+}
+
+.note-directory-item.locked {
+  opacity: 0.62 !important;
+}
+
+.note-directory-item-title {
+  color: #8a4b1f !important;
+
+  font-size: clamp(14px, 1vw, 18px) !important;
+  font-weight: 900 !important;
+
+  white-space: nowrap !important;
+}
+
+.note-directory-item-text {
+  color: #3a2416 !important;
+
+  font-size: clamp(14px, 1vw, 18px) !important;
+  line-height: 1.55 !important;
+
+  word-break: break-word !important;
+}
+
+.note-directory-item.locked .note-directory-item-text {
+  font-weight: 900 !important;
+  letter-spacing: 3px !important;
+}
+
+/* ================================================= */
+/* 筆記目錄：移除大標題後的空間修正 */
+/* ================================================= */
+
+.clue-page.note-directory-page .clue-header {
+  display: none !important;
+}
+
+.clue-page.note-directory-page {
+  padding-top: 16px !important;
+}
+
+.clue-page.note-directory-page #clueContent {
+  height: 100% !important;
+}
+
+/* ================================================= */
+/* 筆記目錄：放大筆記文字 */
+/* ================================================= */
+
+/* 每一則筆記卡片：高度變大一點，讓大字不擠 */
+.note-directory-item {
+  grid-template-columns: 120px minmax(0, 1fr) !important;
+  gap: 18px !important;
+
+  padding: 16px 18px !important;
+  margin-bottom: 14px !important;
+
+  align-items: start !important;
+}
+
+/* 左邊「筆記 10」 */
+.note-directory-item-title {
+  font-size: 26px !important;
+  line-height: 1.4 !important;
+
+  font-weight: 900 !important;
+}
+
+/* 右邊筆記內容 */
+.note-directory-item-text {
+  font-size: 26px !important;
+  line-height: 1.65 !important;
+
+  font-weight: 500 !important;
+}
+
+/* 未收集的 ??? 也同步放大 */
+.note-directory-item.locked .note-directory-item-text {
+  font-size: 26px !important;
+  line-height: 1.65 !important;
+
+  letter-spacing: 6px !important;
+}
+
+/* 筆記列表區：保留卷軸，讓大字時可以往下滑 */
+.note-directory-list {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  padding-right: 14px !important;
+}
+
+/* ================================================= */
+/* 指認兇手畫面：防重疊最終修正版 */
+/* 貼在 style.css 最下面 */
+/* ================================================= */
+
+.accusation-screen {
+  padding: 16px !important;
+  box-sizing: border-box !important;
+
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  overflow: hidden !important;
+}
+
+/* 整個米色面板 */
+.accusation-panel {
+  width: min(86vw, 1380px) !important;
+  height: min(820px, 88vh) !important;
+
+  padding: 34px 48px 34px !important;
+
+  display: grid !important;
+  grid-template-rows: auto minmax(0, 1fr) !important;
+  row-gap: 18px !important;
+
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+/* 大標題 */
+.accusation-title {
+  margin: 0 !important;
+
+  font-size: clamp(38px, 3.4vw, 54px) !important;
+  line-height: 1.1 !important;
+  letter-spacing: 7px !important;
+
+  text-align: center !important;
+}
+
+/* ================================================= */
+/* 第一階段：選人物 */
+/* ================================================= */
+
+#suspectSelectArea {
+  min-height: 0 !important;
+
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+
+  padding-top: 36px !important;
+  box-sizing: border-box !important;
+
+  overflow: hidden !important;
+}
+
+#suspectSelectArea .accusation-instruction {
+  margin: 0 0 24px !important;
+
+  font-size: clamp(22px, 1.9vw, 30px) !important;
+  line-height: 1.35 !important;
+}
+
+.suspect-button-grid,
+.suspect-grid {
+  margin-top: 0 !important;
+
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(260px, 380px)) !important;
+  gap: 28px 36px !important;
+}
+
+.suspect-button {
+  height: 78px !important;
+
+  font-size: clamp(28px, 2.4vw, 40px) !important;
+  line-height: 1 !important;
+}
+
+/* ================================================= */
+/* 第二階段：選證據 */
+/* ================================================= */
+
+/* 讓 JS 控制顯示/隱藏，避免人物選擇和證據選擇同時出現 */
+#suspectSelectArea[style*="none"] {
+  display: none !important;
+}
+
+#suspectSelectArea[style*="flex"] {
+  display: flex !important;
+}
+
+#evidenceSelectArea[style*="none"] {
+  display: none !important;
+}
+
+#evidenceSelectArea[style*="flex"] {
+  display: grid !important;
+}
+
+/* 證據選擇整區：明確切成 4 層，不讓元素互相壓到 */
+#evidenceSelectArea,
+.evidence-select-area {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+
+  display: grid !important;
+  grid-template-rows: auto auto minmax(0, 1fr) auto !important;
+  row-gap: 18px !important;
+
+  align-items: center !important;
+  justify-items: center !important;
+
+  padding-top: 4px !important;
+  box-sizing: border-box !important;
+
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+/* 防止舊 CSS 把元素變成 absolute 後重疊 */
+#evidenceSelectArea > *,
+.evidence-select-area > * {
+  position: static !important;
+}
+
+/* 「你選擇指認：大哥」 */
+.selected-suspect-text {
+  margin: 0 !important;
+
+  font-size: clamp(22px, 1.9vw, 30px) !important;
+  line-height: 1.25 !important;
+  font-weight: 800 !important;
+
+  text-align: center !important;
+}
+
+/* 「請選擇 2 項...」 */
+#evidenceSelectArea .accusation-instruction,
+.evidence-select-area .accusation-instruction {
+  margin: 0 !important;
+
+  font-size: clamp(20px, 1.75vw, 27px) !important;
+  line-height: 1.35 !important;
+  letter-spacing: 1px !important;
+
+  text-align: center !important;
+}
+
+/* 證據卡片區：維持 5 × 2 */
+.accusation-evidence-grid {
+  width: min(100%, 1120px) !important;
+  max-width: 1120px !important;
+
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+
+  margin: 0 !important;
+
+  align-self: center !important;
+  justify-self: center !important;
+
+  overflow: visible !important;
+}
+
+/* 每張證據卡 */
+.accusation-evidence-card {
+  height: clamp(128px, 15.5vh, 158px) !important;
+  min-height: 0 !important;
+
+  padding: 10px 8px !important;
+
+  border-width: 3px !important;
+  border-radius: 14px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* 證據圖片 */
+.accusation-evidence-image {
+  width: clamp(54px, 4.6vw, 74px) !important;
+  height: clamp(44px, 4vw, 62px) !important;
+
+  margin-bottom: 8px !important;
+
+  object-fit: contain !important;
+}
+
+/* 關鍵01 / 次要01 */
+.accusation-evidence-code {
+  margin-bottom: 4px !important;
+
+  font-size: clamp(14px, 1.1vw, 17px) !important;
+  line-height: 1.15 !important;
+}
+
+/* 證據名稱 */
+.accusation-evidence-name {
+  font-size: clamp(15px, 1.2vw, 18px) !important;
+  line-height: 1.25 !important;
+
+  font-weight: 900 !important;
+  text-align: center !important;
+
+  word-break: keep-all !important;
+}
+
+/* 底部返回 / 已選擇 / 確認 */
+.accusation-bottom-row {
+  width: min(100%, 1120px) !important;
+
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center !important;
+
+  column-gap: 24px !important;
+
+  margin: 0 !important;
+  padding-top: 4px !important;
+
+  position: static !important;
+  box-sizing: border-box !important;
+}
+
+.accusation-sub-button,
+.accusation-main-button {
+  min-width: 160px !important;
+  height: 54px !important;
+
+  padding: 0 26px !important;
+
+  border-radius: 16px !important;
+
+  font-size: clamp(19px, 1.55vw, 25px) !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+}
+
+.accusation-sub-button {
+  justify-self: start !important;
+}
+
+.accusation-main-button {
+  justify-self: end !important;
+}
+
+.selected-evidence-counter {
+  justify-self: center !important;
+
+  font-size: clamp(22px, 1.8vw, 30px) !important;
+  line-height: 1.2 !important;
+  font-weight: 800 !important;
+
+  white-space: nowrap !important;
+}
+
+/* 錯誤提示不要擠版面 */
+.accusation-error-text {
+  position: absolute !important;
+  bottom: 4px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+
+  margin: 0 !important;
+
+  font-size: 18px !important;
+  line-height: 1.2 !important;
+
+  text-align: center !important;
+}
+
+/* 小螢幕高度時再壓縮一點 */
+@media (max-height: 820px) {
+  .accusation-panel {
+    height: 90vh !important;
+    padding: 24px 44px 26px !important;
+    row-gap: 12px !important;
+  }
+
+  #evidenceSelectArea,
+  .evidence-select-area {
+    row-gap: 12px !important;
+  }
+
+  .accusation-evidence-grid {
+    gap: 12px !important;
+  }
+
+  .accusation-evidence-card {
+    height: clamp(112px, 14vh, 138px) !important;
+  }
+
+  .accusation-evidence-image {
+    width: 54px !important;
+    height: 44px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .accusation-evidence-name {
+    font-size: 14px !important;
+  }
+
+  .accusation-sub-button,
+  .accusation-main-button {
+    height: 48px !important;
+    font-size: 20px !important;
+  }
+}
+
+/* ================================================= */
+/* 全畫面切換修正：只有 active 的 screen 可以顯示 */
+/* 一定要放在 style.css 最下面 */
+/* ================================================= */
+
+.screen {
+  display: none !important;
+}
+
+.screen.active {
+  display: flex !important;
+}
+
+/* 保險：避免指認畫面被舊 CSS 強制顯示 */
+.accusation-screen:not(.active) {
+  display: none !important;
+}
+
+/* 保險：避免搜索地圖被舊 CSS 強制顯示 */
+.search-screen:not(.active) {
+  display: none !important;
+}
+
+/* 保險：避免片尾被舊 CSS 強制顯示 */
+.credits-screen:not(.active) {
+  display: none !important;
+}
+
+/* 保險：避免暫存提示被蓋掉 */
+.resume-notice-screen.active {
+  display: flex !important;
+}
