@@ -15977,3 +15977,28 @@ button:focus-visible,
 .resume-notice-screen.active {
   display: flex !important;
 }
+
+/* ================================================= */
+/* 調查筆記按鈕：調查階段 + 指認選擇階段顯示 */
+/* ================================================= */
+
+/* 預設隱藏，改由 JS 加 .show 控制 */
+#notebookButton {
+  display: none !important;
+}
+
+/* JS 加上 show 時才顯示 */
+#notebookButton.show {
+  display: flex !important;
+  z-index: 950 !important;
+}
+
+/* 筆記本視窗要蓋過指認畫面 */
+#notebookOverlay {
+  z-index: 2000 !important;
+}
+
+/* 筆記更新提示也要在上層 */
+#notebookUpdateToast {
+  z-index: 2100 !important;
+}
