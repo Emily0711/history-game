@@ -18,6 +18,20 @@
   
   <link rel="stylesheet" href="style.css">
 </head>
+
+<!-- 證據圖片放大預覽 -->
+<div id="imagePreviewOverlay" class="image-preview-overlay" aria-hidden="true">
+  <button id="closeImagePreviewButton" class="close-image-preview-button">
+    ×
+  </button>
+
+  <img id="imagePreviewImage" class="image-preview-image" src="" alt="放大證據圖片">
+
+  <div class="image-preview-hint">
+    點擊空白處或按 Esc 關閉
+  </div>
+</div>
+
 <body>
 
   <!-- 開始遊戲畫面 -->
@@ -40,6 +54,37 @@
 
     <button id="languageNoticeDoneButton" class="language-notice-button">
       閱讀完畢
+    </button>
+  </div>
+</section>
+
+<!-- 遊玩須知畫面 -->
+<section id="playNoticeScreen" class="screen language-notice-screen">
+  <div class="language-notice-content play-notice-content">
+
+    <p class="play-notice-text">
+完整體驗時間：約20分鐘，<br>
+為獲得最佳遊戲體驗，建議使用電腦版 Google Chrome 瀏覽器。<br><br>
+若畫面顯示不完整，請調整瀏覽器縮放比例，<br>
+並避免使用分割視窗或過小的瀏覽器視窗。
+    </p>
+
+    <button id="playNoticeDoneButton" class="language-notice-button">
+      閱讀完畢
+    </button>
+  </div>
+</section>
+
+<!-- 暫存進度提示畫面 -->
+<section id="resumeNoticeScreen" class="screen resume-notice-screen">
+  <div class="resume-notice-content">
+    <p class="resume-notice-text">
+      已偵測到本次遊玩的暫存進度。<br>
+      將回到搜索階段並保留已取得的線索。
+    </p>
+
+    <button id="resumeGameButton" class="language-notice-button">
+      繼續遊戲
     </button>
   </div>
 </section>
@@ -166,20 +211,35 @@
 </section>
 
 <!-- 結局前提示畫面：收齊證據後進入指認前 -->
+<!-- 調查完成提示畫面 -->
 <section id="endingNoticeScreen" class="screen ending-notice-screen">
-  <div class="ending-notice-content">
-    <p class="ending-notice-text">
-      您已找齊物件證據，可進行指認兇手。<br>
-      進入指認環節後，將無法回到搜索環節。
+
+  <div class="ending-complete-panel">
+
+    <h1 class="ending-complete-title">調查已完成</h1>
+
+    <p class="ending-complete-main-text">
+      您已蒐集完所有證據與筆記。
     </p>
 
-    <button id="endingNoticeDoneButton" class="ending-notice-button">
-      閱讀完畢
-    </button>
+    <p class="ending-complete-sub-text">
+      現在可以進入指認兇手階段；若還想確認房間、人物對話或調查筆記，也可以繼續調查。
+    </p>
+
+    <div class="ending-complete-button-row">
+      <button id="endingNoticeDoneButton" class="ending-complete-main-button">
+        進入指認兇手階段
+      </button>
+
+      <button id="continueInvestigationButton" class="ending-complete-sub-button">
+        繼續調查
+      </button>
+    </div>
+
   </div>
+
 </section>
 
-<!-- 指認兇手畫面 -->
 <!-- 指認兇手畫面 -->
 <section id="accusationScreen" class="screen accusation-screen">
 
@@ -295,6 +355,241 @@
 
 </section>
 
+<!-- 片尾跑馬燈畫面 -->
+<section id="creditsScreen" class="screen credits-screen">
+  <div class="credits-roll-wrap">
+    <div id="creditsRoll" class="credits-roll">
+
+      <h1>製作團隊</h1>
+      <p>李芳儒　進度管理、網站架設與設計</p>
+      <p>孫紫綺　編劇</p>
+      <p>謝華家　服裝設計、物件設計、音樂設計</p>
+      <p>謝蓉　格局設計、空間設計</p>
+      <p>共同　史料蒐集</p>
+
+      <h1>感謝名單</h1>
+      <p>陳翠蓮老師、許雅惠老師 悉心指導</p>
+      <p>角色繪師：海蜇</p>
+      <p>封面排版協助：深海兔子魚</p>
+      <p>內測協助：多位不具名熱心人士</p>
+
+      <h1>參考資料</h1>
+      <p>期刊論文、報紙、書籍、網路資源與文物資料</p>
+      <p>完整參考資料請點選「你想知道更多嗎？」查看。</p>
+
+      <h1>特別感謝</h1>
+      <p>感謝每一位遊玩、測試並提供回饋的玩家。</p>
+
+      <h1>感謝遊玩</h1>
+
+      <p>本遊戲為課程專題作品，所有劇情、程式碼、美術素材與音效僅供教學展示使用，未經作者團隊同意，請勿擅自下載、重製、轉載、修改或作為商業用途。</p>
+
+    </div>
+  </div>
+
+  <div id="creditsButtonArea" class="credits-button-area">
+    <button id="retryAccusationButton" class="credits-button">回到指認兇手環節</button>
+    <button id="backToCoverButton" class="credits-button">回主頁面</button>
+    <button id="moreInfoButton" class="credits-button">你想知道更多嗎？</button>
+  </div>
+</section>
+
+<!-- 參考說明頁面 -->
+<section id="referenceScreen" class="screen reference-screen">
+
+  <div class="reference-container">
+
+    <!-- 左上返回片尾 -->
+    <button id="referenceBackButton" class="reference-back-button">
+      返回片尾
+    </button>
+
+    <!-- 分類首頁 -->
+    <div id="referenceHomePanel" class="reference-panel reference-home-panel">
+
+      <h1 class="reference-title">想知道更多嗎？</h1>
+
+      <p class="reference-intro">
+        這裡整理了遊戲中出現的歷史背景、生活細節與時代知識。<br>
+        你可以選擇有興趣的分類，閱讀更多補充說明。
+      </p>
+
+      <div class="reference-category-grid">
+        <button class="reference-category-button" data-category="life">生活</button>
+        <button class="reference-category-button" data-category="medical">醫療與衛生</button>
+        <button class="reference-category-button" data-category="family">女性與家庭關係</button>
+        <button class="reference-category-button" data-category="economy">經濟</button>
+        <button class="reference-category-button" data-category="movement">人群與移動</button>
+        <button class="reference-category-button" data-category="space">空間</button>
+      </div>
+
+      <button id="officialReferenceButton" class="official-reference-button">
+        正式參考資料
+      </button>
+
+    </div>
+
+    <!-- 分類問句列表 -->
+    <div id="referenceQuestionPanel" class="reference-panel reference-question-panel">
+
+      <button id="referenceCategoryBackButton" class="reference-small-back-button">
+        返回分類
+      </button>
+
+      <h2 id="referenceCategoryTitle" class="reference-section-title">
+        分類名稱
+      </h2>
+
+      <p class="reference-section-hint">
+        點擊你有興趣的問題查看說明。
+      </p>
+
+      <div id="referenceQuestionList" class="reference-question-list">
+        <!-- JS 會自動產生問句按鈕 -->
+      </div>
+
+    </div>
+
+    <!-- 單題答案 -->
+    <div id="referenceAnswerPanel" class="reference-panel reference-answer-panel">
+
+      <button id="referenceAnswerBackButton" class="reference-small-back-button">
+        返回問題列表
+      </button>
+
+      <h2 id="referenceAnswerQuestion" class="reference-answer-question">
+        問題
+      </h2>
+
+      <div id="referenceAnswerText" class="reference-answer-text">
+        答案內容
+      </div>
+
+    </div>
+
+    <!-- 正式參考資料 -->
+    <div id="officialReferencePanel" class="reference-panel official-reference-panel">
+
+      <button id="officialReferenceBackButton" class="reference-small-back-button">
+        返回分類
+      </button>
+
+      <h2 class="reference-section-title">正式參考資料</h2>
+
+      <div class="official-reference-scroll">
+        <p>
+          一、期刊論文：
+王宏仁，〈戰後初期（1945-49）台灣各階級之經濟活動〉，《臺灣風物》第47卷1期（1997年），頁23-38。
+何鳳嬌，〈戰後初期臺灣土地接收的糾紛－以更改日式姓名的臺人遭遇爲例〉，《國史館學術集刊》第13期（2007年），頁123-154。
+何鳳嬌，〈戰後臺灣公產管理審議委員會的組成與運作（民國38年11月－42年9月）〉，《國史館館刊》第25期（2010年），頁115-155。
+歐素瑛，〈臺灣省參議會對日產糾紛之調處〉，《臺灣學研究》第18期（2015年），頁99-150。
+吳聰敏，〈臺灣戰後的惡性物價膨脹〉，《國史館學術集刊》第10期（2006年），頁129-159。
+程玉鳳，〈光復初期臺糖的銷售問題—十五萬噸敵糖的來龍去脈（1945-1947）〉，《國史館館刊》第21期（2009年），頁47-94。
+謝國興，〈由商而工：光復初期臺南幫的蛻變〉，《中央研究院中山人文社會科學研究所專書》第31期（1993年），頁335-364。
+湯熙勇，〈臺灣光復初期的公教人員任用方法：留用臺籍、羅致外省籍及徵用日人（1945.10-1947.5）〉，《人文及社會科學集刊》第4卷1期（1991年），頁391-425。
+湯熙勇，〈恢復國籍的爭議：戰後旅外臺灣人的復籍問題1945-47〉，《人文及社會科學集刊》（2005年），頁393―437。
+楊文山、李怡芳、黃郁麟，〈日治時期臺灣女性婚育生命史序列分析〉，《人口學刊》第54期（2017年）頁1-38。
+葉立誠，〈二十世紀臺灣服飾變遷因素之探討〉，《臺灣文獻》第53卷2期，頁68-77。
+葉立誠，〈日治時期顏、施兩家服飾特徵及其意涵：以施素筠的生命史為例〉，《臺灣文獻》第62卷4期，頁55-99。
+葉立誠，〈二十世紀台灣服飾流行時尚之變遷〉，《夏季學校》頁56-66。
+王學新，〈日治時期臺灣出入境管理制度與渡航兩岸問題〉，《臺灣文獻》第62卷3期（2001年）。
+吳勇正，〈戰後台灣戶政變革之研究—從「接收復員」到「清鄉戒嚴」〉，《國立成功大學歷史研究所碩士論文》（2006年）。
+鄔孟慧，〈戰後臺灣的肺結核病防治〉，《國立暨南大學碩士論文》（2004 年），頁1-213。
+許雪姬，〈戰後初期臺灣推行國語運動之探討：1945-1949〉，《環球科技人文學刊》（2021年），頁19－31。
+周志仁，〈日治時期傳統漢詩的阿里山森林鐵道書寫 〉，《東海大學圖書館館刊》第62期（2022年），頁1-36。
+黃士嘉，〈台語俗諺對非婚姻關係男女互動 描繪 〉，《藝術與文化論衡》第2期（2011年），頁57-74。
+李慧婷，〈日治時期大甲街女性婚姻之研究—以戶口調查簿為中心〉，《國立中興大學碩士論文》（2012年） ，頁1-147。
+
+二、報紙：
+〈（三）遊民階級〉，《臺灣新生報》（臺北），1946年6月3日，第5版。
+《民報》（臺北），1946年6月3日，第2版。
+
+三、書籍：
+林玉茹、王泰升、曾品滄、吳美慧、吳俊瑩，《代書筆、商人風: 百歲人瑞孫江淮先生訪問紀錄》（臺北：遠流出版事業股份有限公司，2008），頁254-255。
+林忠勝、吳君瑩，《高玉樹回憶錄》（臺北：前衛出版，2007）。
+洪郁如，《近代台灣女性史：日治時期新女性的誕生》（臺北：臺大出版中心，2017）。
+蔡蔚群，《追尋北一：台北第一高女的光與影》（臺北：衛城出版，2025）。
+
+四、網路資源：
+葉榮鐘，〈臺灣省光復前後的回憶〉（1964年），《數位典藏與數位學習聯合目錄》，http://catalog.digitalarchives.tw/item/00/29/52/b7.html（2026年4月19日檢索）。
+黃灶春等，〈昭和5年5月12日黃灶春等賣渡證書〉（1930年），《國家文化記憶庫》，https://tcmb.culture.tw/zh-tw/detail?indexCode=Culture_Object&id=504451（2026年4月19日檢索）。
+陳永源、陳永周、陳永純、陳永和、陳劉氏春、台中地方法院竹山出張所，〈昭和九年陳永源賣渡證書〉（1934年），《數位典藏與數位學習聯合目錄》，https://catalog.digitalarchives.tw/item/00/47/d0/65.html（2026年4月19日檢索）。
+張水鳳，〈大正8年指令第2844號豫約賣渡証書〉（1919年），《國立臺灣歷史博物館藏品查詢》，https://collections.nmth.gov.tw/CollectionContent.aspx?a=132&rno=2014.011.0201（2026年4月19日檢索）。
+黃灶春等，〈大正12年5月土地登記濟證〉（1923年），《國家文化記憶庫》，https://tcmb.culture.tw/zh-tw/detail?indexCode=Culture_Object&id=265115（2026年4月19日檢索）。
+莊崇暉，〈日治時期臺灣人怎麼用「旅券」？求學求職、環遊世界〉（2019年），《中央研究院研之有物》，http://research.sinica.edu.tw/travel_passport_japan_taiwan_history（2026年4月19日檢索）。
+陳力航，〈歷史編說故事，尋找1920日治時期的旅行文化〉（2020年），《影想文化藝術基金會》，https://pse.is/8xeyxc（2026年4月19日檢索）。
+王麗蕉，〈以旅券檔案數位加值資訊追尋日治臺灣人的跨境足跡〉（2021年），《國家圖書館主辦活動簡報》，https://isp.ncl.edu.tw/files/file_pool/1/0N038537842378143099/%E7%8E%8B%E9%BA%97%E8%95%89%E6%95%99%E6%8E%88.pdf（2026年4月19日檢索）。
+徐逸鴻，〈《圖解日治台北城》：日式住宅的平面不講究對稱，而是以榻榻米為單位自由發展〉（2020年），《關鍵評論》，https://www.thenewslens.com/article/132595（2026年4月19日檢索）。
+陳玉箴，〈「媽媽」怎麼當？談日治時期臺灣的母職實踐〉（2023年），《歷史學相仔店》，https://kamatiam.org/%E5%AA%BD%E5%AA%BD%E6%80%8E%E9%BA%BC%E7%95%B6%E8%AB%87%E6%97%A5%E6%B2%BB%E6%99%82%E6%9C%9F%E8%87%BA%E7%81%A3%E7%9A%84%E6%AF%8D%E8%81%B7%E5%AF%A6%E8%B8%90/（2026年4月19日檢索）。
+周元曦，〈走過歲月的時尚風華 —— 從仕紳文化看「台灣西服史」〉（2023年），《ONE PERCENT STYLE》，https://onepercent.storm.mg/article/4814575#gsc.tab=0（2026年4月20日檢索）。
+李石樵，〈1946少女〉，《數位典藏國家型科技計畫 內容發展分項計劃》，https://content.teldap.tw/main/dc_detail.php?dc_id=664（2026年4月20日檢索）。
+高本莉，〈台灣（漢人）傳統服飾〉，《數位典藏 Blog Collection Room典藏台灣說你的故事》，https://content.teldap.tw/index/blog/?p=3626#:~:text=%E5%8F%B0%E7%81%A3%E6%B0%91%E9%96%93%E5%82%B3%E7%B5%B1%E6%9C%8D%E9%A3%BE%EF%BC%8C%E4%B8%A6,%E5%8C%85%E9%A0%AD%E5%B7%BE%E6%88%96%E6%88%B4%E6%96%97%E7%AC%A0%E3%80%82（2026年4月20日檢索）。
+洪郁如，〈大和民族的衣裳：近現代東亞場域中和服論述、資本與性別政治〉（2021年），《Taiwan Lit and the Global Sinosphere》，https://taiwanlit.org/articles/%E5%A4%A7%E5%92%8C%E6%B0%91%E6%97%8F%E7%9A%84%E8%A1%A3%E8%A3%B3-%E8%BF%91%E7%8F%BE%E4%BB%A3%E6%9D%B1%E4%BA%9E%E5%A0%B4%E5%9F%9F%E4%B8%AD%E5%92%8C%E6%9C%8D%E8%AB%96%E8%BF%B0-%E8%B3%87%E6%9C%AC%E8%88%87%E6%80%A7%E5%88%A5%E6%94%BF%E6%B2%BB（2026年4月20日檢索）。
+彭啓原，〈從前從前，有家金淼寫真……〉（2023年），《琅琅悅讀》，https://reading.udn.com/read/story/7049/7469194（2026年4月20日檢索）。
+劉蓁，〈日治時期台灣美術的現代轉型〉，《時空旅行社》，https://curation.culture.tw/curation/public?id=3793（2026年5月27日檢索）。
+張庭恩、陳宇涵，〈台灣 美裝史 從清治澎粉到日治雪花膏彩妝演變〉，《時空旅行社》，https://curation.culture.tw/curation/public?id=3100（2026年5月27日檢索）。
+張育華，〈無鉛掛的洗澡 台灣熱水器演進史〉，《大紀元》，https://www.epochtimes.com/b5/15/10/16/n4551569.htm（2026年5月27日檢索）。
+鍾祿昌，〈死亡診斷書〉，《臺北客家數位知識庫》，https://www.hkdb.org.tw/theme/assets/Collection1757317529483/（2026年5月27日檢索）。
+鄭玠甫，〈日治時期的玻璃瓶瓶罐罐〉，《開放博物館》，https://openmuseum.tw/muse/exhibition/4bd79df2c48c33b9e92964531d7e2d4b（2026年5月27日檢索）。
+廖運潘，〈廖運潘《生徒年代》：暴民在路上遇到疑似「阿山」的人便以福佬話盤問，藉以辨別「人種」〉，《關鍵評論》，https://www.thenewslens.com/article/245085（2026年5月27日檢索）。
+吳桐，〈巖遙樹色〉，《臺北市立美術館》，https://www.tfam.museum/Collection/CollectionDetail.aspx?ddlLang=zh-tw&CID=456（2026年5月27日檢索）。
+黃水文，〈後庭〉，《臺北市立美術館》，https://www.tfam.museum/Collection/CollectionDetail.aspx?ddlLang=zh-tw&CID=3334（2026年6月4日檢索）。
+張芷菱，〈日治時期當大師就是這麼秋條！不管陳澄波人在哪，郵差都得使命必達〉，《CitiORANGE公民報橘》，https://buzzorange.com/citiorange/2017/07/04/chen-cheng-po-and-the-great-postman/（2026年5月27日檢索）。
+藍子兄弟，〈日治時代的文人官舍～新竹辛志平校長的故居〉，《親子就醬玩》，https://www.kidsplay.com.tw/visitspot/content/2203（2026年5月27日檢索）。
+鍾蕎安、張奕宣、藍芊涵，〈日治時期漢人女性多元服飾文化〉，《時空旅行社》，https://curation.culture.tw/curation/public?id=2807（2026年4月20日檢索）。
+林品婕，〈日治時期傳來台灣的日式料理〉，《時空旅行社》，https://curation.culture.tw/curation/public?id=3787（2026年6月4日檢索）。
+太田猛，〈臺南新報1921年5月12日第八版〉（1921年），《國立臺灣歷史博物館近代臺灣報刊資料庫》，https://newspaper.nmth.gov.tw/search/detail/R-04-000278（2026年4月26日檢索）。
+二十八齋，〈不安、失眠……近代日本文士如何與「藥物」打交道（中）——太宰治、田中英光、宇野千代〉（2022年），《二十八齋的沙龍》，https://vocus.cc/article/62ded5e4fd897800016b5b63（2026年4月26日檢索）。
+林良哲、徐夏蓮，〈日治影響 流行取名宗男〉（2007年），《自由時報》，https://news.ltn.com.tw/news/society/paper/173763（2026年4月26日檢索）。
+萍子，〈【台北景點】0km山物所，三棟百年日式木造建築重現日式町屋，台北森林系秘境，台北老宅咖啡廳 COFFEE LAW山物所，複合式選物店，台北免門票景點 〉（2024年），《upssmile向上的微笑萍子 旅食設影》,https://upssmile.com/215968/0km，（2026年4月26日檢索）。
+蔡文婷，〈老屋日記〉（2005年），《台灣光華雜誌》，https://www.taiwan-panorama.com/Articles/Details?Guid=a27d5a51-a29e-4e06-8fc0-a0c6ec9dba5b&CatId=11&postname=%E8%80%81%E5%B1%8B%E6%97%A5%E8%A8%98，（2026年4月26日檢索）。
+聽兄說三國，〈你可能裝了個假榻榻米，看了日本人設計榻榻米這5條原則不會被騙〉（2017年），《每日頭條》，https://kknews.cc/zh-hk/design/z6y3jel.html#google_vignette，（2026年4月26日檢索）。
+空間美刻度，〈榻榻米黑知識，這樣鋪是辦喪事，逆時針鋪是武士剖腹自盡用〉（2019年），《每日頭條》，https://kknews.cc/home/8p5rzqe.html，（2026年4月26日檢索）。
+張信昌，〈50年代博物館〉，《痞客邦》，https://david78921.pixnet.net/blog/posts/9284586143（2026年6月4日檢索）。
+admin，〈【1972年五大刑案】集滿五大刑案，召喚黨國時代的真實記憶〉，《重大歷史懸疑案件調查辦公室》，https://ohsir.tw/4736/（2026年4月19日檢索）。
+〈評介鍾淑敏著《日治時期在南洋的台灣人》〉，《國立臺灣圖書館》，（2026年4月19日檢索）。
+〈十三號水門命案〉，《國家文化記憶庫》，https://tcmb.culture.tw/zh-tw/detail?indexCode=Culture_Event&id=301472（2026年4月19日檢索）。
+〈孫伯命案〉，《國家文化記憶庫》，https://tcmb.culture.tw/zh-tw/detail?indexCode=Culture_Event&id=301471（2026年4月19日檢索）。
+〈紙達送電報〉（1931年），《國立臺灣歷史博物館藏品查詢》，https://collections.nmth.gov.tw/CollectionContent.aspx?a=132&rno=2020.008.0361（2026年4月26日檢索）。
+〈日式建築介紹 〉（2025年），《農業部林業及自然保育署嘉義分署》，https://chiayi.forest.gov.tw/0000715，（2026年4月26日檢索）。
+〈我是小小修復師：日式建築好好玩！  〉，《新北市立淡水古蹟博物館》，https://www.tshs.ntpc.gov.tw/files/file_pool/1/0M307321781104826321/%E9%99%84%E4%BB%B63-%E6%88%91%E6%98%AF%E5%B0%8F%E5%B0%8F%E4%BF%AE%E5%BE%A9%E5%B8%AB%EF%BC%9A%E6%97%A5%E5%BC%8F%E5%BB%BA%E7%AF%89%E5%A5%BD%E5%A5%BD%E7%8E%A9%EF%BC%81%E6%95%99%E6%A1%88.pdf，（2026年4月26日檢索）。
+〈第三章：建築形制及空間研究〉，《臺南市教育局》，https://share.google/JxuAAS6oYzdvKctfe，（2026年4月26日檢索）。
+〈關於日式建築格局〉，《中平路故事館》，https://www.zhongpingstory.com/%E9%97%9C%E6%96%BC%E6%97%A5%E5%BC%8F%E5%BB%BA%E7%AF%89-1，（2026年4月26日檢索）。
+〈肆、木構造宿舍建築語彙〉（2023年）《基隆市政府》，https://share.google/moAMwq2J4Xk4x06hX，（2026年4月26日）。
+〈中華民國刑法第271/272條〉，《全國法規資料庫》，https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=C0000001&flno=271（2026年4月19日檢索）。
+北藏臻典，〈戶籍證明文件篇〉，《從檔案看見戶政》，https://www.hnorth.taichung.gov.tw/media/448331/%E5%BE%9E%E6%AA%94%E6%A1%88%E7%9C%8B%E8%A6%8B%E6%88%B6%E6%94%BF%E5%87%BA%E7%89%88%E5%93%81.pdf（2026年4月19日檢索）。
+國立暨南大學人類學研究所，〈和服（男）〉，《首選珍藏：一九三〇年代的臺北時尚》，https://digitalarchives.tw/Exhibition/2384/1.html（2026年4月20日檢索）。
+臺北電信局，〈電報紙〉（1937年），《國家文化記憶庫》，https://tcmb.culture.tw/zh-tw/detail?indexCode=MOCCOLLECTIONS&id=144000013618（2026年4月26日檢索）。
+內政部，〈繼承登記法令補充規定〉，《內政部歷史法規》，內政部主管法規共用系統-歷史（2026年4月19日檢索）。
+桃園市龜山區戶政事務所，〈熱「寫」沸「謄」-戶籍謄本的變遷與演進(二)-認識光復後戶籍登記簿〉，《線上檔案展覽》，https://www.guishan-hro.tycg.gov.tw/News_Content.aspx?n=13532&s=1092359（2026年4月19日檢索）。
+新竹市東區戶政事務所，〈日據時期與戶籍用語〉，《戶政延革專區》，https://e-household.hccg.gov.tw/ch/home.jsp?id=114&parentpath=0,14,108（2026年4月19日檢索）。
+雲林縣斗六地政事務所，〈第六章 繼承登記〉，《中央法規及地方自治法規》，第六章　繼承登記（2026年4月19日檢索）。
+臺北市松山地政事務所，〈日治時期遺產繼承實務〉，《臺北市政府地政局》，https://www-ws.gov.taipei/001/Upload/305/relfile/11455/4360/5a6c6883-d6fa-4296-9017-41cff835643c.pdf（2026年4月19日檢索）。
+臺北市政府地政局，〈日據時期土地登記制度〉，《臺北市政府地政局綜合資訊》，https://land.gov.taipei/cp.aspx?n=6D9F37ABA6FF0B16（2026年4月19日檢索）。
+臺北市政府地政局，〈日據時期遺產繼承實務〉，《臺北市政府地政局地政講堂》，https://epaper.land.gov.taipei/Item/Detail/%E6%97%A5%E6%93%9A%E6%99%82%E6%9C%9F%E9%81%BA%E7%94%A2%E7%B9%BC%E6%89%BF%E5%AF%A6%E5%8B%99-1（2026年4月19日檢索）。 
+研之有物，〈日治時代台灣少年的日記震撼曝光！台大醫畢業後慘遭處決，27年年人生種種殘酷全寫下來了〉，《風傳媒》，https://www.storm.mg/lifestyle/374335（2026年5月27日檢索）。
+嘉義市政府文化局，〈臺灣傳統加劇的沿革〉，《國家文化記憶庫》，https://tcmb.culture.tw/zh-tw/detail?indexCode=Culture_Event&id=171453（2026年5月27日檢索）。
+文化部典藏網，〈方形梳妝鏡〉，《國家文化記憶庫》，https://tcmb.culture.tw/zh-tw/detail?indexCode=MOCCOLLECTIONS&id=11000127101（2026年5月27日檢索）。
+文化部典藏網，〈木質冰櫃〉，《國家文化記憶庫》，https://tcmb.culture.tw/zh-tw/detail?indexCode=MOCCOLLECTIONS&id=14000146624（2026年5月27日檢索）。
+文化部典藏網，〈日治時期墨繪菜櫥〉，《國家文化記憶庫》，https://tcmb.culture.tw/zh-tw/detail?indexCode=MOCCOLLECTIONS&id=146000000585（2026年5月27日檢索）。
+文化部典藏網，〈日本刺繡基礎樣本〉，《國家文化記憶庫》，https://tcmb.culture.tw/zh-tw/detail?indexCode=MOCCOLLECTIONS&id=101000002439（2026年5月27日檢索）。
+文化部典藏網，〈粉紅乳白玻璃煤油吊燈組〉，《國家文化記憶庫》，https://tcmb.culture.tw/zh-tw/detail?indexCode=MOCCOLLECTIONS&id=11000008037 （2026年6月4日檢索）。
+國立臺灣歷史博物館，〈紙鎮〉，《藏品資料》，https https://collections.nmth.gov.tw/CollectionContent.aspx?a=132&RNO=2017.043.0097（2026年5月27日檢索）。
+國立臺灣歷史博物館，〈喪禮照片〉，《藏品資料》，https https://collections.nmth.gov.tw/CollectionContent.aspx?a=132&rno=2006.007.0128.0102（2026年5月27日檢索）。
+伽馬文創有限公司，〈日治時期許家家族合照之2〉，《國家文化記憶庫》，https://tcmb.culture.tw/zh-tw/detail?indexCode=Culture_Object&id=487089（2026年5月27日檢索）。
+nao_koba，〈広告「神經衰弱不眠症にカルモチン」(1938)〉，《昭和モダン好き》，http://showamodern.blog.fc2.com/blog-entry-2034.html（2026年5月27日檢索）。
+あき坊，〈まつたく雲がない笠をぬぎ  　山頭火　（２４）〉，《退屈な日もある》，https://ameblo.jp/roastsparrow/entry-12890928459.html（2026年5月27日檢索）。
+中華民國教育部，〈細姨〉，《教育部臺灣台語常用詞辭典》，https://sutian.moe.edu.tw/zh-hant/su/7751/，（2026年6月4日檢索）。
+
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
   <!-- 搜索階段：地圖畫面 -->
   <section id="searchScreen" class="screen search-screen">
 
@@ -361,6 +656,7 @@
   <!-- 大哥房：桌上的日記本 -->
   <button
     class="room-hotspot hotspot-diary"
+    data-room="bigBrother"
     data-hotspot="diary"
     title="點擊調查">
   </button>
@@ -368,6 +664,7 @@
   <!-- 大哥房：右方櫃子上的紙張 -->
   <button
     class="room-hotspot hotspot-paper"
+    data-room="bigBrother"
     data-hotspot="heartCertificate"
     title="點擊調查">
   </button>
@@ -375,6 +672,7 @@
   <!-- 父親房：右邊桌上的石製紙鎮 -->
 <button
   class="room-hotspot hotspot-father-paperweight"
+  data-room="father"
   data-hotspot="fatherPaperweight"
   title="點擊調查">
 </button>
@@ -382,6 +680,7 @@
 <!-- 父親房：床頭櫃角落的血跡 / 破損處 -->
 <button
   class="room-hotspot hotspot-father-bedside-corner"
+  data-room="father"
   data-hotspot="fatherBedsideCorner"
   title="點擊調查">
 </button>
@@ -389,6 +688,7 @@
 <!-- 父親房：整個床頭櫃 -->
 <button
   class="room-hotspot hotspot-father-bedside-cabinet"
+  data-room="father"
   data-hotspot="fatherBedsideCabinet"
   title="點擊調查">
 </button>
@@ -396,6 +696,7 @@
 <!-- 父親房：押入裡的親密書信 -->
 <button
   class="room-hotspot hotspot-father-letter"
+  data-room="father"
   data-hotspot="fatherLetter"
   title="點擊調查">
 </button>
@@ -403,6 +704,7 @@
 <!-- 父親房：整個押入 -->
 <button
   class="room-hotspot hotspot-father-oshiire"
+  data-room="father"
   data-hotspot="fatherOshiire"
   title="點擊調查">
 </button>
@@ -410,6 +712,7 @@
 <!-- 座敷：左下箱子 / 藥箱裡的安眠藥 -->
 <button
   class="room-hotspot hotspot-sleeping-pills"
+  data-room="zashiki"
   data-hotspot="sleepingPills"
   title="點擊調查">
 </button>
@@ -417,6 +720,7 @@
 <!-- 座敷：右側相框 / 細姨與小弟的照片 -->
 <button
   class="room-hotspot hotspot-concubine-photo"
+  data-room="zashiki"
   data-hotspot="concubinePhoto"
   title="點擊調查">
 </button>
@@ -424,6 +728,7 @@
 <!-- 座敷：左側紙張 / 土地契約 -->
 <button
   class="room-hotspot hotspot-land-contract"
+  data-room="zashiki"
   data-hotspot="landContract"
   title="點擊調查">
 </button>
@@ -431,6 +736,7 @@
 <!-- 客廳 / 座敷：父親的遺照 -->
 <button
   class="room-hotspot hotspot-father-memorial-photo"
+  data-room="zashiki"
   data-hotspot="fatherMemorialPhoto"
   title="點擊調查">
 </button>
@@ -438,6 +744,7 @@
 <!-- 女生房：桌上的手帕 -->
 <button
   class="room-hotspot hotspot-girls-handkerchief"
+  data-room="girls"
   data-hotspot="girlsHandkerchief"
   title="點擊調查">
 </button>
@@ -445,6 +752,7 @@
 <!-- 女生房：牆上的蓮花畫 -->
 <button
   class="room-hotspot hotspot-girls-lotus-painting"
+  data-room="girls"
   data-hotspot="girlsLotusPainting"
   title="點擊調查">
 </button>
@@ -452,6 +760,7 @@
 <!-- 女生房：左側梳妝櫃 -->
 <button
   class="room-hotspot hotspot-girls-dresser"
+  data-room="girls"
   data-hotspot="girlsDresser"
   title="點擊調查">
 </button>
@@ -459,6 +768,7 @@
 <!-- 大哥房：蒲團 / 座墊 -->
 <button
   class="room-hotspot hotspot-big-brother-futon"
+  data-room="bigBrother"
   data-hotspot="bigBrotherFuton"
   title="點擊調查">
 </button>
@@ -466,6 +776,7 @@
 <!-- 大哥房：窗戶 -->
 <button
   class="room-hotspot hotspot-big-brother-window"
+  data-room="bigBrother"
   data-hotspot="bigBrotherWindow"
   title="點擊調查">
 </button>
@@ -473,6 +784,7 @@
 <!-- 應接室：燕子花 -->
 <button
   class="room-hotspot hotspot-reception-iris-flower"
+  data-room="reception"
   data-hotspot="receptionIrisFlower"
   title="點擊調查">
 </button>
@@ -480,6 +792,7 @@
 <!-- 應接室：洋式桌椅 -->
 <button
   class="room-hotspot hotspot-reception-western-furniture"
+  data-room="reception"
   data-hotspot="receptionWesternFurniture"
   title="點擊調查">
 </button>
@@ -487,6 +800,7 @@
 <!-- 廚房：右側木製冰箱 -->
 <button
   class="room-hotspot hotspot-kitchen-icebox"
+  data-room="kitchen"
   data-hotspot="kitchenIcebox"
   aria-label="木製冰箱">
 </button>
@@ -494,6 +808,7 @@
 <!-- 廚房：左側高型菜櫥 -->
 <button
   class="room-hotspot hotspot-kitchen-cupboard"
+  data-room="kitchen"
   data-hotspot="kitchenCupboard"
   aria-label="高型菜櫥">
 </button>
@@ -501,6 +816,7 @@
 <!-- 茶間：壽喜燒 -->
 <button
   class="room-hotspot hotspot-tea-sukiyaki"
+  data-room="tea"
   data-hotspot="teaSukiyaki"
   aria-label="壽喜燒">
 </button>
@@ -508,6 +824,7 @@
 <!-- 茶間：牛奶燈 -->
 <button
   class="room-hotspot hotspot-tea-milk-lamp"
+  data-room="tea"
   data-hotspot="teaMilkLamp"
   aria-label="牛奶燈">
 </button>
@@ -515,6 +832,7 @@
 <!-- 風呂：打水桶 -->
 <button
   class="room-hotspot hotspot-bath-bucket"
+  data-room="bath"
   data-hotspot="bathBucket"
   aria-label="打水桶">
 </button>
@@ -522,6 +840,7 @@
 <!-- 風呂：浴缸 -->
 <button
   class="room-hotspot hotspot-bath-tub"
+  data-room="bath"
   data-hotspot="bathTub"
   aria-label="浴缸">
 </button>
@@ -657,6 +976,11 @@
 
 </div>
 
+<button id="enterAccusationButton" class="enter-accusation-button">
+  進入指認
+</button>
+
+
 <!-- 人物關係圖快速查看彈窗 -->
 <div id="relationshipMapOverlay" class="relationship-map-overlay">
 
@@ -711,7 +1035,7 @@
   </button>
 
   <button class="notebook-tab" data-tab="notes">
-    筆記
+    筆記一覽
     <span class="notebook-tab-dot"></span>
   </button>
 </div> 
@@ -725,7 +1049,7 @@
 
       <div id="clueContent" class="clue-content">
         <img id="clueImage" class="clue-image" src="" alt="線索圖片">
-        <p id="clueDescription" class="clue-description"></p>
+        <div id="clueDescription" class="clue-description"></div>
       </div>
 
     </div>
